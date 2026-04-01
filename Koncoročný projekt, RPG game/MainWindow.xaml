@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="750" Width="1500">
     <Grid>
+        <Button x:Name="start" Content="Button" HorizontalAlignment="Left" Margin="1304,261,0,0" VerticalAlignment="Top" Height="150" Width="104" Click="start_Click"/>
+        <Grid x:Name="Map_UI" Margin="0,0,300,134" Background="#FFA7A7A7"/>
 
     </Grid>
 </Window>
