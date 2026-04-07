@@ -14,18 +14,19 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
     {
         private Grid Box;
         private int box_position = 5;
+        public List<Grid> blocks = [];
         public Map_Block()
         {
-            Box = new Grid()
+            /*Box = new Grid()
             {
                 Height = 100,
                 Width = 100,
                 Margin = new Thickness(5),
                 Background = Brushes.DarkGray
             };
-
+            */
             Height = 100;
-            Width = 1200;
+            Width = 1265;
             Margin = new Thickness(2);
             Background = Brushes.Gray;
             HorizontalAlignment = HorizontalAlignment.Left;
@@ -38,11 +39,14 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
                 {
                     Height = 100,
                     Width = 100,
-                    Margin = new Thickness(5), /// change somethin' here
+                    Margin = new Thickness(box_position, 5,5,5), /// change somethin' here
                     Background = Brushes.DarkGray
                 };
 
-                Children.Add(tempBox); 
+                tempBox.HorizontalAlignment = HorizontalAlignment.Left;
+                Children.Add(tempBox);
+                box_position += 100 + 5;
+                blocks.Add(tempBox);
             }
         }
     }
