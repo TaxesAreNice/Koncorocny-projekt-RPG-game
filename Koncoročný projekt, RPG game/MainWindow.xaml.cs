@@ -27,6 +27,8 @@ namespace Koncoročný_projekt__RPG_game
         private string CurrentState = "Main";
         private string CurrentMain = "Map";
 
+        private string itemNAME = "";
+
         DispatcherTimer inventory_click_checker = new DispatcherTimer();
 
         PlayerMovementClass playerMovement = new PlayerMovementClass();
@@ -216,6 +218,30 @@ namespace Koncoročný_projekt__RPG_game
             inventory_on_slot = false;
             inventoryMovementClass.slot_pressed = false;
 
+        }
+
+        private void Add_Item_Click(object sender, RoutedEventArgs e)
+        {
+            Add_Item_To_Inventory();
+        }
+
+        private void item_name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            itemNAME = item_name.Text;
+        }
+
+        private void Add_Item_To_Inventory()
+        {
+            string sucess = inventoryMovementClass.CheckingForYs();
+
+            if (sucess == "inventory_full")
+            { 
+                MessageBox.Show("Inventory is full!");
+                return;
+            }
+
+            Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x].Content = itemNAME; // changes the current position's text to the item
+            Inventory_Code[inventoryMovementClass.ender_y].names[inventoryMovementClass.ender_x] = itemNAME;
         }
     }
 }
