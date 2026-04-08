@@ -22,7 +22,7 @@ namespace Koncoročný_projekt__RPG_game
      
   
         }
-        public void E_Pressed() // uses items
+        public void E_Pressed(string name) // uses items
         {
 
 

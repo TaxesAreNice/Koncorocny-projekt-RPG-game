@@ -9,6 +9,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
     {
         private int box_position = 5;
         public List<Label> slots = new List<Label>(); //here too
+        public List<string> names = new List<string>();
 
         private InventoryInputs inventoryMovementClass;
 
@@ -44,6 +45,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
 
                 Children.Add(tempSlot);
                 slots.Add(tempSlot);
+                names.Add("");
 
                 box_position += 105;
             }

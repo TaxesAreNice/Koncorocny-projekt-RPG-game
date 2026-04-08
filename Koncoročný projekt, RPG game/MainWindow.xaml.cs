@@ -136,13 +136,17 @@ namespace Koncoročný_projekt__RPG_game
                     if (inventory_on_slot)
                     {
                         Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Content = ""; // changes the current position's text to nothing
+                        Inventory_Code[inventoryMovementClass.chosed_y].names[inventoryMovementClass.chosed_x] = "";
                     }
                     break;
                 case Key.E:
-                    inventoryMovementClass.E_Pressed();
+                    string content = Inventory_Code[inventoryMovementClass.chosed_y].names[inventoryMovementClass.chosed_x];
+
+                    inventoryMovementClass.E_Pressed(content);
                     if (inventory_on_slot)
                     {
-                        Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Content = "faf"; // changes the current position's text to the item
+                        Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Content = ""; // changes the current position's text to the item
+                        Inventory_Code[inventoryMovementClass.chosed_y].names[inventoryMovementClass.chosed_x] = "";
                     }
                     break;
                 case Key.Escape:
