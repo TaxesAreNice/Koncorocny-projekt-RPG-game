@@ -93,11 +93,11 @@ namespace Koncoročný_projekt__RPG_game
             int rowY = 0;
             int Yrow = 0;
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 7; i++)
             {
                 Inventory_Slots roww = new Inventory_Slots(Yrow, inventoryMovementClass);
 
-                roww.Margin = new Thickness(0, rowY + 5 + 60, 0, 0);
+                roww.Margin = new Thickness(900, rowY + 5 + 0, 0, 0);
 
                 Inventory.Children.Add(roww);
                 Inventory_Code.Add(roww);
@@ -105,6 +105,7 @@ namespace Koncoročný_projekt__RPG_game
                 rowY += 100;
                 Yrow++;
             }
+
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -132,9 +133,17 @@ namespace Koncoročný_projekt__RPG_game
             {
                 case Key.Q:
                     inventoryMovementClass.Q_Pressed();
+                    if (inventory_on_slot)
+                    {
+                        Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Content = ""; // changes the current position's text to nothing
+                    }
                     break;
                 case Key.E:
                     inventoryMovementClass.E_Pressed();
+                    if (inventory_on_slot)
+                    {
+                        Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Content = "faf"; // changes the current position's text to the item
+                    }
                     break;
                 case Key.Escape:
                     Inventory_Open();
