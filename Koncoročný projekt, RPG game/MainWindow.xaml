@@ -10,8 +10,6 @@
         <Button x:Name="start" Content="Button" HorizontalAlignment="Left" Margin="1342,257,0,0" VerticalAlignment="Top" Height="150" Width="104" Click="start_Click"/>
         <Grid x:Name="Map_UI" Margin="0,0,213,98" Background="#FFA7A7A7"/>
         
-        <Grid x:Name="Inventory" Background="#FF444242" Visibility="Collapsed">
-            
-        </Grid>
+        <Grid x:Name="Inventory" Background="#FF444242" Visibility="Collapsed" MouseDown="Inventory_MouseDown"/>
     </Grid>
 </Window>

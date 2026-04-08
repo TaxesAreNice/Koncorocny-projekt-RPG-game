@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Koncoročný_projekt__RPG_game.UI_Generations;
 
 namespace Koncoročný_projekt__RPG_game
@@ -20,23 +22,40 @@ namespace Koncoročný_projekt__RPG_game
         private List<List<Map_Block>> Map = [];
         private List<Inventory_Slots> Inventory_Code = [];
         private bool Started = false;
+        private bool inventory_on_slot = false;
 
         private string CurrentState = "Main";
         private string CurrentMain = "Map";
 
-
-
+        DispatcherTimer inventory_click_checker = new DispatcherTimer();
 
         PlayerMovementClass playerMovement = new PlayerMovementClass();
-        InventoryMovementClass inventoryMovementClass = new InventoryMovementClass();
+        InventoryInputs inventoryMovementClass = new InventoryInputs();
+
 
         public MainWindow()
         {
             InitializeComponent();
 
+            inventory_click_checker.Interval = TimeSpan.FromMilliseconds(20);
+            inventory_click_checker.Tick += Inventory_Click_Checker_Tick;
 
 
+        }
 
+        private void Inventory_Click_Checker_Tick(object? sender, EventArgs e)
+        {
+            if (inventory_on_slot)
+            {
+                Inventory_Code[inventoryMovementClass.backup_chosed_y].slots[inventoryMovementClass.backup_chosed_x].Background = Brushes.DarkGray; // changes the last position
+                Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Background = Brushes.Gray; // changes the current position
+                inventoryMovementClass.PressedTick();
+            }
+            else
+            {
+                Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Background = Brushes.DarkGray; // changes the current position
+                inventory_on_slot = inventoryMovementClass.slot_pressed;
+            }
         }
 
         private void start_Click(object sender, RoutedEventArgs e)
@@ -71,19 +90,20 @@ namespace Koncoročný_projekt__RPG_game
         }
         private void GeneretingInventory()
         {
-            List<Inventory_Slots> row = [];
             int rowY = 0;
+            int Yrow = 0;
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
-                Inventory_Slots roww = new Inventory_Slots();
-                row.Add(roww);
+                Inventory_Slots roww = new Inventory_Slots(Yrow, inventoryMovementClass);
 
-                roww.Margin = new Thickness(0, rowY + 5 + 30, 0, 0);
+                roww.Margin = new Thickness(0, rowY + 5 + 60, 0, 0);
+
                 Inventory.Children.Add(roww);
                 Inventory_Code.Add(roww);
 
                 rowY += 100;
+                Yrow++;
             }
         }
 
@@ -107,27 +127,18 @@ namespace Koncoročný_projekt__RPG_game
 
         private void InventoryMovement(bool success, string key, KeyEventArgs e)
         {
+
             switch (e.Key)
             {
-                case Key.W:
-                    success = inventoryMovementClass.CheckingForWalls(key);
+                case Key.Q:
+                    inventoryMovementClass.Q_Pressed();
                     break;
-                case Key.A:
-                    success = inventoryMovementClass.CheckingForWalls(key);
+                case Key.E:
+                    inventoryMovementClass.E_Pressed();
                     break;
-                case Key.S:
-                    success = inventoryMovementClass.CheckingForWalls(key);
-                    break;
-                case Key.D:
-                    success = inventoryMovementClass.CheckingForWalls(key);
-                    break;
-                case Key.F:
+                case Key.Escape:
                     Inventory_Open();
                     break;
-            }
-            if (success)
-            {
-                ChangingInventoryPosition(key);
             }
         }
 
@@ -147,7 +158,7 @@ namespace Koncoročný_projekt__RPG_game
                 case Key.D:
                     success = playerMovement.CheckingForWalls(key);
                     break;
-                case Key.F:
+                case Key.Escape:
                     Inventory_Open();
                     break;
             }
@@ -165,8 +176,8 @@ namespace Koncoročný_projekt__RPG_game
         }
         private void ChangingInventoryPosition(string key)
         {
-            Inventory_Code[inventoryMovementClass.LastInventoryY].slots[inventoryMovementClass.LastInventoryX].Background = Brushes.DarkGray; // changes the last position
-            Inventory_Code[inventoryMovementClass.InventoryY].slots[inventoryMovementClass.InventoryX].Background = Brushes.Gray; // changes the current position
+        //    Inventory_Code[inventoryMovementClass.LastInventoryY].slots[inventoryMovementClass.LastInventoryX].Background = Brushes.DarkGray; // changes the last position
+         //   Inventory_Code[inventoryMovementClass.InventoryY].slots[inventoryMovementClass.InventoryX].Background = Brushes.Gray; // changes the current position
         }
         private void Inventory_Open()
         {
@@ -175,12 +186,22 @@ namespace Koncoročný_projekt__RPG_game
             {
                 Inventory.Visibility = Visibility.Hidden;
                 CurrentState = "Main";
+                inventory_click_checker.Stop();
                 return;
             }
 
             Inventory.Visibility = Visibility.Visible;
             CurrentState = "Inventory";
+            inventory_click_checker.Start();
 
+        }
+
+        private void Inventory_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource != sender) { return; }
+
+            inventory_on_slot = false;
+            inventoryMovementClass.slot_pressed = false;
 
         }
     }
