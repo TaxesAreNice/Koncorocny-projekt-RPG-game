@@ -234,14 +234,17 @@ namespace Koncoročný_projekt__RPG_game
         {
             string sucess = inventoryMovementClass.CheckingForYs();
 
+          
             if (sucess == "inventory_full")
             { 
                 MessageBox.Show("Inventory is full!");
                 return;
             }
+           
 
             Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x].Content = itemNAME; // changes the current position's text to the item
             Inventory_Code[inventoryMovementClass.ender_y].names[inventoryMovementClass.ender_x] = itemNAME;
+
         }
     }
 }

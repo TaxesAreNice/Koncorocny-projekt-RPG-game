@@ -17,6 +17,8 @@ namespace Koncoročný_projekt__RPG_game
         public int ender_x = 0;
         public int ender_y = 0;
 
+        private bool first_ender = true;
+
         public bool slot_pressed = false;
 
         private List<List<string>> inventory = new List<List<string>>();
@@ -50,20 +52,23 @@ namespace Koncoročný_projekt__RPG_game
         }
         public string CheckingForYs()
         {
-            if (ender_x == 0 && ender_y == 0)
+
+            // notes: You gotta check a list of holes that can be form from E/Q inputs. And check if your last position is farther on the array then the farthest hole. If yes, then ...
+            // you will add items to the lowest holes.
+            if (ender_x == 0 && ender_y == 0 && first_ender)
             {
-                //raawwhhh
+                first_ender = false;
                 return "first_item";
             }
-            else if (ender_x == 5)
+            else if (ender_y == 6 && ender_x == 4)
+            {
+                return "inventory_full";
+            }
+            else if (ender_x == 4)
             {
                 ender_x = 0;
                 ender_y += 1;
                 return "next_y";
-            }
-            else if (ender_y == 7)
-            {
-                return "inventory_full";
             }
             else
             {
