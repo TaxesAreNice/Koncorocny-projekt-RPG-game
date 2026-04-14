@@ -147,7 +147,7 @@ namespace Koncoročný_projekt__RPG_game
                     inventoryMovementClass.E_Pressed(content);
                     if (inventory_on_slot)
                     {
-                        Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Content = ""; // changes the current position's text to the item
+                        Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Content = "";
                         Inventory_Code[inventoryMovementClass.chosed_y].names[inventoryMovementClass.chosed_x] = "";
                     }
                     break;
@@ -191,8 +191,8 @@ namespace Koncoročný_projekt__RPG_game
         }
         private void ChangingInventoryPosition(string key)
         {
-        //    Inventory_Code[inventoryMovementClass.LastInventoryY].slots[inventoryMovementClass.LastInventoryX].Background = Brushes.DarkGray; // changes the last position
-         //   Inventory_Code[inventoryMovementClass.InventoryY].slots[inventoryMovementClass.InventoryX].Background = Brushes.Gray; // changes the current position
+            //    Inventory_Code[inventoryMovementClass.LastInventoryY].slots[inventoryMovementClass.LastInventoryX].Background = Brushes.DarkGray; // changes the last position
+            //   Inventory_Code[inventoryMovementClass.InventoryY].slots[inventoryMovementClass.InventoryX].Background = Brushes.Gray; // changes the current position
         }
         private void Inventory_Open()
         {
@@ -232,21 +232,23 @@ namespace Koncoročný_projekt__RPG_game
 
         private void Add_Item_To_Inventory()
         {
-            string sucess = inventoryMovementClass.CheckingForYs();
+            string sucess = inventoryMovementClass.CheckingForYs(itemNAME);
 
-          
+
             if (sucess == "inventory_full")
-            { 
+            {
                 MessageBox.Show("Inventory is full!");
                 return;
             }
-           
+
 
             Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x].Content = itemNAME; // changes the current position's text to the item
             Inventory_Code[inventoryMovementClass.ender_y].names[inventoryMovementClass.ender_x] = itemNAME;
 
+            if (sucess == "hole")
+            {
+                inventoryMovementClass.FixingHolesXandYs();
+            }
         }
     }
 }
-        
-    

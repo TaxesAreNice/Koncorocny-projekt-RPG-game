@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="750" Width="1500" KeyDown="Window_KeyDown">
     <Grid>
-        <Button x:Name="start" Content="Button" HorizontalAlignment="Left" Margin="1342,257,0,0" VerticalAlignment="Top" Height="150" Width="104" Click="start_Click"/>
+        <Button x:Name="start" Content="Load Map" HorizontalAlignment="Left" Margin="1342,257,0,0" VerticalAlignment="Top" Height="150" Width="104" Click="start_Click" FontSize="20"/>
         <Grid x:Name="Map_UI" Margin="0,0,213,98" Background="#FFA7A7A7"/>
         <Button x:Name="Add_Item" Content="Add Item" HorizontalAlignment="Left" Margin="1342,509,0,0" VerticalAlignment="Top" Height="74" Width="144" FontSize="30" Click="Add_Item_Click"/>
         <TextBox x:Name="item_name" HorizontalAlignment="Left" Margin="1332,620,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="158" Height="55" TextChanged="item_name_TextChanged"/>
