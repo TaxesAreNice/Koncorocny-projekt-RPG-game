@@ -3,14 +3,14 @@
     internal class Player
     {
         Monster monster = new Monster();
-        public int PlayerHP { get; set; }
-        public int PlayerDamage { get; set; }
+        public int PlayerHP = 100;
+        public int PlayerDamage = 15;
         public bool IsDead => PlayerHP <= 0;
-        private void DoDamage()
+        public void DoDamage()
         {
             monster.MonsterHP -= PlayerDamage;
         }
-        private void TakeDamage()
+        public void TakeDamage()
         {
             PlayerHP -= monster.MonsterDamage;
         }
