@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:Koncoročný_projekt__RPG_game"
         mc:Ignorable="d"
         Title="MainWindow" Height="750" Width="1500">
-    <Grid>
+    <Grid x:Name="Map_UI" Margin="0,0,171,147">
+        <Button x:Name="start" Content="Button" HorizontalAlignment="Left" Margin="476,240,0,0" VerticalAlignment="Top" Height="204" Width="274"/>
+        <Button x:Name="Add_Item" Content="Button" HorizontalAlignment="Left" Margin="924,240,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="item_name" HorizontalAlignment="Left" Margin="1052,444,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Grid HorizontalAlignment="Left" Height="593" Margin="253,83,0,0" VerticalAlignment="Top" Width="1134"/>
 
     </Grid>
 </Window>
