@@ -6,6 +6,8 @@
         public string Name = "";
         public int MonsterHP { get; set; }
         public int MonsterDamage { get; set; }
+        public int MonsterAttack { get; set; }
+        public int MonsterDefense { get; set; }
 
         public void DoDamage()
         {
@@ -14,6 +16,16 @@
         public void TakeDamage()
         {
             MonsterHP -= player.PlayerDamage;
+        }
+
+        public int CalculateDamage()
+        {
+            MonsterDamage = MonsterAttack - player.PlayerDefense;
+
+            if (MonsterDamage < 0)
+                MonsterDamage = 0;
+
+            return MonsterDamage;
         }
     }
 }
