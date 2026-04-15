@@ -12,6 +12,8 @@
         <Button x:Name="Add_Item" Content="Add Item" HorizontalAlignment="Left" Margin="1342,509,0,0" VerticalAlignment="Top" Height="74" Width="144" FontSize="30" Click="Add_Item_Click"/>
         <TextBox x:Name="item_name" HorizontalAlignment="Left" Margin="1332,620,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="158" Height="55" TextChanged="item_name_TextChanged"/>
         <Grid x:Name="Inventory" Background="#FF444242" Visibility="Collapsed" MouseDown="Inventory_MouseDown"/>
-        
+        <Grid x:Name="Fighting_UI" Background="#FF444242" Visibility="Collapsed"/>
+        <Button x:Name="StartFight_but" Content="Button" HorizontalAlignment="Left" Margin="1372,94,0,0" VerticalAlignment="Top" Height="79" Width="89" Click="StartFight_but_Click"/>
+
     </Grid>
 </Window>
