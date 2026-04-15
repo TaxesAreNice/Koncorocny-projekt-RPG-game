@@ -14,6 +14,9 @@ namespace Koncoročný_projekt__RPG_game
         public int chosed_x = 0;
         public int chosed_y = 0;
 
+        public int chosed_But_x = 0;
+        public int backup_chosed_But_x = 0;
+
         public int backup_chosed_x = 0;
         public int backup_chosed_y = 0;
 
@@ -28,6 +31,7 @@ namespace Koncoročný_projekt__RPG_game
         private bool first_ender = true;
 
         public bool slot_pressed = false;
+        public bool q_pressed = false;
 
         private List<List<string>> inventory = new List<List<string>>();
 
@@ -62,9 +66,10 @@ namespace Koncoročný_projekt__RPG_game
 
         }
 
-        public void Equip_Pressed(string name) // equips items
+        public void Equip_Pressed(string name, int pos) // equips items
         {
-            
+            chosed_But_x = pos;
+            q_pressed = true;
         }
 
         public void Pressed(int x, int y)
@@ -81,6 +86,11 @@ namespace Koncoročný_projekt__RPG_game
         {
             backup_chosed_x = chosed_x;
             backup_chosed_y = chosed_y;
+        }
+
+        public void PressedTick_Q()
+        {
+            backup_chosed_But_x = chosed_But_x;
         }
         public void FixingHolesXandYs()
         {

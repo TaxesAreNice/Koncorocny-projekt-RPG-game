@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Koncoročný_projekt__RPG_game.UI_Generations
 {
     internal class Inventory_Buttons : Grid
     {
         private int box_position = 5;
+        public List<Label> slots = new List<Label>(); //here too
         private InventoryInputs inventoryMovementClass;
         private List<string> names = new List<string>() { "Hemlet:", "Chestplate:", "Leggins:", "Boots:", "Sword:", "Ring:", "2nd hand:", "Accesory:" };
 
@@ -35,9 +37,10 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
                 
             };
             */
-            
+
             for (int i = 0; i < 4; i++)
             {
+                int current = list_pos; // ✅ store value for THIS button
 
                 var tempLabel = new Label()
                 {
@@ -47,10 +50,10 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
                     VerticalAlignment = System.Windows.VerticalAlignment.Top,
                     Margin = new System.Windows.Thickness(5, box_position, 5, 5),
                     Background = System.Windows.Media.Brushes.DarkGray,
-                    Content = names[list_pos],
+                    Content = names[current],
                     HorizontalAlignment = System.Windows.HorizontalAlignment.Left
-
                 };
+
                 var tempButton = new Label()
                 {
                     Height = 95,
@@ -64,12 +67,14 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
 
                 tempButton.MouseDown += (s, e) =>
                 {
-                    inventoryMovementClass.Equip_Pressed("faf");
+                    inventoryMovementClass.Equip_Pressed(names[current], current);
                 };
 
-                //Children.Add(tempButton1);
                 Children.Add(tempButton);
                 Children.Add(tempLabel);
+
+                slots.Add(tempButton);
+
                 box_position += 100;
                 list_pos++;
             }
