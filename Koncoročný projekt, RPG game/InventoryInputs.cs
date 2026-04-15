@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Koncoročný_projekt__RPG_game
 {
@@ -21,7 +23,7 @@ namespace Koncoročný_projekt__RPG_game
         public int backup_ender_x = 0;
         public int backup_ender_y = 0;
 
-        private List<(int x, int y)> inventory_holes = new List<(int x, int y)>();
+        private List<(int x, int y)> inventory_holes = new List<(int x, int y)>() ;
 
         private bool first_ender = true;
 
@@ -44,10 +46,11 @@ namespace Koncoročný_projekt__RPG_game
 
 
 
-
         }
         public void E_Pressed(string name) // uses items
         {
+
+
             try
             {
                 if (inventory[chosed_y][chosed_x] == "") { return; }
@@ -55,6 +58,13 @@ namespace Koncoročný_projekt__RPG_game
             }
             catch { }
 
+            
+
+        }
+
+        public void Equip_Pressed(string name) // equips items
+        {
+            
         }
 
         public void Pressed(int x, int y)
@@ -62,6 +72,9 @@ namespace Koncoročný_projekt__RPG_game
             chosed_x = x;
             chosed_y = y;
             slot_pressed = true;
+
+
+
         }
 
         public void PressedTick()
@@ -113,6 +126,7 @@ namespace Koncoročný_projekt__RPG_game
         }
         private bool CheckingForHoles()
         {
+
             bool success = false;
 
             int H_x = 0;
