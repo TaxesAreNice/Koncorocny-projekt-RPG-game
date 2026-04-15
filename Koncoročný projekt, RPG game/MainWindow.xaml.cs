@@ -94,6 +94,8 @@ namespace Koncoročný_projekt__RPG_game
         {
             int rowY = 0;
             int Yrow = 0;
+            int EquepsX = 5;
+            int Equeps_list_num = 0;
 
             for (int i = 0; i < 7; i++)
             {
@@ -107,6 +109,18 @@ namespace Koncoročný_projekt__RPG_game
                 rowY += 100;
                 Yrow++;
             }
+
+            for (int j = 0; j < 2; j++)
+            {
+                Inventory_Buttons inventory_Buttons = new Inventory_Buttons(inventoryMovementClass, Equeps_list_num);
+                inventory_Buttons.HorizontalAlignment = HorizontalAlignment.Left;
+                inventory_Buttons.Margin = new Thickness(EquepsX, 5,5,5);
+                Inventory.Children.Add(inventory_Buttons);
+
+                EquepsX += 215;
+                Equeps_list_num += 4;
+            }
+            
 
         }
 
@@ -134,6 +148,8 @@ namespace Koncoročný_projekt__RPG_game
             switch (e.Key)
             {
                 case Key.Q:
+                    MessageBox.Show("test");
+
                     inventoryMovementClass.Q_Pressed();
                     if (inventory_on_slot)
                     {
