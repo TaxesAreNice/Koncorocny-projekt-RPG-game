@@ -34,7 +34,7 @@ namespace Koncoročný_projekt__RPG_game
                         player.PlayerHP = 100;
                     }
                     break;
-        /*case "BloodThorn Sword":
+                /*case "BloodThorn Sword":
                     player.PlayerDamage += 20;
                     break;
                 case "Blood Pack Ring":
@@ -62,8 +62,5 @@ namespace Koncoročný_projekt__RPG_game
                     break; */
             }
         }
-
-
-
     }
 }
