@@ -139,6 +139,15 @@ namespace Koncoročný_projekt__RPG_game
             {
                 InventoryMovement(success, key, e);
             }
+            else if (CurrentState == "Fight")
+            {
+                FightingMovement(success, key, e);
+            }
+
+        }
+
+        private void FightingMovement(bool success, string key, KeyEventArgs e)
+        {
 
         }
 
@@ -265,6 +274,21 @@ namespace Koncoročný_projekt__RPG_game
             {
                 inventoryMovementClass.FixingHolesXandYs();
             }
+        }
+
+        private void StartFight_but_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Started) { return; }
+            if (Fighting_UI.Visibility == Visibility.Visible)
+            {
+                Fighting_UI.Visibility = Visibility.Hidden;
+                CurrentState = "Main";
+                return;
+            }
+
+            Fighting_UI.Visibility = Visibility.Visible;
+            CurrentState = "Fight";
+
         }
     }
 }
