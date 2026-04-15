@@ -77,8 +77,6 @@ namespace Koncoročný_projekt__RPG_game
         public string CheckingForYs(string item_name)
         {
             bool success = false;
-            // notes: You gotta check a list of holes that can be form from E/Q inputs. And check if your last position is farther on the array then the farthest hole. If yes, then ...
-            // you will add items to the lowest holes.
             success = CheckingForHoles();
 
 
@@ -126,13 +124,12 @@ namespace Koncoročný_projekt__RPG_game
             int indexHighest = 0;
             int indexLowest = 0;
 
-            if (inventory_holes.Count > 0) // this if statement is made by AI
+            if (inventory_holes.Count > 0)
             {
-                var highest = inventory_holes.MaxBy(p => (p.y, p.x));
-                var lowest = inventory_holes.MinBy(p => (p.y, p.x));
+                var highest = inventory_holes.MaxBy(p => (p.y, p.x)); //toto je od AI
+                var lowest = inventory_holes.MinBy(p => (p.y, p.x)); //toto je od AI
 
-                //indexHighest = inventory_holes.IndexOf(highest);
-                indexLowest = inventory_holes.IndexOf(lowest);
+                indexLowest = inventory_holes.IndexOf(lowest); //toto je od AI
                 H_x = highest.x;
                 H_y = highest.y;
 
