@@ -12,6 +12,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         public List<string> names = new List<string>();
 
         private InventoryInputs inventoryMovementClass;
+        
 
         public Inventory_Slots(int y, InventoryInputs inputs)
         {
