@@ -21,8 +21,10 @@ namespace Koncoročný_projekt__RPG_game
     {
         private List<List<Map_Block>> Map = [];
         private List<Inventory_Slots> Inventory_Code = [];
+        private List<Inventory_Buttons> Inventory_butons = [];
         private bool Started = false;
         private bool inventory_on_slot = false;
+        private bool inventory_on_slot_q = false;
 
         private string CurrentState = "Main";
         private string CurrentMain = "Map";
@@ -30,6 +32,7 @@ namespace Koncoročný_projekt__RPG_game
         private string itemNAME = "";
 
         DispatcherTimer inventory_click_checker = new DispatcherTimer();
+        DispatcherTimer inventory_q_click_checker = new DispatcherTimer();
 
         PlayerMovementClass playerMovement = new PlayerMovementClass();
         InventoryInputs inventoryMovementClass = new InventoryInputs();
@@ -41,17 +44,54 @@ namespace Koncoročný_projekt__RPG_game
 
             inventory_click_checker.Interval = TimeSpan.FromMilliseconds(20);
             inventory_click_checker.Tick += Inventory_Click_Checker_Tick;
+            inventory_q_click_checker.Interval = TimeSpan.FromMilliseconds(20);
+            inventory_q_click_checker.Tick += Inventory_Q_Click_Checker_Tick;
 
+        }
 
+        private void Inventory_Q_Click_Checker_Tick(object? sender, EventArgs e)
+        {
+            int rowB = 0;
+            int row = 0;
+            int minesar = 0;
+            int minesarB = 0;
+
+            if (inventoryMovementClass.backup_chosed_But_x >= 4)
+            {
+                rowB = 1;
+                minesarB += 4;
+            }
+            if (inventoryMovementClass.chosed_But_x >= 4)
+            {
+                row = 1;
+                minesar += 4;
+            }
+
+            if (inventory_on_slot_q)
+            {
+                Inventory_butons[rowB].slots[inventoryMovementClass.backup_chosed_But_x - minesarB].Background = Brushes.DarkGray; // changes the last position
+                Inventory_butons[row].slots[inventoryMovementClass.chosed_But_x - minesar].Background = Brushes.Gray; // changes the current position
+                inventoryMovementClass.PressedTick_Q();
+            }
+            else
+            {
+                Inventory_butons[row].slots[inventoryMovementClass.chosed_But_x - minesar].Background = Brushes.DarkGray; // changes the current position
+                inventory_on_slot_q = inventoryMovementClass.q_pressed;
+            }
         }
 
         private void Inventory_Click_Checker_Tick(object? sender, EventArgs e)
         {
+           
+
+
             if (inventory_on_slot)
             {
+                
                 Inventory_Code[inventoryMovementClass.backup_chosed_y].slots[inventoryMovementClass.backup_chosed_x].Background = Brushes.DarkGray; // changes the last position
                 Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Background = Brushes.Gray; // changes the current position
                 inventoryMovementClass.PressedTick();
+
             }
             else
             {
@@ -115,6 +155,8 @@ namespace Koncoročný_projekt__RPG_game
                 Inventory_Buttons inventory_Buttons = new Inventory_Buttons(inventoryMovementClass, Equeps_list_num);
                 inventory_Buttons.HorizontalAlignment = HorizontalAlignment.Left;
                 inventory_Buttons.Margin = new Thickness(EquepsX, 5,5,5);
+
+                Inventory_butons.Add(inventory_Buttons);
                 Inventory.Children.Add(inventory_Buttons);
 
                 EquepsX += 215;
@@ -227,12 +269,14 @@ namespace Koncoročný_projekt__RPG_game
                 Inventory.Visibility = Visibility.Hidden;
                 CurrentState = "Main";
                 inventory_click_checker.Stop();
+                inventory_q_click_checker.Stop();
                 return;
             }
 
             Inventory.Visibility = Visibility.Visible;
             CurrentState = "Inventory";
             inventory_click_checker.Start();
+            inventory_q_click_checker.Start();
 
         }
 
@@ -242,6 +286,8 @@ namespace Koncoročný_projekt__RPG_game
 
             inventory_on_slot = false;
             inventoryMovementClass.slot_pressed = false;
+            inventory_on_slot_q  = false;
+            inventoryMovementClass.q_pressed = false;
 
         }
 
