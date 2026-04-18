@@ -9,16 +9,11 @@ namespace Koncoročný_projekt__RPG_game
         public int PlayerDamage = 0;
         public int PlayerAttack = 15;
         public int PlayerDefense = 0;
+        public int PlayerMana = 50;
         public bool IsDead => PlayerHP <= 0;
-        public bool DoDamage()
+        public void DoDamage()
         {
             monster.MonsterHP -= PlayerDamage;
-            if (monster.MonsterHP <= 0)
-            {
-                return true; // monster dead
-            }
-
-            return false;
         }
         public void TakeDamage()
         {

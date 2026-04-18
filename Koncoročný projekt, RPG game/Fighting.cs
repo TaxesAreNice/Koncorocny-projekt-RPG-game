@@ -69,55 +69,5 @@ namespace Koncoročný_projekt__RPG_game
         "2x Damage Potion",
         //scrolls
         };
-
-        private void UseItem(string item)
-        {
-            switch (item)
-            {
-                case "Phoenix Feather":
-                        if (player.IsDead)
-                        {
-                        //dorobit este ze to napise ze ta to revivlo
-                        player.PlayerHP = 100;
-                        }
-                        break;
-                case "BloodThorn Sword":
-                        player.PlayerDamage += 35;
-                        break;
-                case "Breaker Ring":
-                        if(player.DoDamage())
-                        {
-                            monster.MonsterDefense = 0; // breaks thru defense
-                    }
-                        break;
-                case "Knight Helmet":
-                        player.PlayerDefense += 2;
-                        break;
-                case "Knight Chestplate":
-                        player.PlayerDefense += 5;
-                        break;
-                case "Knight Leggins":
-                        player.PlayerDefense += 3;
-                        break;
-                case "Knight Boots":
-                        player.PlayerDefense += 2;
-                        break;
-                case "Knight Sword":
-                        player.PlayerDamage += 15;
-                        break;
-                case "Mythical Meal":
-                        player.PlayerHP += 100;
-                        break;
-                case "Health Potion":
-                        player.PlayerHP += 25;
-                        break;
-                case "Big Health Potion":
-                        player.PlayerHP += 50;
-                        break;
-                case "2x Damage Potion":
-                        player.PlayerDamage = player.PlayerDamage * 2;
-                        break;
-            }
-        }
     }
 }
