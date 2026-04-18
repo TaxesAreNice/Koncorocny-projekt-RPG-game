@@ -30,6 +30,7 @@ namespace Koncoročný_projekt__RPG_game
         private string CurrentMain = "Map";
 
         private string itemNAME = "";
+        private int enemy_num = 0;
 
         DispatcherTimer inventory_click_checker = new DispatcherTimer();
         DispatcherTimer inventory_q_click_checker = new DispatcherTimer();
@@ -335,6 +336,13 @@ namespace Koncoročný_projekt__RPG_game
             Fighting_UI.Visibility = Visibility.Visible;
             CurrentState = "Fight";
 
+        }
+
+        private void Enemy_Num_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Enemy_Num.Text is string) { return; }
+
+            enemy_num = int.Parse(Enemy_Num.Text);
         }
     }
 }
