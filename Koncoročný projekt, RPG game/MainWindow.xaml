@@ -11,7 +11,16 @@
         <Grid x:Name="Map_UI" Margin="0,0,213,98" Background="#FFA7A7A7"/>
         <Button x:Name="Add_Item" Content="Add Item" HorizontalAlignment="Left" Margin="1342,509,0,0" VerticalAlignment="Top" Height="74" Width="144" FontSize="30" Click="Add_Item_Click"/>
         <TextBox x:Name="item_name" HorizontalAlignment="Left" Margin="1332,620,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="158" Height="55" TextChanged="item_name_TextChanged"/>
-        <Grid x:Name="Inventory" Background="#FF444242" Visibility="Collapsed" MouseDown="Inventory_MouseDown"/>
+        <Grid x:Name="Inventory" Background="#FF444242" MouseDown="Inventory_MouseDown" Visibility="Collapsed">
+            <Grid x:Name="Item_Stuff" Margin="0,502,1030,0" Background="Gray">
+                <Label Content="Item Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="0,10,0,0" Width="235" FontSize="30"/>
+                <Label Content="Mana Usage:" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="0,144,0,0" Width="235" FontSize="30"/>
+                <Label Content="Item Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Width="235" FontSize="30" Margin="0,79,0,0"/>
+                <Label x:Name="Mana_Usage" Content="           -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="245,144,0,0" Width="200" FontSize="30"/>
+                <Label x:Name="Item_Description" Content="           -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="245,79,0,0" Width="200" FontSize="30"/>
+                <Label x:Name="Item_Name" Content="           -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="245,10,0,0" Width="200" FontSize="30"/>
+            </Grid>
+        </Grid>
         <Grid x:Name="Fighting_UI" Background="#FF444242" Visibility="Collapsed"/>
         <Button x:Name="StartFight_but" Content="Button" HorizontalAlignment="Left" Margin="1372,94,0,0" VerticalAlignment="Top" Height="79" Width="89" Click="StartFight_but_Click"/>
 

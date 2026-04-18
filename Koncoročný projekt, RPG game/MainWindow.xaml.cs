@@ -26,7 +26,7 @@ namespace Koncoročný_projekt__RPG_game
         private bool inventory_on_slot = false;
         private bool inventory_on_slot_q = false;
 
-        private string CurrentState = "Main";
+        private string CurrentState = "Main"; //Main
         private string CurrentMain = "Map";
 
         private string itemNAME = "";
