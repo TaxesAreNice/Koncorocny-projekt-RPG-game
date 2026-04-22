@@ -37,9 +37,10 @@
                 <Label x:Name="Player_Defence" Content="   -" HorizontalAlignment="Left" Margin="235,128,0,0" VerticalAlignment="Top" Background="Gray" Height="57" Width="70" FontSize="30" Grid.Row="1"/>
                 <Label Content="Attack:" HorizontalAlignment="Left" Margin="310,138,0,0" VerticalAlignment="Top" Background="Gray" Height="47" Width="70" FontSize="15" Grid.Row="1"/>
             </Grid>
-            <Grid x:Name="Enemy_Grid" Margin="852,75,38,75" Background="DarkGray"/>
+            <Grid x:Name="Enemy_Grid" Margin="852,75,38,75" Background="Gray"/>
+            <Button x:Name="NextTurn" Content="Next Turn" HorizontalAlignment="Left" Margin="642,0,0,0" VerticalAlignment="Center" Height="106" Width="108" FontSize="20" Click="NextTurn_Click"/>
         </Grid>
-        <Button x:Name="StartFight_but" Content="Fight" HorizontalAlignment="Left" Margin="1372,94,0,0" VerticalAlignment="Top" Height="79" Width="89" Click="StartFight_but_Click" FontSize="20"/>
+        <Button x:Name="StartFight_but" Content="Fight" HorizontalAlignment="Left" Margin="1342,94,0,0" VerticalAlignment="Top" Height="79" Width="89" Click="StartFight_but_Click" FontSize="20"/>
         <TextBox x:Name="Enemy_Num" HorizontalAlignment="Left" Margin="1342,178,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="144" Height="59" TextChanged="Enemy_Num_TextChanged"/>
 
     </Grid>

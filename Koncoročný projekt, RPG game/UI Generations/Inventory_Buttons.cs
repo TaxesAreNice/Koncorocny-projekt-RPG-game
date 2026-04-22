@@ -40,7 +40,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
 
             for (int i = 0; i < 4; i++)
             {
-                int current = list_pos; // ✅ store value for THIS button
+                int current = list_pos;
 
                 var tempLabel = new Label()
                 {

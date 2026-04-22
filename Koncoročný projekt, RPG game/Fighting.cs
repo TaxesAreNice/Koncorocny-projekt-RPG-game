@@ -8,7 +8,10 @@ namespace Koncoročný_projekt__RPG_game
 {
     internal class Fighting
     {
-        private List<(int hp, int damage, string name)> enemies = new List<(int hp, int damage, string name)>()
+        public List<string> currentEnemies = new List<string>();
+
+
+        public List<(int hp, int damage, string name)> enemies = new List<(int hp, int damage, string name)>()
         {
             (100, 10, "Trader"), //can sell you items, but you can try to kill him for chance to get potions, scrolls, etc
             (320, 35, "Possessed King "), // will drop Bloodthorn sword
