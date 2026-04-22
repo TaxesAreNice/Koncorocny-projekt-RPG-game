@@ -17,6 +17,7 @@ namespace Koncoročný_projekt__RPG_game
 
         Player player = new Player();
         Monster monster = new Monster();
+        Specials specials = new Specials();
 
         public enum TurnState
         {
@@ -29,10 +30,38 @@ namespace Koncoročný_projekt__RPG_game
 
         public TurnState State { get; private set; }
 
+        public List<(int hp, int attack, int defense, string name)> enemies = new List<(int hp, int attack, int defense, string name)>()   
+        {
+            (150, 25, 20, "Trader"),
+            (320, 35, 15, "Possessed King"),
+            (200, 30, 30, "Cursed Trader"),
+            (35, 4, 0, "Bat"),
+            (65, 10, 0, "Vampire"),
+            (80, 30, 20, "Jester"),
+            (250, 10, 0, "Shield Spirit"),
+            (180, 25, 10, "Knight"),
+            (150, 20, 0, "Mage"),
+            (220, 30, 10, "Phoenix"),
+            (300, 40, 20, "Dragon"),
+            (100, 1, 50, "Mythical Pig")
+        };
         private void EnemyTurn()
         {
             if (State != TurnState.EnemyTurn)
                 return;
+            if (monster.MonsterName == "Jester")
+            {
+                specials.JesterSpecial();
+            }
+            else if (monster.MonsterName == "Mage")
+            {
+                specials.MageSpecials();
+            }
+            else
+            {
+                monster.CalculateDamage(player);
+                monster.DoDamage(player);
+            }
 
             monster.CalculateDamage(player);
             monster.DoDamage(player);
@@ -47,22 +76,7 @@ namespace Koncoročný_projekt__RPG_game
             player.DoDamage(monster);
         }
 
-        public List<(int hp, int attack, int defense, string name)> enemies =
-            new List<(int hp, int attack, int defense, string name)>()
-        {
-        (150, 25, 20, "Trader"),
-        (320, 35, 15, "Possessed King"),
-        (200, 30, 30, "Cursed Trader"),
-        (35, 4, 0, "Bat"),
-        (65, 10, 0, "Vampire"),
-        (80, 0, 20, "Jester"),
-        (250, 10, 0, "Shield Spirit"),
-        (180, 25, 10, "Knight"),
-        (150, 20, 0, "Mage"),
-        (220, 30, 10, "Phoenix"),
-        (300, 40, 20, "Dragon"),
-        (100, 1, 50, "Mythical Pig")
-        };
+        
 
         public bool enemyDead()
         {
