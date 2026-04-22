@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -11,6 +12,9 @@ namespace Koncoročný_projekt__RPG_game
 {
     internal class InventoryInputs
     {
+        private ItemTypes itemTypes = new ItemTypes();
+
+
         public int chosed_x = 0;
         public int chosed_y = 0;
 
@@ -53,7 +57,8 @@ namespace Koncoročný_projekt__RPG_game
         }
         public void E_Pressed(string name) // uses items
         {
-
+            string success = "";
+            success = checkingItemType(name);
 
             try
             {
@@ -66,6 +71,15 @@ namespace Koncoročný_projekt__RPG_game
 
         }
 
+        private string checkingItemType(string name)
+        {
+            string returner = "";
+
+
+
+
+            return returner;
+        }
         public void Equip_Pressed(string name, int pos) // equips items
         {
             chosed_But_x = pos;
