@@ -22,10 +22,10 @@ namespace Koncoročný_projekt__RPG_game
             ""
           )
         };
-        
-        
-          
-        
+
+
+
+
     }
     //"Hemlet:", "Chestplate:", "Leggins:", "Boots:", "Sword:", "Ring:", "2nd hand:", "Accesory:"
 }

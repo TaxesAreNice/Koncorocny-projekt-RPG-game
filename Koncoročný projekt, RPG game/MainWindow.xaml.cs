@@ -22,20 +22,24 @@ namespace Koncoročný_projekt__RPG_game
         private List<List<Map_Block>> Map = [];
         private List<Inventory_Slots> Inventory_Code = [];
         private List<Inventory_Buttons> Inventory_butons = [];
+        private List<Fighting_EnemySpawner> current_enemies = [];
+
         private bool Started = false;
         private bool inventory_on_slot = false;
         private bool inventory_on_slot_q = false;
 
-        private string CurrentState = "Main";
+        private string CurrentState = "Main"; //Main
         private string CurrentMain = "Map";
 
         private string itemNAME = "";
+        private string enemy_name = "";
 
         DispatcherTimer inventory_click_checker = new DispatcherTimer();
         DispatcherTimer inventory_q_click_checker = new DispatcherTimer();
 
         PlayerMovementClass playerMovement = new PlayerMovementClass();
         InventoryInputs inventoryMovementClass = new InventoryInputs();
+        Fighting fighting = new Fighting();
 
 
         public MainWindow()
@@ -82,12 +86,12 @@ namespace Koncoročný_projekt__RPG_game
 
         private void Inventory_Click_Checker_Tick(object? sender, EventArgs e)
         {
-           
+
 
 
             if (inventory_on_slot)
             {
-                
+
                 Inventory_Code[inventoryMovementClass.backup_chosed_y].slots[inventoryMovementClass.backup_chosed_x].Background = Brushes.DarkGray; // changes the last position
                 Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Background = Brushes.Gray; // changes the current position
                 inventoryMovementClass.PressedTick();
@@ -154,7 +158,7 @@ namespace Koncoročný_projekt__RPG_game
             {
                 Inventory_Buttons inventory_Buttons = new Inventory_Buttons(inventoryMovementClass, Equeps_list_num);
                 inventory_Buttons.HorizontalAlignment = HorizontalAlignment.Left;
-                inventory_Buttons.Margin = new Thickness(EquepsX, 5,5,5);
+                inventory_Buttons.Margin = new Thickness(EquepsX, 5, 5, 5);
 
                 Inventory_butons.Add(inventory_Buttons);
                 Inventory.Children.Add(inventory_Buttons);
@@ -162,7 +166,7 @@ namespace Koncoročný_projekt__RPG_game
                 EquepsX += 215;
                 Equeps_list_num += 4;
             }
-            
+
 
         }
 
@@ -286,7 +290,7 @@ namespace Koncoročný_projekt__RPG_game
 
             inventory_on_slot = false;
             inventoryMovementClass.slot_pressed = false;
-            inventory_on_slot_q  = false;
+            inventory_on_slot_q = false;
             inventoryMovementClass.q_pressed = false;
 
         }
@@ -329,12 +333,123 @@ namespace Koncoročný_projekt__RPG_game
             {
                 Fighting_UI.Visibility = Visibility.Hidden;
                 CurrentState = "Main";
+                Enemy_Grid.Children.Clear();
+                current_enemies.Clear();
                 return;
             }
 
             Fighting_UI.Visibility = Visibility.Visible;
             CurrentState = "Fight";
+            Spawing_Enemies();
 
+        }
+
+        private void Enemy_Num_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Enemy_Num.Text is int) { return; }
+
+            enemy_name = Enemy_Num.Text;
+
+            if (fighting.currentEnemies.Count < 4)
+            {
+                fighting.currentEnemies.Add(enemy_name);
+            }
+        }
+
+        private void Spawing_Enemies()
+        {
+            int enemy_num = fighting.currentEnemies.Count;
+            int space_off_x = 0;
+            int space_off_y = 0;
+            string name = "";
+
+            switch (enemy_num)
+            {
+                case 0:
+                    MessageBox.Show("You need to add at least 1 enemy!");
+                    return;
+                case 1:
+                    Spawing_enemy(name, space_off_x, space_off_y);
+                    break;
+                case 2:
+                    for (int i = 0; i < enemy_num; i++)
+                    {
+                        if (i == 1)
+                        {
+                            space_off_x += 450;
+                        }
+                        else
+                        {
+                            space_off_x =- 200;
+                        }
+                        Spawing_enemy(name, space_off_x, space_off_y);
+                    }
+                    break;
+                case 3:
+                    for (int i = 0; i < enemy_num; i++)
+                    {
+                        if (i == 2)
+                        {
+                            space_off_x = 100;
+                            space_off_y = 320;
+                        }
+                        else if (i == 1)
+                        {
+                            space_off_x = -150;
+                        }
+                        else
+                        {
+                            space_off_x += 300;
+                            space_off_y = -100;
+                        }
+                        Spawing_enemy(name, space_off_x, space_off_y);
+                    }
+                    break;
+                case 4:
+                    for (int i = 0; i < enemy_num; i++)
+                    {
+                        if (i == 0) // top-left
+                        {
+                            space_off_x = -220;
+                            space_off_y = -220;
+                        }
+                        else if (i == 1) // top-right
+                        {
+                            space_off_x = 220;
+                            space_off_y = -220;
+                        }
+                        else if (i == 2) // bottom-left
+                        {
+                            space_off_x = -220;
+                            space_off_y = 220;
+                        }
+                        else if (i == 3) // bottom-right
+                        {
+                            space_off_x = 220;
+                            space_off_y = 220;
+                        }
+
+                        Spawing_enemy(name, space_off_x, space_off_y);
+                    }
+                    break;
+            }
+        }
+        private void Spawing_enemy(string name, int space_off_x, int space_off_y)
+        {
+                Fighting_EnemySpawner fighting_EnemySpawner = new Fighting_EnemySpawner();
+                fighting_EnemySpawner.Margin = new Thickness(space_off_x, space_off_y, 0, 0);
+                Enemy_Grid.Children.Add(fighting_EnemySpawner);
+
+            current_enemies.Add(fighting_EnemySpawner);
+        }
+
+        private void NextTurn_Click(object sender, RoutedEventArgs e)
+        {
+            current_enemies[0].stuff[0].prog.Value = 100;
+            current_enemies[0].stuff[0].progLab.Content = "100hp";
+
+            current_enemies[0].stuff[0].atkLabel.Content = "10";
+            current_enemies[0].stuff[0].defLabel.Content = "5";
         }
     }
 }

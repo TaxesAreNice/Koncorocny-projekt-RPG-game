@@ -13,9 +13,10 @@ namespace Koncoročný_projekt__RPG_game
 {
     internal class Fighting
     {
-        Player player = new Player();
-        Monster monster = new Monster();
-        public enum TurnState
+        public List<string> currentEnemies = new List<string>();
+
+
+        public List<(int hp, int damage, string name)> enemies = new List<(int hp, int damage, string name)>()
         {
             PlayerTurn,
             EnemyTurn,
