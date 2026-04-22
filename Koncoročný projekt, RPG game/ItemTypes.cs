@@ -9,35 +9,32 @@ namespace Koncoročný_projekt__RPG_game
 {
     internal class ItemTypes
     {
-        public List<(string Hemlet, string Chestplate, string Leggins, string Boots, string Sword, string Ring, string SecondHand, string Accessory)> items = new List<(string Hemlet, string Chestplate, string Leggins, string Boots, string Sword, string Ring, string SecondHand, string Accessory)>()
+        private List<string> items = new List<string>()
         {
-         (
-            "Phoenix Feather",
-            "Knight Armor",
-            "Knight Leggins",
-            "Knight Boots",
-            "Knight Sword",
-            "Blood Pack Ring",
-            "faf", // tester
-            ""
-          )
+        "Phoenix Feather",
+        "BloodThorn Sword",
+        "Breaker Ring",
+        "Knight Helmet",
+        "Knight Chestplate",
+        "Knight Leggins",
+        "Knight Boots",
+        "Knight Sword",
+        "Mythical Meal",
+        "Health Potion",
+        "Big Health Potion",
+        "2x Damage Potion",
+        "Mana Potion",
+        "Big Mana Potion",
+        "Fire Scroll",
+        "Cursed Scroll",
+        "Lightning Scroll",
+        "Healing Scroll",
+        "Barrier Scroll",
+        "Revive Scroll",
+        "Dragon Helmet",
+        "Dragon Chestplate",
+        "Dragon Leggins",
+        "Dragon Boots",
         };
-
-
-
-
     }
-    //"Hemlet:", "Chestplate:", "Leggins:", "Boots:", "Sword:", "Ring:", "2nd hand:", "Accesory:"
 }
-
-/*
- "Phoenix Feather",
-"BloodThorn Sword",
-"Blood Pack Ring",
-"Knight Armor",
-"Knight Sword",
-"Mythical Meal",
-"Health Potion",
-"Big Health Potion",
-"2x Damage Potion",
- * */
