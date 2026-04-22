@@ -2,7 +2,7 @@
 {
     internal class Monster
     {
-        public string Name = "";
+        public string MonsterName = "";
         public int MonsterHP { get; set; }
         public int MonsterDamage { get; set; }
         public int MonsterAttack { get; set; }

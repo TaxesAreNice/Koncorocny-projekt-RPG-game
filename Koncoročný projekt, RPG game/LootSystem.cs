@@ -35,7 +35,7 @@ namespace Koncoročný_projekt__RPG_game
             "Fire scroll",
             "Lightning scroll",
             "Healing scroll",
-            "Barrier scroll",
+            "Shield scroll",
             "Revive scroll"
 
         };
@@ -50,7 +50,7 @@ namespace Koncoročný_projekt__RPG_game
             "Cursed Scroll",
             "Lightning Scroll",
             "Healing Scroll",
-            "Barrier Scroll",
+            "Shield Scroll",
             "Revive Scroll",
         };
 

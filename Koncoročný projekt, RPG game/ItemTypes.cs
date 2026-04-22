@@ -29,7 +29,7 @@ namespace Koncoročný_projekt__RPG_game
         "Cursed Scroll",
         "Lightning Scroll",
         "Healing Scroll",
-        "Barrier Scroll",
+        "Shield Scroll",
         "Revive Scroll",
         "Dragon Helmet",
         "Dragon Chestplate",
