@@ -14,8 +14,10 @@ namespace Koncoročný_projekt__RPG_game
     internal class Fighting
     {
         public List<string> currentEnemies = new List<string>();
+
         Player player = new Player();
         Monster monster = new Monster();
+
         public enum TurnState
         {
             PlayerTurn,
@@ -24,37 +26,42 @@ namespace Koncoročný_projekt__RPG_game
             Win,
             Lose
         }
+
         public TurnState State { get; private set; }
 
         private void EnemyTurn()
         {
             if (State != TurnState.EnemyTurn)
                 return;
-            monster.DoDamage();
-            player.TakeDamage();
+
+            monster.CalculateDamage(player);
+            monster.DoDamage(player);
         }
+
         private void PlayerTurn()
         {
             if (State != TurnState.PlayerTurn)
                 return;
-            player.DoDamage();
-            monster.TakeDamage();
+
+            player.CalculateDamage(monster);
+            player.DoDamage(monster);
         }
 
-        public List<(int hp, int attack, int defense, string name)> enemies = new List<(int hp, int attack, int defense, string name)>()
+        public List<(int hp, int attack, int defense, string name)> enemies =
+            new List<(int hp, int attack, int defense, string name)>()
         {
-            (150, 25, 20, "Trader"), //can sell you items, but you can try to kill him
-            (320, 35, 15, "Possessed King"),
-            (200, 30, 30, "Cursed Trader"),
-            (35, 4, 0, "Bat"),
-            (65, 10, 0, "Vampire"),
-            (80, 0, 20, "Jester"),  // can do special attacks....
-            (250, 10, 0, "Shield Spirit"), // everz 2nd attack will be blocked
-            (180, 25, 10, "Knight"),
-            (150, 20, 0, "Mage"),
-            (220, 30, 10, "Phoenix"),
-            (300, 40, 20, "Dragon"),
-            (100, 1, 50, "Mythical Pig")
+        (150, 25, 20, "Trader"),
+        (320, 35, 15, "Possessed King"),
+        (200, 30, 30, "Cursed Trader"),
+        (35, 4, 0, "Bat"),
+        (65, 10, 0, "Vampire"),
+        (80, 0, 20, "Jester"),
+        (250, 10, 0, "Shield Spirit"),
+        (180, 25, 10, "Knight"),
+        (150, 20, 0, "Mage"),
+        (220, 30, 10, "Phoenix"),
+        (300, 40, 20, "Dragon"),
+        (100, 1, 50, "Mythical Pig")
         };
 
         public bool enemyDead()
