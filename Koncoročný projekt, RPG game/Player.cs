@@ -1,18 +1,38 @@
-﻿namespace Koncoročný_projekt__RPG_game
+﻿using System.Numerics;
+
+namespace Koncoročný_projekt__RPG_game
 {
     internal class Player
     {
         Monster monster = new Monster();
-        public int PlayerHP { get; set; }
-        public int PlayerDamage { get; set; }
+        public int PlayerHP = 100;
+        public int PlayerDamage = 0;
+        public int PlayerAttack = 15;
+        public int PlayerDefense = 0;
         public bool IsDead => PlayerHP <= 0;
-        private void DoDamage()
+        public bool DoDamage()
         {
             monster.MonsterHP -= PlayerDamage;
+            if (monster.MonsterHP <= 0)
+            {
+                return true; // monster dead
+            }
+
+            return false;
         }
-        private void TakeDamage()
+        public void TakeDamage()
         {
             PlayerHP -= monster.MonsterDamage;
+        }
+
+        public int CalculateDamage()
+        {
+            PlayerDamage = PlayerAttack - monster.MonsterDefense;
+
+            if (PlayerDamage < 0)
+                PlayerDamage = 0;
+
+            return PlayerDamage;
         }
     }
 }

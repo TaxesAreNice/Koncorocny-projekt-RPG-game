@@ -3,17 +3,29 @@
     internal class Monster
     {
         Player player = new Player();
-        public string Name { get; set; }
+        public string Name = "";
         public int MonsterHP { get; set; }
-        public int MonsterDamage = 0;
+        public int MonsterDamage { get; set; }
+        public int MonsterAttack { get; set; }
+        public int MonsterDefense { get; set; }
 
-        private void DoDamage()
+        public void DoDamage()
         {
             player.PlayerHP -= MonsterDamage;
         }
-        private void TakeDamage()
+        public void TakeDamage()
         {
             MonsterHP -= player.PlayerDamage;
+        }
+
+        public int CalculateDamage()
+        {
+            MonsterDamage = MonsterAttack - player.PlayerDefense;
+
+            if (MonsterDamage < 0)
+                MonsterDamage = 0;
+
+            return MonsterDamage;
         }
     }
 }

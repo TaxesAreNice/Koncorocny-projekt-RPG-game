@@ -13,7 +13,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         private int box_position = 5;
         public List<Label> slots = new List<Label>(); //here too
         private InventoryInputs inventoryMovementClass;
-        private List<string> names = new List<string>() { "Hemlet:", "Chestplate:", "Leggins:", "Boots:", "Sword:", "Ring:", "2nd hand:", "Accesory:" };
+        private List<string> names = new List<string>() { "Helmet:", "Chestplate:", "Leggins:", "Boots:", "Sword:", "Ring:", "2nd hand:", "Accessory:" };
 
         public Inventory_Buttons(InventoryInputs inventoryMovementClass, int list_pos)
         {
