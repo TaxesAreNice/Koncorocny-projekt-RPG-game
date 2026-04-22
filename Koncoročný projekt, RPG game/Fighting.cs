@@ -13,12 +13,14 @@ namespace Koncoročný_projekt__RPG_game
 {
     internal class Fighting
     {
+        public List<string> currentEnemies = new List<string>();
         Player player = new Player();
         Monster monster = new Monster();
         public enum TurnState
         {
             PlayerTurn,
             EnemyTurn,
+            WonFight,
             Win,
             Lose
         }
@@ -39,35 +41,30 @@ namespace Koncoročný_projekt__RPG_game
             monster.TakeDamage();
         }
 
-        private List<(int hp, int damage, int defense, string name)> enemies = new List<(int hp, int damage, int defense, string name)>()
+        public List<(int hp, int attack, int defense, string name)> enemies = new List<(int hp, int attack, int defense, string name)>()
         {
-            (100, 10, 5, "Trader"), //can sell you items, but you can try to kill him for chance to get potions, scrolls, etc
-            (320, 35, 15, "Possessed King "), // will drop Bloodthorn sword
-            (35, 4, 0, "Bat"),     //uselless
-            (65, 10, 0, "Vampire"), // can drop Blood pack ring
-            (80, 12, 20, "Jester"),  // can do special attacks....
+            (150, 25, 20, "Trader"), //can sell you items, but you can try to kill him
+            (320, 35, 15, "Possessed King"),
+            (200, 30, 30, "Cursed Trader"),
+            (35, 4, 0, "Bat"),
+            (65, 10, 0, "Vampire"),
+            (80, 0, 20, "Jester"),  // can do special attacks....
             (250, 10, 0, "Shield Spirit"), // everz 2nd attack will be blocked
-            (180, 25, 10, "Knight"),       // can drop knight armor, sword
-            (150, 20, 0, "Mage"),    // can drop scrolls..., ranged attacks + spells
-            (220, 30, 10, "Phoenix"), // drop phoenix feather
-            (300, 40, 20, "Dragon"),   // can drop egg, scale or heart
-            (100, 1, 0, "Mythical Pig") // can drop mythical meal
+            (180, 25, 10, "Knight"),
+            (150, 20, 0, "Mage"),
+            (220, 30, 10, "Phoenix"),
+            (300, 40, 20, "Dragon"),
+            (100, 1, 50, "Mythical Pig")
         };
-        private List<string> items = new List<string>()
+
+        public bool enemyDead()
         {
-        "Phoenix Feather",
-        "BloodThorn Sword",
-        "Breaker Ring",
-        "Knight Helmet",
-        "Knight Chestplate",
-        "Knight Leggins",
-        "Knight Boots",
-        "Knight Sword",
-        "Mythical Meal",
-        "Health Potion",
-        "Big Health Potion",
-        "2x Damage Potion",
-        //scrolls
-        };
+            if (monster.MonsterHP <= 0)
+            {
+                State = TurnState.WonFight;
+                return true;
+            }
+            return false;
+        }
     }
 }
