@@ -60,5 +60,9 @@ namespace Koncoročný_projekt__RPG_game
                 monster.MonsterDefense += 15; //shield scroll
             }
         }
+        public void PlayerSpecials()
+        {
+            //ak ma hrac eqquiped scythe,tak urobi scytheDamage metodu
+        }
     }
 }

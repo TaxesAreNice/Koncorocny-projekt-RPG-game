@@ -76,8 +76,6 @@ namespace Koncoročný_projekt__RPG_game
             player.DoDamage(monster);
         }
 
-        
-
         public bool enemyDead()
         {
             if (monster.MonsterHP <= 0)
