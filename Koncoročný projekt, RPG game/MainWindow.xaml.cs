@@ -92,14 +92,15 @@ namespace Koncoročný_projekt__RPG_game
             if (inventory_on_slot)
             {
 
-                Inventory_Code[inventoryMovementClass.backup_chosed_y].slots[inventoryMovementClass.backup_chosed_x].Background = Brushes.DarkGray; // changes the last position
-                Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Background = Brushes.Gray; // changes the current position
+                SetGameImage(Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x], "Items", "Basics", "Unselected");
+                SetGameImage(Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x], "Items", "Basics", "Selected");
                 inventoryMovementClass.PressedTick();
 
             }
             else
             {
-                Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Background = Brushes.DarkGray; // changes the current position
+                SetGameImage(Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x], "Items", "Basics", "Unselected");
+
                 inventory_on_slot = inventoryMovementClass.slot_pressed;
             }
         }
@@ -208,7 +209,7 @@ namespace Koncoročný_projekt__RPG_game
                     inventoryMovementClass.Q_Pressed();
                     if (inventory_on_slot)
                     {
-                        Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Content = ""; // changes the current position's text to nothing
+                        SetGameImage(Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x], "Items", "faf", "None"); 
                         Inventory_Code[inventoryMovementClass.chosed_y].names[inventoryMovementClass.chosed_x] = "";
                     }
                     break;
@@ -218,7 +219,7 @@ namespace Koncoročný_projekt__RPG_game
                     inventoryMovementClass.E_Pressed(content);
                     if (inventory_on_slot)
                     {
-                        Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Content = "";
+                        SetGameImage(Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x], "Items", "faf", "AGuy");
                         Inventory_Code[inventoryMovementClass.chosed_y].names[inventoryMovementClass.chosed_x] = "";
                     }
                     break;
@@ -259,6 +260,7 @@ namespace Koncoročný_projekt__RPG_game
         {
             Map[0][playerMovement.LastPlayerY].blocks[playerMovement.LastPlayerX].Background = Brushes.DarkGray; // changes the last position
             Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Background = Brushes.Red; // changes the current position
+            
         }
         private void ChangingInventoryPosition(string key)
         {
@@ -317,7 +319,8 @@ namespace Koncoročný_projekt__RPG_game
             }
 
 
-            Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x].Content = itemNAME; // changes the current position's text to the item
+           
+            SetGameImage(Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x], "Items", "faf", "AGuy");
             Inventory_Code[inventoryMovementClass.ender_y].names[inventoryMovementClass.ender_x] = itemNAME;
 
             if (sucess == "hole")
@@ -451,5 +454,21 @@ namespace Koncoročný_projekt__RPG_game
             current_enemies[0].stuff[0].atkLabel.Content = "10";
             current_enemies[0].stuff[0].defLabel.Content = "5";
         }
+
+
+        public void SetGameImage(Image targetControl, string folder, string insiderFolder, string fileName)
+        {
+            try
+            {
+                string path = $"pack://application:,,,/Images/{folder}/{insiderFolder}/{fileName}.png";
+                targetControl.Source = new BitmapImage(new Uri(path));
+            }
+            catch (Exception ex)
+            {
+                // Helpful if you forget to set an image to "Resource"
+                System.Diagnostics.Debug.WriteLine($"Failed to load: {fileName}. Error: {ex.Message}");
+            }
+        }
     }
-}
+    }
+

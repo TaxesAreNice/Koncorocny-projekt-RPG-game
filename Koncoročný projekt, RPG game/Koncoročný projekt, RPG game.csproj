@@ -9,4 +9,16 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\AGuy.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Characters\Player\AGuy.png" />
+    <Resource Include="Images\Items\Basics\Unselected.png" />
+    <Resource Include="Images\Items\Basics\Selected.png" />
+    <Resource Include="Images\Items\faf\None.png" />
+    <Resource Include="Images\Items\faf\AGuy.png" />
+  </ItemGroup>
+
 </Project>
