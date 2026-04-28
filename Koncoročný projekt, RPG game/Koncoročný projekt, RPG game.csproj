@@ -15,10 +15,15 @@
 
   <ItemGroup>
     <Resource Include="Images\Characters\Player\AGuy.png" />
-    <Resource Include="Images\Items\Basics\Unselected.png" />
-    <Resource Include="Images\Items\Basics\Selected.png" />
     <Resource Include="Images\Items\faf\None.png" />
     <Resource Include="Images\Items\faf\AGuy.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Images\Walls\Left_walls\" />
+    <Folder Include="Images\Walls\Bottom_walls\" />
+    <Folder Include="Images\Walls\Right_walls\" />
+    <Folder Include="Images\Walls\Upper_walls\" />
   </ItemGroup>
 
 </Project>

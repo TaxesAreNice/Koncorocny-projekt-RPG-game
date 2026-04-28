@@ -275,7 +275,10 @@ namespace Koncoročný_projekt__RPG_game
         {
             Map[0][playerMovement.LastPlayerY].blocks[playerMovement.LastPlayerX].Background = Brushes.DarkGray; // changes the last position
             Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Background = Brushes.Red; // changes the current position
+            SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Middle, "Characters", "Player", "AGuy");
             
+
+
         }
         private void ChangingInventoryPosition(string key)
         {
