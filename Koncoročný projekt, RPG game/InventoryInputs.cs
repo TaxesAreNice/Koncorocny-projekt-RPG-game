@@ -42,32 +42,28 @@ namespace Koncoročný_projekt__RPG_game
         public int tester_i = 0;
         public string tester = "";
 
+        public InventoryInputs()
+        {
+            // Pre-fill the 7x5 grid with empty strings
+            for (int y = 0; y < 7; y++)
+            {
+                inventory.Add(new List<string>());
+                for (int x = 0; x < 5; x++)
+                {
+                    inventory[y].Add("");
+                }
+            }
+        }
         public void Q_Pressed() // removes items
         {
-            try
-            {
-                if (inventory[chosed_y][chosed_x] == "") { return; }
-                inventory_holes.Add((chosed_x, chosed_y));
-            }
-            catch { }
-            //if (inventory[chosed_y][chosed_x] == "") { return; }
-
+         
 
 
         }
         public void E_Pressed(string name) // uses items
         {
-            string success = "";
-            success = checkingItemType(name);
+            checkingItemType(name);
 
-            try
-            {
-                if (inventory[chosed_y][chosed_x] == "") { return; }
-                inventory_holes.Add((chosed_x, chosed_y));
-            }
-            catch { }
-
-            
 
         }
 
@@ -113,94 +109,88 @@ namespace Koncoročný_projekt__RPG_game
         }
         public string CheckingForYs(string item_name)
         {
-            bool success = false;
-            success = CheckingForHoles();
-
-
-            if (success)
+            // 1. Check for holes first
+            if (CheckingForHoles())
             {
                 inventory[ender_y][ender_x] = item_name;
                 return "hole";
             }
-            else if (ender_x == 0 && ender_y == 0 && first_ender)
+
+            // 2. Standard placement: 
+            // We do NOT increment ender_x here anymore. 
+            // We increment it AFTER the UI has placed the item.
+            if (ender_y >= 7) return "inventory_full";
+
+            inventory[ender_y][ender_x] = item_name;
+            return "normal";
+        }
+
+        // Add this new helper to move the pointer forward ONLY when we are NOT filling a hole
+        public void MovePointerForward()
+        {
+            ender_x++;
+            if (ender_x > 4)
             {
-                first_ender = false;
-                inventory.Add(new List<string>());
-                inventory[ender_y].Add(item_name);
-                return "first_item";
-            }
-            else if (ender_y == 6 && ender_x == 4)
-            {
-                return "inventory_full";
-            }
-            else if (ender_x == 4)
-            {
-                inventory.Add(new List<string>());
-                inventory[ender_y].Add(item_name);
                 ender_x = 0;
-                ender_y += 1;
-                return "next_y";
-            }
-            else
-            {
-                inventory[ender_y].Add(item_name);
-                ender_x++;
-                return "normal";
+                ender_y++;
             }
         }
         private bool CheckingForHoles()
         {
-
-            bool success = false;
-
-            int H_x = 0;
-            int H_y = 0;
-
-            int L_x = 0;
-            int L_y = 0;
-
-            int indexHighest = 0;
-            int indexLowest = 0;
-
             if (inventory_holes.Count > 0)
             {
-                var highest = inventory_holes.MaxBy(p => (p.y, p.x)); //toto je od AI
-                var lowest = inventory_holes.MinBy(p => (p.y, p.x)); //toto je od AI
+                // Get the earliest hole
+                var lowest = inventory_holes.MinBy(p => (p.y, p.x));
 
-                indexLowest = inventory_holes.IndexOf(lowest); //toto je od AI
-                H_x = highest.x;
-                H_y = highest.y;
-
-                L_x = lowest.x;
-                L_y = lowest.y;
-
-                if (ender_y == H_y && ender_x == H_x)
+                // ONLY fill the hole if it is actually behind the current "ender" position
+                // This prevents the "jumping" bug at the end of the list
+                if (lowest.y < ender_y || (lowest.y == ender_y && lowest.x < ender_x))
                 {
                     backup_ender_x = ender_x;
                     backup_ender_y = ender_y;
 
-                    ender_x = L_x;
-                    ender_y = L_y;
+                    ender_x = lowest.x;
+                    ender_y = lowest.y;
 
-                    inventory_holes.RemoveAt(indexLowest);
-
-                    success = true;
+                    inventory_holes.Remove(lowest);
+                    return true;
                 }
-                else if (ender_y > H_y || (ender_y == H_y && ender_x > H_x))
+                else
                 {
-
-                    backup_ender_x = ender_x;
-                    backup_ender_y = ender_y;
-
-                    ender_x = L_x;
-                    ender_y = L_y;
-
-                    inventory_holes.RemoveAt(indexLowest);
-
-                    success = true;
+                    // If the "hole" is actually at or past the ender, it's not a hole anymore
+                    inventory_holes.Remove(lowest);
                 }
             }
-            return success;
+            return false;
+        }
+        public void ClearSlot(int x, int y)
+        {
+            inventory[y][x] = "";
+
+            // Convert coordinates to a single number to check if it's the last item
+            int deletedIdx = (y * 5) + x;
+            int enderIdx = (ender_y * 5) + ender_x;
+
+            // If we deleted the item right behind the 'next' pointer
+            if (deletedIdx == enderIdx - 1)
+            {
+                ender_x--;
+                if (ender_x < 0)
+                {
+                    if (ender_y > 0) { ender_y--; ender_x = 4; }
+                    else { ender_x = 0; }
+                }
+                // Clean up any hole that might have been registered at this spot
+                inventory_holes.RemoveAll(h => h.x == ender_x && h.y == ender_y);
+            }
+            else
+            {
+                // It's a middle item, add it to holes
+                if (!inventory_holes.Any(h => h.x == x && h.y == y))
+                {
+                    inventory_holes.Add((x, y));
+                }
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Koncoročný_projekt__RPG_game.UI_Generations
 {
@@ -21,6 +22,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         {
             Height = 100;
             Width = 100;
+            Background = Brushes.DarkGray;
             Margin = new Thickness(box_position, 5, 5, 5);
             Name = "_" + xX.ToString() + "_" + y.ToString();
             HorizontalAlignment = HorizontalAlignment.Left;

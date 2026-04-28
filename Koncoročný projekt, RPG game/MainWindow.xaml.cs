@@ -92,14 +92,14 @@ namespace Koncoročný_projekt__RPG_game
             if (inventory_on_slot)
             {
 
-                SetGameImage(Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x], "Items", "Basics", "Unselected");
-                SetGameImage(Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x], "Items", "Basics", "Selected");
+                Inventory_Code[inventoryMovementClass.backup_chosed_y].slots[inventoryMovementClass.backup_chosed_x].Background = Brushes.DarkGray; // changes the last position
+                Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Background = Brushes.Gray;
                 inventoryMovementClass.PressedTick();
 
             }
             else
             {
-                SetGameImage(Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x], "Items", "Basics", "Unselected");
+                Inventory_Code[inventoryMovementClass.backup_chosed_y].slots[inventoryMovementClass.backup_chosed_x].Background = Brushes.DarkGray;
 
                 inventory_on_slot = inventoryMovementClass.slot_pressed;
             }
@@ -200,29 +200,44 @@ namespace Koncoročný_projekt__RPG_game
 
         private void InventoryMovement(bool success, string key, KeyEventArgs e)
         {
+            // We only care about E and Q if a slot is actually selected
+            int x = inventoryMovementClass.chosed_x;
+            int y = inventoryMovementClass.chosed_y;
 
             switch (e.Key)
             {
-                case Key.Q:
-                    MessageBox.Show("test");
-
-                    inventoryMovementClass.Q_Pressed();
+                case Key.E: // Uses items
                     if (inventory_on_slot)
                     {
-                        SetGameImage(Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x], "Items", "faf", "None"); 
-                        Inventory_Code[inventoryMovementClass.chosed_y].names[inventoryMovementClass.chosed_x] = "";
+                        string contentE = Inventory_Code[y].names[x];
+
+                        // 1. Logic: Check if it's a potion/weapon etc.
+                        inventoryMovementClass.E_Pressed(contentE);
+
+                        // 2. Visual: Clear the image
+                        Inventory_Code[y].slots[x].image.Source = null;
+                        Inventory_Code[y].names[x] = "";
+
+                        // 3. Logic: Mark as a "Hole" so it can be filled later
+                        inventoryMovementClass.ClearSlot(x, y);
                     }
                     break;
-                case Key.E:
-                    string content = Inventory_Code[inventoryMovementClass.chosed_y].names[inventoryMovementClass.chosed_x];
 
-                    inventoryMovementClass.E_Pressed(content);
+                case Key.Q: // Removes items
                     if (inventory_on_slot)
                     {
-                        SetGameImage(Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x], "Items", "faf", "AGuy");
-                        Inventory_Code[inventoryMovementClass.chosed_y].names[inventoryMovementClass.chosed_x] = "";
+                        // 1. Logic: Register that Q was pressed
+                        inventoryMovementClass.Q_Pressed();
+
+                        // 2. Visual: Clear the image
+                        Inventory_Code[y].slots[x].image.Source = null;
+                        Inventory_Code[y].names[x] = "";
+
+                        // 3. Logic: Mark as a "Hole"
+                        inventoryMovementClass.ClearSlot(x, y);
                     }
                     break;
+
                 case Key.Escape:
                     Inventory_Open();
                     break;
@@ -309,23 +324,34 @@ namespace Koncoročný_projekt__RPG_game
 
         private void Add_Item_To_Inventory()
         {
-            string sucess = inventoryMovementClass.CheckingForYs(itemNAME);
+            // 1. Logic sets ender_x/y to the correct spot (either a hole or the next empty slot)
+            string success = inventoryMovementClass.CheckingForYs(itemNAME);
 
-
-            if (sucess == "inventory_full")
+            if (success == "inventory_full")
             {
-                MessageBox.Show("Inventory is full!");
+                MessageBox.Show("Your inventory is full! You can't add more items.");
                 return;
             }
+            
 
+            // 2. Get the current target coordinates
+            int tx = inventoryMovementClass.ender_x;
+            int ty = inventoryMovementClass.ender_y;
 
-           
-            SetGameImage(Inventory_Code[inventoryMovementClass.ender_y].slots[inventoryMovementClass.ender_x], "Items", "faf", "AGuy");
-            Inventory_Code[inventoryMovementClass.ender_y].names[inventoryMovementClass.ender_x] = itemNAME;
+            // 3. Draw the item
+            SetGameImage(Inventory_Code[ty].slots[tx].image, "Items", "faf", "AGuy");
+            Inventory_Code[ty].names[tx] = itemNAME;
 
-            if (sucess == "hole")
+            // 4. Handle the pointers
+            if (success == "hole")
             {
+                // Put the pointer back to the "real" end of the inventory
                 inventoryMovementClass.FixingHolesXandYs();
+            }
+            else
+            {
+                // ONLY move the pointer forward if we didn't just fill a hole
+                inventoryMovementClass.MovePointerForward();
             }
         }
 

@@ -8,7 +8,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
     internal class Inventory_Slots : Grid
     {
         private int box_position = 5;
-        public List<Image> slots = new List<Image>(); //here too
+        public List<InventorySlots_Image> slots = new List<InventorySlots_Image>(); //here too
         public List<string> names = new List<string>();
 
         private InventoryInputs inventoryMovementClass;
@@ -28,14 +28,8 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             {
                 int xX = i;
 
-                var tempSlot = new Image() // change to grid, please
-                {
-                    Height = 100,
-                    Width = 100,
-                    Margin = new Thickness(box_position, 5, 5, 5),
-                    Name = "_" + xX.ToString() + "_" + y.ToString(),
-                    HorizontalAlignment = HorizontalAlignment.Left
-                };
+                InventorySlots_Image tempSlot = new InventorySlots_Image(box_position, xX, y); // change to grid, please
+              
 
                 tempSlot.MouseDown += (s, e) =>
                 {
