@@ -498,6 +498,20 @@ namespace Koncoročný_projekt__RPG_game
                 System.Diagnostics.Debug.WriteLine($"Failed to load: {fileName}. Error: {ex.Message}");
             }
         }
+
+        private void StudioAct_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Started) { return; }
+            if (Studio.Visibility == Visibility.Visible)
+            {
+                Studio.Visibility = Visibility.Hidden;
+                return;
+            }
+            else
+            {
+                Studio.Visibility = Visibility.Visible;
+            }
+        }
     }
     }
 
