@@ -223,40 +223,33 @@ namespace Koncoročný_projekt__RPG_game
 
         private void InventoryMovement(bool success, string key, KeyEventArgs e)
         {
-            // We only care about E and Q if a slot is actually selected
             int x = inventoryMovementClass.chosed_x;
             int y = inventoryMovementClass.chosed_y;
 
             switch (e.Key)
             {
-                case Key.E: // Uses items
+                case Key.E:
                     if (inventory_on_slot)
                     {
                         string contentE = Inventory_Code[y].names[x];
 
-                        // 1. Logic: Check if it's a potion/weapon etc.
                         inventoryMovementClass.E_Pressed(contentE);
 
-                        // 2. Visual: Clear the image
                         Inventory_Code[y].slots[x].image.Source = null;
                         Inventory_Code[y].names[x] = "";
 
-                        // 3. Logic: Mark as a "Hole" so it can be filled later
                         inventoryMovementClass.ClearSlot(x, y);
                     }
                     break;
 
-                case Key.Q: // Removes items
+                case Key.Q: 
                     if (inventory_on_slot)
                     {
-                        // 1. Logic: Register that Q was pressed
                         inventoryMovementClass.Q_Pressed();
 
-                        // 2. Visual: Clear the image
                         Inventory_Code[y].slots[x].image.Source = null;
                         Inventory_Code[y].names[x] = "";
 
-                        // 3. Logic: Mark as a "Hole"
                         inventoryMovementClass.ClearSlot(x, y);
                     }
                     break;
@@ -267,80 +260,35 @@ namespace Koncoročný_projekt__RPG_game
             }
         }
 
-        private void MapMovement(string key, KeyEventArgs e)
+        private void MapMovement(string key, KeyEventArgs e) // made by Mahutik, tho changed by ai.. tho more like just the idea by me at this point
         {
             int px = playerMovement.PlayerX;
             int py = playerMovement.PlayerY;
-            MapEdge edge = GetCurrentEdge(px, py);
 
-            MapBlocks_Insides currentBlock = Map[0][py].blocks[px];
-            MapBlocks_Insides neighborBlock = null;
+            MapBlocks_Insides current = Map[0][py].blocks[px];
+            MapBlocks_Insides neighbor = null;
 
-            // 1. Find the neighbor safely
+            // Identify the neighbor block before moving
             switch (e.Key)
             {
-                case Key.W:
-                    if (py > 0) neighborBlock = Map[0][py - 1].blocks[px];
-                    break;
-                case Key.S:
-                    if (py < playerMovement.MAX_y) neighborBlock = Map[0][py + 1].blocks[px];
-                    break;
-                case Key.A:
-                    if (px > 0) neighborBlock = Map[0][py].blocks[px - 1];
-                    break;
-                case Key.D:
-                    if (px < playerMovement.MAX_x) neighborBlock = Map[0][py].blocks[px + 1];
-                    break;
-                case Key.Escape:
-                    Inventory_Open();
-                    return;
+                case Key.W: if (py > 0) neighbor = Map[0][py - 1].blocks[px]; break;
+                case Key.S: if (py < playerMovement.MAX_y) neighbor = Map[0][py + 1].blocks[px]; break;
+                case Key.A: if (px > 0) neighbor = Map[0][py].blocks[px - 1]; break;
+                case Key.D: if (px < playerMovement.MAX_x) neighbor = Map[0][py].blocks[px + 1]; break;
+                case Key.Escape: Inventory_Open(); return;
             }
 
-            // 2. Run the check
-            bool success = playerMovement.CheckingForWalls(key, currentBlock, neighborBlock);
-
-            if (success)
+            if (playerMovement.CheckingForWalls(key, current, neighbor))
             {
                 ChangingPlayerPosition(key);
             }
         }
 
-        private MapEdge GetCurrentEdge(int x, int y)
-        {
-            bool left = (x <= 0);
-            bool right = (x >= playerMovement.MAX_x);
-            bool top = (y <= 0);
-            bool bottom = (y >= playerMovement.MAX_y);
-
-            if (top && left) return MapEdge.TopLeft;
-            if (top && right) return MapEdge.TopRight;
-            if (bottom && left) return MapEdge.BottomLeft;
-            if (bottom && right) return MapEdge.BottomRight;
-            if (top) return MapEdge.Top;
-            if (bottom) return MapEdge.Bottom;
-            if (left) return MapEdge.Left;
-            if (right) return MapEdge.Right;
-            return MapEdge.None;
-        }
-
         private void ChangingPlayerPosition(string key)
         {
-            // Map[0][playerMovement.LastPlayerY].blocks[playerMovement.LastPlayerX].Background = Brushes.DarkGray; // changes the last position
-            //Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Background = Brushes.Red; // changes the current position
-            // SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Middle, "Characters", "Player", "AGuy");
-
             Player_ima.Margin = new Thickness(playerMovement.Player_Pixel_X, playerMovement.Player_Pixel_Y, 0, 0);
-            // This changes the actual map data
-
-
-            // Then update your UI label
-            //CurrentBlockType.Content = $"Current block: {Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type}";
         }
-        private void ChangingInventoryPosition(string key)
-        {
-            //    Inventory_Code[inventoryMovementClass.LastInventoryY].slots[inventoryMovementClass.LastInventoryX].Background = Brushes.DarkGray; // changes the last position
-            //   Inventory_Code[inventoryMovementClass.InventoryY].slots[inventoryMovementClass.InventoryX].Background = Brushes.Gray; // changes the current position
-        }
+    
         private void Inventory_Open()
         {
             if (!Started) { return; }
