@@ -7,34 +7,13 @@ using System.Threading.Tasks;
 
 namespace Koncoročný_projekt__RPG_game
 {
-    internal class ItemTypes
+    public class ItemTypes
     {
-        private List<string> items = new List<string>()
+        public enum ItemType
         {
-        "Phoenix Feather",
-        "BloodThorn Sword",
-        "Breaker Ring",
-        "Knight Helmet",
-        "Knight Chestplate",
-        "Knight Leggins",
-        "Knight Boots",
-        "Knight Sword",
-        "Mythical Meal",
-        "Health Potion",
-        "Big Health Potion",
-        "2x Damage Potion",
-        "Mana Potion",
-        "Big Mana Potion",
-        "Fire Scroll",
-        "Cursed Scroll",
-        "Lightning Scroll",
-        "Healing Scroll",
-        "Barrier Scroll",
-        "Revive Scroll",
-        "Dragon Helmet",
-        "Dragon Chestplate",
-        "Dragon Leggins",
-        "Dragon Boots",
-        };
+            FightOnly,
+            Wearable,
+            Support,
+        }
     }
 }

@@ -29,13 +29,14 @@ namespace Koncoročný_projekt__RPG_game
             "Dragon Chestplate",
             "Dragon Leggins",
             "Dragon Boots",
+            "Fire Breath Orb",
         };
         List<string> Scrolls = new List<string>
         {
             "Fire scroll",
             "Lightning scroll",
             "Healing scroll",
-            "Barrier scroll",
+            "Shield scroll",
             "Revive scroll"
 
         };
@@ -50,7 +51,7 @@ namespace Koncoročný_projekt__RPG_game
             "Cursed Scroll",
             "Lightning Scroll",
             "Healing Scroll",
-            "Barrier Scroll",
+            "Shield Scroll",
             "Revive Scroll",
         };
 
