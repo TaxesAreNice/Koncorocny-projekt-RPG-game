@@ -24,8 +24,7 @@ namespace Koncoročný_projekt__RPG_game
             PlayerTurn,
             EnemyTurn,
             WonFight,
-            Win,
-            Lose
+            StartFight,
         }
 
         public TurnState State { get; private set; }
@@ -75,8 +74,6 @@ namespace Koncoročný_projekt__RPG_game
             player.CalculateDamage(monster);
             player.DoDamage(monster);
         }
-
-        
 
         public bool enemyDead()
         {

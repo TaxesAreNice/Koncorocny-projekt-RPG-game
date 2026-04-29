@@ -40,8 +40,7 @@ namespace Koncoročný_projekt__RPG_game
         PlayerMovementClass playerMovement = new PlayerMovementClass();
         InventoryInputs inventoryMovementClass = new InventoryInputs();
         Fighting fighting = new Fighting();
-
-
+        
         public MainWindow()
         {
             InitializeComponent();
