@@ -42,7 +42,7 @@ namespace Koncoročný_projekt__RPG_game
         public void MageSpecials()
         {
             Random random = new Random();
-            int roll = random.Next(0, 4);
+            int roll = random.Next(0, 5);
             if (roll == 0)
             {
                 monster.MonsterDamage += 10; //fire scroll
@@ -59,6 +59,12 @@ namespace Koncoročný_projekt__RPG_game
             {
                 monster.MonsterDefense += 15; //shield scroll
             }
+            if (roll == 4)
+            {
+                monster.MonsterHP = 0; //revive scroll
+            }
+             monster.CalculateDamage(player);
+             monster.DoDamage(player);
         }
         public void PlayerSpecials()
         {

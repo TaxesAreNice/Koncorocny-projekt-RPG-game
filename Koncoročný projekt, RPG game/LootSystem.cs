@@ -29,6 +29,7 @@ namespace Koncoročný_projekt__RPG_game
             "Dragon Chestplate",
             "Dragon Leggins",
             "Dragon Boots",
+            "Fire Breath Orb",
         };
         List<string> Scrolls = new List<string>
         {
