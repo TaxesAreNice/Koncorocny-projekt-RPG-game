@@ -9,4 +9,42 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Images\Walls\**" />
+    <EmbeddedResource Remove="Images\Walls\**" />
+    <None Remove="Images\Walls\**" />
+    <Page Remove="Images\Walls\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Images\AGuy.png" />
+    <None Remove="Images\Blocks\Buttom_Walls\gray_tops.png" />
+    <None Remove="Images\Blocks\Buttom_Walls\red_tops.png" />
+    <None Remove="Images\Blocks\Flores\gray_block.png" />
+    <None Remove="Images\Blocks\Flores\red_block.png" />
+    <None Remove="Images\Blocks\Left_Walls\gray_sides.png" />
+    <None Remove="Images\Blocks\Left_Walls\red_sides.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Blocks\Buttom_Walls\gray_tops.png" />
+    <Resource Include="Images\Blocks\Buttom_Walls\red_tops.png" />
+    <Resource Include="Images\Blocks\Flores\gray_block.png" />
+    <Resource Include="Images\Blocks\Flores\red_block.png" />
+    <Resource Include="Images\Blocks\Left_Walls\gray_sides.png" />
+    <Resource Include="Images\Blocks\Left_Walls\red_sides.png" />
+    <Resource Include="Images\Blocks\Right_Walls\gray_sides.png" />
+    <Resource Include="Images\Blocks\Right_Walls\red_sides.png" />
+    <Resource Include="Images\Blocks\Top_Walls\gray_tops.png" />
+    <Resource Include="Images\Blocks\Top_Walls\red_tops.png" />
+    <Resource Include="Images\Characters\Player\AGuy.png" />
+    <Resource Include="Images\Items\faf\None.png" />
+    <Resource Include="Images\Items\faf\AGuy.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Images\Blocks\Items\" />
+    <Folder Include="Images\Blocks\NPCs\" />
+  </ItemGroup>
+
 </Project>

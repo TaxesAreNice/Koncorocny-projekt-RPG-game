@@ -42,6 +42,29 @@
         </Grid>
         <Button x:Name="StartFight_but" Content="Fight" HorizontalAlignment="Left" Margin="1342,94,0,0" VerticalAlignment="Top" Height="79" Width="89" Click="StartFight_but_Click" FontSize="20"/>
         <TextBox x:Name="Enemy_Num" HorizontalAlignment="Left" Margin="1342,178,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="144" Height="59" TextChanged="Enemy_Num_TextChanged"/>
+        <Button x:Name="StudioAct" Content="Button" HorizontalAlignment="Left" Margin="1183,648,0,0" VerticalAlignment="Top" Height="46" Width="72" Click="StudioAct_Click"/>
+        <Grid x:Name="Studio" Margin="1292,0,0,0" Background="#FF7D7D7D" Visibility="Visible">
+            <Label x:Name="CurrentBlockType" Content="Current block:" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Background="#FFB2B2B2" Height="48" Width="172" FontSize="18"/>
+
+            <Grid x:Name="Buttons_Grid_Studio" Margin="0,69,0,381" Background="#FF615F5F" Visibility="Visible">
+                <Button x:Name="Left_Walls_Studio" Content="Left Walls" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Height="52" Width="80" FontSize="18" Click="Left_Walls_Studio_Click_1"/>
+                <Button x:Name="Right_Walls_Studio" Content="Right Walls" HorizontalAlignment="Left" Margin="85,11,0,0" VerticalAlignment="Top" Height="52" Width="97" FontSize="15" Click="Right_Walls_Studio_Click"/>
+                <Button x:Name="Top_Walls_Studio" Content="Top Walls" HorizontalAlignment="Left" Margin="0,67,0,0" VerticalAlignment="Top" Height="52" Width="80" FontSize="18" Click="Top_Walls_Studio_Click"/>
+                <Button x:Name="Buttom_Walls_Studio" Content="Buttom Walls" HorizontalAlignment="Left" Margin="85,68,0,0" VerticalAlignment="Top" Height="52" Width="97" FontSize="15" Click="Buttom_Walls_Studio_Click"/>
+                <Button x:Name="Flores_Studio" Content="Floors" HorizontalAlignment="Left" Margin="0,125,0,0" VerticalAlignment="Top" Height="52" Width="80" FontSize="18" Click="Flores_Studio_Click"/>
+                <Button x:Name="Items_Studio" Content="Items" HorizontalAlignment="Left" Margin="85,125,0,0" VerticalAlignment="Top" Height="52" Width="97" FontSize="18" Click="Items_Studio_Click"/>
+                <Button x:Name="NPCs_Studio" Content="NPCs" HorizontalAlignment="Left" Margin="0,182,0,0" VerticalAlignment="Top" Height="45" Width="80" FontSize="18" Click="NPCs_Studio_Click"/>
+            </Grid>
+            <Grid>
+                <Button x:Name="Back_Studio" Content="Back" HorizontalAlignment="Left" Margin="131,663,0,0" VerticalAlignment="Top" Height="36" Width="54" FontSize="20" Click="Back_Studio_Click" Visibility="Hidden"/>
+                <Label x:Name="Current_State_Studio" Content="Current State: Menu" HorizontalAlignment="Center" Margin="0,594,0,0" VerticalAlignment="Top" Height="40" Width="188" Background="#FFB7B4B4" FontSize="18"/>
+                <Button x:Name="Slot_1_Studio" Content="" HorizontalAlignment="Left" Margin="10,354,0,0" VerticalAlignment="Top" Height="62" Width="77" Click="Slot_1_Studio_Click"/>
+                <Button x:Name="Slot_2_Studio" Content="" HorizontalAlignment="Left" Margin="109,354,0,0" VerticalAlignment="Top" Height="62" Width="76" Click="Slot_2_Studio_Click"/>
+                <Button x:Name="Slot_3_Studio" Content="" HorizontalAlignment="Left" Margin="10,421,0,0" VerticalAlignment="Top" Height="62" Width="77" Click="Slot_3_Studio_Click"/>
+                <Button x:Name="Slot_4_Studio" Content="" HorizontalAlignment="Left" Margin="120,421,0,0" VerticalAlignment="Top" Height="62" Width="76" Click="Slot_4_Studio_Click"/>
+            </Grid>
+
+        </Grid>
 
     </Grid>
 </Window>
