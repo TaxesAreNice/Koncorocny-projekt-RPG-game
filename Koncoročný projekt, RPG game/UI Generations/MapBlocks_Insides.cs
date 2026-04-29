@@ -12,12 +12,57 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
     internal class MapBlocks_Insides : Grid
     {
 
-      
-
-       public Image Middle = new Image()
+      public enum BlockType
         {
-            Height = 60,
-            Width = 60,
+            Empty,
+            Item,
+            Items,
+            Enemy
+        }
+        public enum LeftWallType
+        {
+            None,
+            Wall,
+            Door
+        }
+        public enum RightWallType
+        {
+            None,
+            Wall,
+            Door
+        }
+        public enum UpperWallType
+        {
+            None,
+            Wall,
+            Door
+        }
+        public enum DownerWallType
+        {
+            None,
+            Wall,
+            Door
+        }
+
+        public string current_Left_Wall_Texture = "";
+        public string current_Right_Wall_Texture = "";
+        public string current_Upper_Wall_Texture = "";
+        public string current_Downer_Wall_Texture = "";
+        public string current_Flore_Texture = "";
+        public string current_item_Texture = "";
+        public string current_Enemy_Texture = "";
+
+        public BlockType block_type = BlockType.Empty;
+        public LeftWallType left_wall = LeftWallType.None;
+        public RightWallType right_wall = RightWallType.None;
+        public UpperWallType upper_wall = UpperWallType.None;
+        public DownerWallType downer_wall = DownerWallType.None;
+
+
+        public Image Flore = new Image()
+        {
+            Height = 100,
+            Width = 100,
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center
         };
@@ -58,7 +103,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             Children.Add(Right_wall);
             Children.Add(Upper_wall);
             Children.Add(Downer_wall);
-            Children.Add(Middle);
+            Children.Add(Flore);
         }
     }
 }

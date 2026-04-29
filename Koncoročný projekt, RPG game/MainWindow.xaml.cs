@@ -11,6 +11,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Koncoročný_projekt__RPG_game.UI_Generations;
+using static Koncoročný_projekt__RPG_game.UI_Generations.MapBlocks_Insides;
 
 namespace Koncoročný_projekt__RPG_game
 {
@@ -40,7 +41,14 @@ namespace Koncoročný_projekt__RPG_game
         PlayerMovementClass playerMovement = new PlayerMovementClass();
         InventoryInputs inventoryMovementClass = new InventoryInputs();
         Fighting fighting = new Fighting();
-
+        private enum MapEdge
+        {
+            None,
+            Top,
+            Bottom,
+            Left,
+            Right
+        }
 
         public MainWindow()
         {
@@ -51,6 +59,10 @@ namespace Koncoročný_projekt__RPG_game
             inventory_q_click_checker.Interval = TimeSpan.FromMilliseconds(20);
             inventory_q_click_checker.Tick += Inventory_Q_Click_Checker_Tick;
 
+            Studio_Buttons.Add(Slot_1_Studio);
+            Studio_Buttons.Add(Slot_2_Studio);
+            Studio_Buttons.Add(Slot_3_Studio);
+            Studio_Buttons.Add(Slot_4_Studio);
         }
 
         private void Inventory_Q_Click_Checker_Tick(object? sender, EventArgs e)
@@ -113,7 +125,11 @@ namespace Koncoročný_projekt__RPG_game
             GeneretingInventory();
 
 
+
         }
+
+
+
         private void GeneretingMap()
         {
             List<Map_Block> row = [];
@@ -244,25 +260,62 @@ namespace Koncoročný_projekt__RPG_game
             }
         }
 
+        private bool GetCurrentEdge(int x, int y)
+        {
+            // Check X (Width is 12, so max index is 11)
+            if (x <= 0) return true;
+            if (x >= playerMovement.MAX_x) return true;
+
+            // Check Y (Height is 6, so max index is 5)
+            if (y <= 0) return true;
+            if (y >= playerMovement.MAX_y) return true;
+            return false;
+        }
         private void MapMovement(bool success, string key, KeyEventArgs e)
         {
-            switch (e.Key)
+            bool mappEddgee = GetCurrentEdge(playerMovement.PlayerX, playerMovement.PlayerY);
+
+            if (mappEddgee)
             {
-                case Key.W:
-                    success = playerMovement.CheckingForWalls(key);
-                    break;
-                case Key.A:
-                    success = playerMovement.CheckingForWalls(key);
-                    break;
-                case Key.S:
-                    success = playerMovement.CheckingForWalls(key);
-                    break;
-                case Key.D:
-                    success = playerMovement.CheckingForWalls(key);
-                    break;
-                case Key.Escape:
-                    Inventory_Open();
-                    break;
+                switch (e.Key)
+                {
+                    case Key.W:
+                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], mappEddgee);
+                        break;
+                    case Key.A:
+                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], mappEddgee);
+                        break;
+                    case Key.S:
+                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], mappEddgee);
+                        break;
+                    case Key.D:
+                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], mappEddgee);
+                        break;
+                    case Key.Escape:
+                        Inventory_Open();
+                        break;
+                }
+            }
+            else
+            {
+                switch (e.Key)
+                {
+                    case Key.W:
+                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY - 1].blocks[playerMovement.PlayerX], mappEddgee);
+                        break;
+                    case Key.A:
+                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX - 1], mappEddgee);
+                        break;
+                    case Key.S:
+                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY + 1].blocks[playerMovement.PlayerX], mappEddgee);
+                        break;
+                    case Key.D:
+                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX + 1], mappEddgee);
+                        break;
+                    case Key.Escape:
+                        Inventory_Open();
+                        break;
+                }
             }
 
             if (success)
@@ -275,10 +328,14 @@ namespace Koncoročný_projekt__RPG_game
         {
             Map[0][playerMovement.LastPlayerY].blocks[playerMovement.LastPlayerX].Background = Brushes.DarkGray; // changes the last position
             Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Background = Brushes.Red; // changes the current position
-            SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Middle, "Characters", "Player", "AGuy");
-            
+           // SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Middle, "Characters", "Player", "AGuy");
 
 
+            // This changes the actual map data
+
+
+            // Then update your UI label
+            CurrentBlockType.Content = $"Current block: {Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type}";
         }
         private void ChangingInventoryPosition(string key)
         {
@@ -335,7 +392,7 @@ namespace Koncoročný_projekt__RPG_game
                 MessageBox.Show("Your inventory is full! You can't add more items.");
                 return;
             }
-            
+
 
             // 2. Get the current target coordinates
             int tx = inventoryMovementClass.ender_x;
@@ -412,7 +469,7 @@ namespace Koncoročný_projekt__RPG_game
                         }
                         else
                         {
-                            space_off_x =- 200;
+                            space_off_x = -200;
                         }
                         Spawing_enemy(name, space_off_x, space_off_y);
                     }
@@ -468,9 +525,9 @@ namespace Koncoročný_projekt__RPG_game
         }
         private void Spawing_enemy(string name, int space_off_x, int space_off_y)
         {
-                Fighting_EnemySpawner fighting_EnemySpawner = new Fighting_EnemySpawner();
-                fighting_EnemySpawner.Margin = new Thickness(space_off_x, space_off_y, 0, 0);
-                Enemy_Grid.Children.Add(fighting_EnemySpawner);
+            Fighting_EnemySpawner fighting_EnemySpawner = new Fighting_EnemySpawner();
+            fighting_EnemySpawner.Margin = new Thickness(space_off_x, space_off_y, 0, 0);
+            Enemy_Grid.Children.Add(fighting_EnemySpawner);
 
             current_enemies.Add(fighting_EnemySpawner);
         }
@@ -501,7 +558,7 @@ namespace Koncoročný_projekt__RPG_game
 
         private void StudioAct_Click(object sender, RoutedEventArgs e)
         {
-            if (!Started) { return; }
+            if (!Started) { Studio.Visibility = Visibility.Hidden; return; }
             if (Studio.Visibility == Visibility.Visible)
             {
                 Studio.Visibility = Visibility.Hidden;
@@ -510,8 +567,172 @@ namespace Koncoročný_projekt__RPG_game
             else
             {
                 Studio.Visibility = Visibility.Visible;
+
             }
         }
+
+        private enum StudioState
+        {
+            Left_Walls,
+            Right_Walls,
+            Top_Walls,
+            Buttom_Walls,
+            Flores,
+            Items,
+            NPCs,
+            Menu
+
+        }
+
+        private List<List<string>> Studio_Names = new List<List<string>>
+        {
+            {new List<string> { "gray", "red", "none", "none" }  },
+            {new List<string> { "gray", "red", "none", "none" }  },
+            {new List<string> { "gray", "red", "none", "none" }  },
+            {new List<string> { "gray", "red", "none", "none" }  },
+            {new List<string> { "gray", "red", "none", "none" }  },
+            {new List<string> { "Krankenwagen", "bloxy cola", "none", "none" }  },
+            {new List<string> { "Gerry", "Fafafela", "fa_ulty", "none" }  },
+        };
+
+        private List<Button> Studio_Buttons = new List<Button>();
+        private StudioState currentStudioState = StudioState.Menu;
+        private void Left_Walls_Studio_Click(object sender, RoutedEventArgs e)
+        {
+            int i = 0;
+            currentStudioState = StudioState.Left_Walls; faf(i);
+        }
+
+        private void Left_Walls_Studio_Click_1(object sender, RoutedEventArgs e)
+        {
+            int i = 0;
+            currentStudioState = StudioState.Left_Walls; faf(i);
+        }
+
+        private void Right_Walls_Studio_Click(object sender, RoutedEventArgs e)
+        {
+            int i = 1;
+            currentStudioState = StudioState.Right_Walls; faf(i);
+        }
+
+        private void Top_Walls_Studio_Click(object sender, RoutedEventArgs e)
+        {
+            int i = 2;
+            currentStudioState = StudioState.Top_Walls; faf(i);
+        }
+
+        private void Buttom_Walls_Studio_Click(object sender, RoutedEventArgs e)
+        {
+            int i = 3;
+            currentStudioState = StudioState.Buttom_Walls; faf(i);
+        }
+
+        private void Flores_Studio_Click(object sender, RoutedEventArgs e)
+        {
+            int i = 4;
+            currentStudioState = StudioState.Flores; faf(i);
+        }
+
+        private void Items_Studio_Click(object sender, RoutedEventArgs e)
+        {
+            int i = 5;
+            currentStudioState = StudioState.Items; faf(i);
+        }
+
+        private void NPCs_Studio_Click(object sender, RoutedEventArgs e)
+        {
+            int i = 6;
+            currentStudioState = StudioState.NPCs;
+            faf(i);
+        }
+        private void faf(int i)
+        {
+            Back_Studio.Visibility = Visibility.Visible;
+            Buttons_Grid_Studio.Visibility = Visibility.Hidden;
+            Current_State_Studio.Content = $"Current State: {currentStudioState.ToString()}";
+
+            foreach (Button button in Studio_Buttons)
+            {
+                button.Content = Studio_Names[i][Studio_Buttons.IndexOf(button)];
+            }
+
+
+        }
+
+        private void Back_Studio_Click(object sender, RoutedEventArgs e)
+        {
+            currentStudioState = StudioState.Menu;
+            Back_Studio.Visibility = Visibility.Hidden;
+            Buttons_Grid_Studio.Visibility = Visibility.Visible;
+            Current_State_Studio.Content = $"Current State: {currentStudioState.ToString()}";
+            foreach (Button button in Studio_Buttons)
+            {
+                button.Content = "";
+            }
+        }
+
+        void faff(int i)
+        {
+            string taxes = Studio_Buttons[i].Content.ToString();
+
+            
+
+            if (currentStudioState == StudioState.Left_Walls )
+            {
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Left_wall, "Blocks", currentStudioState.ToString(), taxes + "_sides");
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].left_wall = LeftWallType.Wall;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Left_Wall_Texture = taxes;
+            }
+            else if (currentStudioState == StudioState.Right_Walls)
+            {
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Right_wall, "Blocks", currentStudioState.ToString(), taxes + "_sides");
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].right_wall = RightWallType.Wall;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Right_Wall_Texture = taxes;
+            }
+            else if (currentStudioState == StudioState.Top_Walls )
+            {
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Upper_wall, "Blocks", currentStudioState.ToString(), taxes + "_tops");
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].upper_wall = UpperWallType.Wall;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Upper_Wall_Texture = taxes;
+            }
+            else if (currentStudioState == StudioState.Buttom_Walls )
+            {
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Downer_wall, "Blocks", currentStudioState.ToString(), taxes + "_tops");
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].downer_wall = DownerWallType.Wall;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Downer_Wall_Texture = taxes;
+                
+            }
+            else if (currentStudioState == StudioState.Flores )
+            {
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Flore, "Blocks", currentStudioState.ToString(), taxes + "_block");
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Flore_Texture = taxes;
+            }
+
+
+        }
+        private void Slot_1_Studio_Click(object sender, RoutedEventArgs e)
+        {
+            faff(0);
+        }
+
+        private void Slot_2_Studio_Click(object sender, RoutedEventArgs e)
+        {
+            faff(1);
+        }
+
+        private void Slot_3_Studio_Click(object sender, RoutedEventArgs e)
+        {
+                        faff(2);    
+        }
+
+        private void Slot_4_Studio_Click(object sender, RoutedEventArgs e)
+        {
+                        faff(3);    
+        }
+
+
+
+        
     }
-    }
+}
 
