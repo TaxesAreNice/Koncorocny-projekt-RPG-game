@@ -25,6 +25,8 @@ namespace Koncoročný_projekt__RPG_game
         private List<Inventory_Buttons> Inventory_butons = [];
         private List<Fighting_EnemySpawner> current_enemies = [];
 
+        private Image Player_ima = new Image();
+
         private bool Started = false;
         private bool inventory_on_slot = false;
         private bool inventory_on_slot_q = false;
@@ -41,14 +43,7 @@ namespace Koncoročný_projekt__RPG_game
         PlayerMovementClass playerMovement = new PlayerMovementClass();
         InventoryInputs inventoryMovementClass = new InventoryInputs();
         Fighting fighting = new Fighting();
-        private enum MapEdge
-        {
-            None,
-            Top,
-            Bottom,
-            Left,
-            Right
-        }
+        public enum MapEdge { None, Top, Bottom, Left, Right, TopLeft, TopRight, BottomLeft, BottomRight }
 
         public MainWindow()
         {
@@ -147,9 +142,21 @@ namespace Koncoročný_projekt__RPG_game
                 Map.Add(row);
 
                 rowY += 100;
+
             }
             //row[0].blocks[0].Background = Brushes.Red;
+            // DON'T put "Image" in front of it here, just use the class variable
+            Player_ima = new Image()
+            {
+                Height = 50,
+                Width = 50,
+                HorizontalAlignment = HorizontalAlignment.Left, // Important for Margin movement
+                VerticalAlignment = VerticalAlignment.Top,      // Important for Margin movement
+                Margin = new Thickness(playerMovement.Player_Pixel_X, playerMovement.Player_Pixel_Y, 0, 0)
+            };
 
+            SetGameImage(Player_ima, "Characters", "Player", "AGuy");
+            Map_UI.Children.Add(Player_ima);
         }
         private void GeneretingInventory()
         {
@@ -196,7 +203,7 @@ namespace Koncoročný_projekt__RPG_game
 
             if (CurrentState == "Main" && CurrentMain == "Map")
             {
-                MapMovement(success, key, e);
+                MapMovement(key, e);
             }
             else if (CurrentState == "Inventory")
             {
@@ -260,63 +267,37 @@ namespace Koncoročný_projekt__RPG_game
             }
         }
 
-        private bool GetCurrentEdge(int x, int y)
+        private void MapMovement(string key, KeyEventArgs e)
         {
-            // Check X (Width is 12, so max index is 11)
-            if (x <= 0) return true;
-            if (x >= playerMovement.MAX_x) return true;
+            int px = playerMovement.PlayerX;
+            int py = playerMovement.PlayerY;
+            MapEdge edge = GetCurrentEdge(px, py);
 
-            // Check Y (Height is 6, so max index is 5)
-            if (y <= 0) return true;
-            if (y >= playerMovement.MAX_y) return true;
-            return false;
-        }
-        private void MapMovement(bool success, string key, KeyEventArgs e)
-        {
-            bool mappEddgee = GetCurrentEdge(playerMovement.PlayerX, playerMovement.PlayerY);
+            MapBlocks_Insides currentBlock = Map[0][py].blocks[px];
+            MapBlocks_Insides neighborBlock = null;
 
-            if (mappEddgee)
+            // 1. Find the neighbor safely
+            switch (e.Key)
             {
-                switch (e.Key)
-                {
-                    case Key.W:
-                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], mappEddgee);
-                        break;
-                    case Key.A:
-                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], mappEddgee);
-                        break;
-                    case Key.S:
-                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], mappEddgee);
-                        break;
-                    case Key.D:
-                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], mappEddgee);
-                        break;
-                    case Key.Escape:
-                        Inventory_Open();
-                        break;
-                }
+                case Key.W:
+                    if (py > 0) neighborBlock = Map[0][py - 1].blocks[px];
+                    break;
+                case Key.S:
+                    if (py < playerMovement.MAX_y) neighborBlock = Map[0][py + 1].blocks[px];
+                    break;
+                case Key.A:
+                    if (px > 0) neighborBlock = Map[0][py].blocks[px - 1];
+                    break;
+                case Key.D:
+                    if (px < playerMovement.MAX_x) neighborBlock = Map[0][py].blocks[px + 1];
+                    break;
+                case Key.Escape:
+                    Inventory_Open();
+                    return;
             }
-            else
-            {
-                switch (e.Key)
-                {
-                    case Key.W:
-                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY - 1].blocks[playerMovement.PlayerX], mappEddgee);
-                        break;
-                    case Key.A:
-                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX - 1], mappEddgee);
-                        break;
-                    case Key.S:
-                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY + 1].blocks[playerMovement.PlayerX], mappEddgee);
-                        break;
-                    case Key.D:
-                        success = playerMovement.CheckingForWalls(key, Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX], Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX + 1], mappEddgee);
-                        break;
-                    case Key.Escape:
-                        Inventory_Open();
-                        break;
-                }
-            }
+
+            // 2. Run the check
+            bool success = playerMovement.CheckingForWalls(key, currentBlock, neighborBlock);
 
             if (success)
             {
@@ -324,18 +305,36 @@ namespace Koncoročný_projekt__RPG_game
             }
         }
 
+        private MapEdge GetCurrentEdge(int x, int y)
+        {
+            bool left = (x <= 0);
+            bool right = (x >= playerMovement.MAX_x);
+            bool top = (y <= 0);
+            bool bottom = (y >= playerMovement.MAX_y);
+
+            if (top && left) return MapEdge.TopLeft;
+            if (top && right) return MapEdge.TopRight;
+            if (bottom && left) return MapEdge.BottomLeft;
+            if (bottom && right) return MapEdge.BottomRight;
+            if (top) return MapEdge.Top;
+            if (bottom) return MapEdge.Bottom;
+            if (left) return MapEdge.Left;
+            if (right) return MapEdge.Right;
+            return MapEdge.None;
+        }
+
         private void ChangingPlayerPosition(string key)
         {
-            Map[0][playerMovement.LastPlayerY].blocks[playerMovement.LastPlayerX].Background = Brushes.DarkGray; // changes the last position
-            Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Background = Brushes.Red; // changes the current position
-           // SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Middle, "Characters", "Player", "AGuy");
+            // Map[0][playerMovement.LastPlayerY].blocks[playerMovement.LastPlayerX].Background = Brushes.DarkGray; // changes the last position
+            //Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Background = Brushes.Red; // changes the current position
+            // SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Middle, "Characters", "Player", "AGuy");
 
-
+            Player_ima.Margin = new Thickness(playerMovement.Player_Pixel_X, playerMovement.Player_Pixel_Y, 0, 0);
             // This changes the actual map data
 
 
             // Then update your UI label
-            CurrentBlockType.Content = $"Current block: {Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type}";
+            //CurrentBlockType.Content = $"Current block: {Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type}";
         }
         private void ChangingInventoryPosition(string key)
         {

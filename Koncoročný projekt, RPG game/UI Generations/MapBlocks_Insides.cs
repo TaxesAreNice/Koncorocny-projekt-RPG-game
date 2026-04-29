@@ -59,13 +59,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         public DownerWallType downer_wall = DownerWallType.None;
 
 
-        public Image Flore = new Image()
-        {
-            Height = 100,
-            Width = 100,
-            HorizontalAlignment = HorizontalAlignment.Center,
-            VerticalAlignment = VerticalAlignment.Center
-        };
+        
         public Image Left_wall = new Image()
         {
             Height = 100,
@@ -90,7 +84,13 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             Width = 100,
             VerticalAlignment = VerticalAlignment.Bottom,
         };
-
+        public Image Flore = new Image()
+        {
+            Height = 100,
+            Width = 100,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center
+        };
 
         public MapBlocks_Insides(int box_position)
             {
@@ -99,11 +99,12 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             Margin = new Thickness(box_position, 5, 5, 5); /// change somethin' here
             Background = Brushes.DarkGray;
 
+            Children.Add(Flore);
             Children.Add(Left_wall);
             Children.Add(Right_wall);
             Children.Add(Upper_wall);
             Children.Add(Downer_wall);
-            Children.Add(Flore);
+          
         }
     }
 }
