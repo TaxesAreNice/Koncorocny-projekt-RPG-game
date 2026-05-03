@@ -280,8 +280,45 @@ namespace Koncoročný_projekt__RPG_game
 
             if (playerMovement.CheckingForWalls(key, current, neighbor))
             {
-                ChangingPlayerPosition(key);
+               ChangingPlayerPosition(key);
+                playerMovement.CheckingForEPrompts(CheckingForEPrompts());
             }
+        }
+
+        private List<MapBlocks_Insides> CheckingForEPrompts()
+        {
+            int px = playerMovement.PlayerX;
+            int py = playerMovement.PlayerY;
+
+            var positions = new List<(int x, int y)>();
+            List<MapBlocks_Insides> FinishedPositions = new List<MapBlocks_Insides>();
+
+            for (int dx = -1; dx <= 1; dx++)
+            {
+                for (int dy = -1; dy <= 1; dy++)
+                {
+                    if (dx == 0 && dy == 0) continue;
+                    positions.Add((px + dx, py + dy));
+                }
+            }
+
+            foreach (var pos in positions)
+            {
+                try
+                {
+                    var targetBlock = Map[0][pos.y].blocks[pos.x];
+
+                    targetBlock.OutofArrayChecker();
+
+                    FinishedPositions.Add(targetBlock);
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+            }
+
+            return FinishedPositions;
         }
 
         private void ChangingPlayerPosition(string key)
@@ -538,7 +575,7 @@ namespace Koncoročný_projekt__RPG_game
             {new List<string> { "gray", "red", "none", "none" }  },
             {new List<string> { "gray", "red", "none", "none" }  },
             {new List<string> { "gray", "red", "none", "none" }  },
-            {new List<string> { "Krankenwagen", "bloxy cola", "none", "none" }  },
+            {new List<string> { "Krankenwagen", "Bloxy_Cola", "none", "none" }  },
             {new List<string> { "Gerry", "Fafafela", "fa_ulty", "none" }  },
         };
 
@@ -653,6 +690,11 @@ namespace Koncoročný_projekt__RPG_game
             {
                 SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Flore, "Blocks", currentStudioState.ToString(), taxes + "_block");
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Flore_Texture = taxes;
+            }
+            else if (currentStudioState == StudioState.Items)
+            {
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Item, "Blocks", currentStudioState.ToString(), taxes + "_item");
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Item_Texture = taxes;
             }
 
 

@@ -29,7 +29,7 @@ namespace Koncoročný_projekt__RPG_game
             {
                 case "W":
                     PlayerY -= 1;
-                    Player_Pixel_Y -= 105; 
+                    Player_Pixel_Y -= 100; 
                     break;
                 case "A":
                     PlayerX -= 1;
@@ -37,7 +37,7 @@ namespace Koncoročný_projekt__RPG_game
                     break;
                 case "S":
                     PlayerY += 1;
-                    Player_Pixel_Y += 105;
+                    Player_Pixel_Y += 100;
                     break;
                 case "D":
                     PlayerX += 1;
@@ -77,6 +77,12 @@ namespace Koncoročný_projekt__RPG_game
 
             PlayerMovement(key);
             return true;
+        }
+        public void CheckingForEPrompts(List<MapBlocks_Insides> the_area)
+        {
+            //check if in any pos of this there is a prompt, if yes, put it in a list... 
+            //then if theres more, just put some extra inputs on the prompts.. 
+            // then have this methode return the list of extra inputs.. or just one and the positions of the prompts..
         }
     }
 }

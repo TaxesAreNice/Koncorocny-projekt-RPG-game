@@ -10,9 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Images\Blocks\NPCs\**" />
     <Compile Remove="Images\Walls\**" />
+    <EmbeddedResource Remove="Images\Blocks\NPCs\**" />
     <EmbeddedResource Remove="Images\Walls\**" />
+    <None Remove="Images\Blocks\NPCs\**" />
     <None Remove="Images\Walls\**" />
+    <Page Remove="Images\Blocks\NPCs\**" />
     <Page Remove="Images\Walls\**" />
   </ItemGroup>
 
@@ -22,6 +26,8 @@
     <None Remove="Images\Blocks\Buttom_Walls\red_tops.png" />
     <None Remove="Images\Blocks\Flores\gray_block.png" />
     <None Remove="Images\Blocks\Flores\red_block.png" />
+    <None Remove="Images\Blocks\Items\Bloxy_Cola_item.png" />
+    <None Remove="Images\Blocks\Items\Krankenwagen_item.png" />
     <None Remove="Images\Blocks\Left_Walls\gray_sides.png" />
     <None Remove="Images\Blocks\Left_Walls\red_sides.png" />
   </ItemGroup>
@@ -31,6 +37,8 @@
     <Resource Include="Images\Blocks\Buttom_Walls\red_tops.png" />
     <Resource Include="Images\Blocks\Flores\gray_block.png" />
     <Resource Include="Images\Blocks\Flores\red_block.png" />
+    <Resource Include="Images\Blocks\Items\Bloxy_Cola_item.png" />
+    <Resource Include="Images\Blocks\Items\Krankenwagen_item.png" />
     <Resource Include="Images\Blocks\Left_Walls\gray_sides.png" />
     <Resource Include="Images\Blocks\Left_Walls\red_sides.png" />
     <Resource Include="Images\Blocks\Right_Walls\gray_sides.png" />
@@ -40,11 +48,6 @@
     <Resource Include="Images\Characters\Player\AGuy.png" />
     <Resource Include="Images\Items\faf\None.png" />
     <Resource Include="Images\Items\faf\AGuy.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Images\Blocks\Items\" />
-    <Folder Include="Images\Blocks\NPCs\" />
   </ItemGroup>
 
 </Project>
