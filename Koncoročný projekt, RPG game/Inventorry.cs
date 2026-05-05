@@ -27,13 +27,15 @@ namespace Koncoročný_projekt__RPG_game
             {
                 Name = "Phoenix Feather",
                 Type = ItemType.Support,
-                Description = ""
+                Description = "Automatically revives user upon dying",
+                Revive = true,
             };
             var BloodthornSword = new Item
             {
                 Name = "BloodThorn Sword",
                 Type = ItemType.Wearable,
-                Description = ""
+                Description = "Every attack will give user a 30% of users damage",
+                LifeLeech = 30,
             };
             var BreakerRing = new Item
             {
@@ -67,15 +69,15 @@ namespace Koncoročný_projekt__RPG_game
             {
                 Name = "Knight Boots",
                 Type = ItemType.Wearable,
-                Description = "+3 defense",
-                Defense = 3,
+                Description = "+4 defense",
+                Defense = 4,
             };
             var KnightSword = new Item
             {
                 Name = "Knight Sword",
                 Type = ItemType.Wearable,
                 Description = "+15 attack",
-                Attack = 15,
+                Attack = 13,
             };
             var MythicalMeal = new Item
             {
@@ -89,14 +91,14 @@ namespace Koncoročný_projekt__RPG_game
             {
                 Name = "Health Potion",
                 Type = ItemType.Support,
-                Description = "heals 25HP",
+                Description = "Heals 25HP",
                 Heal = 25,
             };
             var BigHealthPotion = new Item
             {
                 Name = "Big Health Potion",
                 Type = ItemType.Support,
-                Description = "heals 50HP",
+                Description = "Heals 50HP",
                 Heal = 50,
             };
             var ManaPotion = new Item
@@ -124,14 +126,14 @@ namespace Koncoročný_projekt__RPG_game
             {
                 Name = "Fireball Scroll",
                 Type = ItemType.FightOnly,
-                Description = "",
+                Description = "Deals 25 damage to a single enemy",
                 Attack = 25,
             };
             var CursedScroll = new Item
             {
                 Name = "Cursed Scroll",
                 Type = ItemType.FightOnly,
-                Description = "If used on opponent causes confused effect and opponent will have 100% chance to miss next attack",
+                Description = "Used on opponent causes him to lose 50% of his attack",                  //DOROBIT
             };
             var LightningScroll = new Item
             {
@@ -144,133 +146,182 @@ namespace Koncoročný_projekt__RPG_game
             {
                 Name = "Healing Scroll",
                 Type = ItemType.FightOnly,
-                Description = "",
+                Description = "Heals 50HP",
+                Heal = 50,
             };
             var ShieldScroll = new Item
             {
                 Name = "Shield Scroll",
                 Type = ItemType.FightOnly,
-                Description = ""
+                Description = "Gives user 20 defense",
+                Defense = 20,
             };
             var ReviveScroll = new Item
             {
                 Name = "Revive Scroll",
                 Type = ItemType.FightOnly,
-                Description = ""
+                Description = "Automatically revives user upon dying",
+                Revive = true,
             };
             var DragonHelmet = new Item
             {
                 Name = "Dragon Helmet",
                 Type = ItemType.Wearable,
-                Description = "Defense += idk"
+                Description = "+10 defense",
+                Defense = 10,
             };
             var DragonChestplate = new Item
             {
                 Name = "Dragon Chestplate",
                 Type = ItemType.Wearable,
-                Description = "Defense += idk"
+                Description = "+10 defense",
+                Defense = 10,
             };
             var DragonLeggins = new Item
             {
-                Name = "Dragon Legplates",
+                Name = "Dragon Leggins",
                 Type = ItemType.Wearable,
-                Description = "Defense += idk"
+                Description = "+10 defense",
+                Defense = 10,
             };
             var DragonBoots = new Item
             {
                 Name = "Dragon Boots",
                 Type = ItemType.Wearable,
-                Description = "Defense += idk"
+                Description = "+10 defense",
+                Defense = 10,
             };
             var FireBreathOrb = new Item
             {
                 Name = "Fire Breath Orb",
                 Type = ItemType.FightOnly,
-                Description = "Does 25 AoE damage"
+                Description = "Does 25 AoE damage",              // DOROBIT
             };
             var GuardianAmulet = new Item
             {
                 Name = "Guardian Amulet",
                 Type = ItemType.Wearable,
-                Description = "Defense += idk"
+                Description = "+30 defense",
+                Defense = 30,
             };
             var RustyHelmet = new Item
             {
                 Name = "Rusty Helmet",
                 Type = ItemType.Wearable,
-                Description = "Defense += idk"
+                Description = " +1 defense",
+                Defense = 1,
             };
-            var RustyRustyChestplate = new Item
+            var RustyChestplate = new Item
             {
                 Name = "Rusty Chestplate",
                 Type = ItemType.Wearable,
-                Description = "Defense += idk"
+                Description = " +2 defense",
+                Defense = 2,
             };
             var RustyLeggins = new Item
             {
                 Name = "Rusty Legplates",
                 Type = ItemType.Wearable,
-                Description = "Defense += idk"
+                Description = " +2 defense",
+                Defense = 2,
             };
             var RustyBoots = new Item
             {
                 Name = "Rusty Boots",
                 Type = ItemType.Wearable,
-                Description = "Defense += idk"
+                Description = " +1 defense",
+                Defense = 1,
             };
             var DullBlade = new Item
             {
                 Name = "Dull Blade",
                 Type = ItemType.Wearable,
-                Description = ""
+                Description = "Just some dull blade",
+                Attack = 5,
             };
             var IronSword = new Item
             {
                 Name = "Iron Sword",
                 Type = ItemType.Wearable,
-                Description = "",
+                Description = "A sturdy iron sword",
+                Attack = 10,
             };
             var SteelSword = new Item
             {
                 Name = "Steel Sword",
                 Type = ItemType.Wearable,
-                Description = "",
+                Description = "A sharp steel sword",
+                Attack = 15,
             };
             var DiamondSword = new Item
             {
                 Name = "Diamond Sword",
                 Type = ItemType.Wearable,
-                Description = "",
+                Description = "A powerful diamond sword",
+                Attack = 20,
             };
             var Excalibur = new Item
             {
                 Name = "Excalibur",
                 Type = ItemType.Wearable,
-                Description = "",
+                Description = "The legendary sword of King Arthur",
+                Attack = 50,
             };
             var SteelHelmet = new Item
             {
                 Name = "Steel Helmet",
                 Type = ItemType.Wearable,
-                Description = "Defense += idk",
+                Description = " +5 defense",
+                Defense = 5,
             };
             var SteelChestplate = new Item
             {
                 Name = "Steel Chestplate",
                 Type = ItemType.Wearable,
-                Description = "Defense += idk",
+                Description = " +8 defense",
+                Defense = 8,
             };
             var SteelLeggins = new Item
             {
                 Name = "Steel Legplates",
                 Type = ItemType.Wearable,
-                Description = "Defense += idk",
+                Description = " +7 defense",
+                Defense = 7,
             };
             var SteelBoots = new Item
             {
                 Name = "Steel Boots",
                 Type = ItemType.Wearable,
-                Description = "Defense += idk",
+                Description = " +5 defense",
+                Defense = 5,
+            };
+            var IronHelmet = new Item
+            {
+                Name = "Iron Helmet",
+                Type = ItemType.Wearable,
+                Description = " +3 defense",
+                Defense = 3,
+            };
+            var IronChestplate = new Item
+            {
+                Name = "Iron Chestplate",
+                Type = ItemType.Wearable,
+                Description = " +5 defense",
+                Defense = 5,
+            };
+            var IronLeggins = new Item
+            {
+                Name = "Iron Legplates",
+                Type = ItemType.Wearable,
+                Description = " +4 defense",
+                Defense = 4,
+            };
+            var IronBoots = new Item
+            {
+                Name = "Iron Boots",
+                Type = ItemType.Wearable,
+                Description = " +3 defense",
+                Defense = 3,
             };
         }
     }
