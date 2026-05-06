@@ -5,22 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Koncoročný_projekt__RPG_game.UI_Generations
 {
     internal class Fighting_EnemySpawner : Grid
     {
+        string name;
 
-        public List<(Label progLab, ProgressBar prog, Label atkLabel, Label defLabel)> stuff = new List<(Label progLab, ProgressBar prog, Label atkLabel, Label defLabel)>();
+        public List<(Label progLab, ProgressBar prog, Label atkLabel, Label defLabel, string name)> stuff = new List<(Label progLab, ProgressBar prog, Label atkLabel, Label defLabel, string name)>();
 
-        public Fighting_EnemySpawner()
+        Fighting Fighting;
+        public Fighting_EnemySpawner(Fighting fight, string name)
         {
+            Fighting = fight;
             Height = 200;
             Width = 210;
             Margin = new System.Windows.Thickness(2);
             Background = System.Windows.Media.Brushes.DarkGray;
-
+            this.name = name;
 
 
             ProgressBar progressBar = new ProgressBar()
@@ -116,7 +120,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             Children.Add(progressBar);
             Children.Add(progressLabel);
 
-            stuff.Add((progressLabel, progressBar, AtkNum, DefNum));
+            stuff.Add((progressLabel, progressBar, AtkNum, DefNum,name));
             /*
                 var tempButton = new Label()
                 {
@@ -138,6 +142,25 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
     
 
             */
+            this.AddHandler(MouseLeftButtonDownEvent, new MouseButtonEventHandler(this.OnMouseLeftButtonDown), true);
+
+           
+        }
+        void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            string isSelected = Fighting.EnemySelected(name);
+
+            if (isSelected == "true")
+            {
+                this.Background = System.Windows.Media.Brushes.Black;
+            }
+            else if (isSelected == "unselect")
+            {
+                this.Background = System.Windows.Media.Brushes.DarkGray;
+            }
+        }
+
         }
     }
-}
+
+

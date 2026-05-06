@@ -13,7 +13,9 @@ namespace Koncoročný_projekt__RPG_game
 {
     internal class Fighting
     {
-        public List<Monster> currentEnemies = new List<Monster>();
+        public List<string> currentEnemies = new List<string>();
+        public string selectedEnemy = "";
+        public bool enemySelected = false;
 
         Player player = new Player();
         Monster monster = new Monster();
@@ -83,6 +85,28 @@ namespace Koncoročný_projekt__RPG_game
                 return true;
             }
             return false;
+        }
+
+        public string EnemySelected(string name)
+        {
+            if (!enemySelected) 
+            {
+                selectedEnemy = name;
+                enemySelected = true;
+                return "true";
+            }
+            else if (name == selectedEnemy)
+            {
+                selectedEnemy = "";
+                enemySelected = false;
+                return "unselect";
+            }
+            return "false";
+        }
+
+        public void PlayerAttack()
+        {
+            
         }
     }
 }

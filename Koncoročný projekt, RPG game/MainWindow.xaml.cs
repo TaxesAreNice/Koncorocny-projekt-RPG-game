@@ -280,8 +280,45 @@ namespace Koncoročný_projekt__RPG_game
 
             if (playerMovement.CheckingForWalls(key, current, neighbor))
             {
-                ChangingPlayerPosition(key);
+               ChangingPlayerPosition(key);
+                playerMovement.CheckingForEPrompts(CheckingForEPrompts());
             }
+        }
+
+        private List<MapBlocks_Insides> CheckingForEPrompts()
+        {
+            int px = playerMovement.PlayerX;
+            int py = playerMovement.PlayerY;
+
+            var positions = new List<(int x, int y)>();
+            List<MapBlocks_Insides> FinishedPositions = new List<MapBlocks_Insides>();
+
+            for (int dx = -1; dx <= 1; dx++)
+            {
+                for (int dy = -1; dy <= 1; dy++)
+                {
+                    if (dx == 0 && dy == 0) continue;
+                    positions.Add((px + dx, py + dy));
+                }
+            }
+
+            foreach (var pos in positions)
+            {
+                try
+                {
+                    var targetBlock = Map[0][pos.y].blocks[pos.x];
+
+                    targetBlock.OutofArrayChecker();
+
+                    FinishedPositions.Add(targetBlock);
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+            }
+
+            return FinishedPositions;
         }
 
         private void ChangingPlayerPosition(string key)
@@ -398,6 +435,9 @@ namespace Koncoročný_projekt__RPG_game
             int space_off_x = 0;
             int space_off_y = 0;
             string name = "";
+            List<string> enemy_names = new List<string>();
+
+            name = enemy_name;
 
             switch (enemy_num)
             {
@@ -405,6 +445,7 @@ namespace Koncoročný_projekt__RPG_game
                     MessageBox.Show("You need to add at least 1 enemy!");
                     return;
                 case 1:
+                    name = fighting.currentEnemies[0];
                     Spawing_enemy(name, space_off_x, space_off_y);
                     break;
                 case 2:
@@ -418,6 +459,7 @@ namespace Koncoročný_projekt__RPG_game
                         {
                             space_off_x = -200;
                         }
+                        name = fighting.currentEnemies[i];
                         Spawing_enemy(name, space_off_x, space_off_y);
                     }
                     break;
@@ -438,6 +480,7 @@ namespace Koncoročný_projekt__RPG_game
                             space_off_x += 300;
                             space_off_y = -100;
                         }
+                        name = fighting.currentEnemies[i];
                         Spawing_enemy(name, space_off_x, space_off_y);
                     }
                     break;
@@ -464,7 +507,7 @@ namespace Koncoročný_projekt__RPG_game
                             space_off_x = 220;
                             space_off_y = 220;
                         }
-
+                        name = fighting.currentEnemies[i];
                         Spawing_enemy(name, space_off_x, space_off_y);
                     }
                     break;
@@ -472,22 +515,33 @@ namespace Koncoročný_projekt__RPG_game
         }
         private void Spawing_enemy(string name, int space_off_x, int space_off_y)
         {
-            Fighting_EnemySpawner fighting_EnemySpawner = new Fighting_EnemySpawner();
+            Fighting_EnemySpawner fighting_EnemySpawner = new Fighting_EnemySpawner(fighting, name);
             fighting_EnemySpawner.Margin = new Thickness(space_off_x, space_off_y, 0, 0);
             Enemy_Grid.Children.Add(fighting_EnemySpawner);
 
             current_enemies.Add(fighting_EnemySpawner);
         }
 
-        private void NextTurn_Click(object sender, RoutedEventArgs e)
+        private void Attack_Click(object sender, RoutedEventArgs e)
         {
-            current_enemies[0].stuff[0].prog.Value = 100;
-            current_enemies[0].stuff[0].progLab.Content = "100hp";
+            //current_enemies[0].stuff[0].prog.Value = 100;
+            //current_enemies[0].stuff[0].progLab.Content = "100hp";
 
-            current_enemies[0].stuff[0].atkLabel.Content = "10";
-            current_enemies[0].stuff[0].defLabel.Content = "5";
+            //current_enemies[0].stuff[0].atkLabel.Content = "10";
+            //current_enemies[0].stuff[0].defLabel.Content = "5";
+
+            fighting.PlayerAttack();
         }
-
+        private void Enemy_Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource != sender) { return; }
+            foreach (var enemy in current_enemies)
+            {
+                enemy.Background = Brushes.DarkGray;
+                fighting.selectedEnemy = "";
+                fighting.enemySelected = false;
+            }
+        }
 
         public void SetGameImage(Image targetControl, string folder, string insiderFolder, string fileName)
         {
@@ -538,7 +592,7 @@ namespace Koncoročný_projekt__RPG_game
             {new List<string> { "gray", "red", "none", "none" }  },
             {new List<string> { "gray", "red", "none", "none" }  },
             {new List<string> { "gray", "red", "none", "none" }  },
-            {new List<string> { "Krankenwagen", "bloxy cola", "none", "none" }  },
+            {new List<string> { "Krankenwagen", "Bloxy_Cola", "none", "none" }  },
             {new List<string> { "Gerry", "Fafafela", "fa_ulty", "none" }  },
         };
 
@@ -654,6 +708,11 @@ namespace Koncoročný_projekt__RPG_game
                 SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Flore, "Blocks", currentStudioState.ToString(), taxes + "_block");
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Flore_Texture = taxes;
             }
+            else if (currentStudioState == StudioState.Items)
+            {
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Item, "Blocks", currentStudioState.ToString(), taxes + "_item");
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Item_Texture = taxes;
+            }
 
 
         }
@@ -677,9 +736,7 @@ namespace Koncoročný_projekt__RPG_game
                         faff(3);    
         }
 
-
-
-        
+       
     }
 }
 

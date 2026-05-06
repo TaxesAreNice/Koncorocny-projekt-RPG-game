@@ -51,6 +51,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         public string current_Flore_Texture = "";
         public string current_item_Texture = "";
         public string current_Enemy_Texture = "";
+        public string current_Item_Texture = "";
 
         public BlockType block_type = BlockType.Empty;
         public LeftWallType left_wall = LeftWallType.None;
@@ -58,8 +59,12 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         public UpperWallType upper_wall = UpperWallType.None;
         public DownerWallType downer_wall = DownerWallType.None;
 
+        public bool OutofArrayChecker()
+        {
+            //MessageBox.Show("NOT out of array!"); // inportent piece of tech right here
+            return true;
+        }
 
-        
         public Image Left_wall = new Image()
         {
             Height = 100,
@@ -91,6 +96,13 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center
         };
+        public Image Item = new Image()
+        {
+            Height = 30,
+            Width = 30,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center
+        };
 
         public MapBlocks_Insides(int box_position)
             {
@@ -104,7 +116,8 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             Children.Add(Right_wall);
             Children.Add(Upper_wall);
             Children.Add(Downer_wall);
-          
+            Children.Add(Item);
+
         }
     }
 }
