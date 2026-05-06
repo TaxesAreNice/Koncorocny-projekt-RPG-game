@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml.Linq;
 using Koncoročný_projekt__RPG_game.UI_Generations;
 using static Koncoročný_projekt__RPG_game.UI_Generations.MapBlocks_Insides;
 
@@ -425,19 +426,32 @@ namespace Koncoročný_projekt__RPG_game
 
             if (fighting.currentEnemies.Count < 4)
             {
-                fighting.currentEnemies.Add(enemy_name);
+                fighting.currentEnemies.Add(new Enemy { EnemyName = enemy_name });
             }
         }
 
+        private void EnemyStatAdder(string name)
+        {
+            foreach (var enemy in fighting.enemies)
+            {
+                if (enemy.name == name)
+                { 
+                    fighting.currentEnemies[fighting.currentEnemies.Count - 1].EnemyAttack = enemy.attack;
+                    fighting.currentEnemies[fighting.currentEnemies.Count - 1].EnemyDefense = enemy.defense;
+                    fighting.currentEnemies[fighting.currentEnemies.Count - 1].EnemyHP = enemy.hp;
+                }
+            }
+        }
         private void Spawing_Enemies()
         {
             int enemy_num = fighting.currentEnemies.Count;
+
             int space_off_x = 0;
             int space_off_y = 0;
-            string name = "";
-            List<string> enemy_names = new List<string>();
+            string name = enemy_name;
+           // List<string> enemy_names = new List<string>();
+            //enemy_names.Add(name);
 
-            name = enemy_name;
 
             switch (enemy_num)
             {
@@ -445,8 +459,9 @@ namespace Koncoročný_projekt__RPG_game
                     MessageBox.Show("You need to add at least 1 enemy!");
                     return;
                 case 1:
-                    name = fighting.currentEnemies[0];
-                    Spawing_enemy(name, space_off_x, space_off_y);
+                    name = fighting.currentEnemies[0].EnemyName;
+                    EnemyStatAdder(name);
+                    Spawing_enemy(name, space_off_x, space_off_y, 0);
                     break;
                 case 2:
                     for (int i = 0; i < enemy_num; i++)
@@ -459,8 +474,9 @@ namespace Koncoročný_projekt__RPG_game
                         {
                             space_off_x = -200;
                         }
-                        name = fighting.currentEnemies[i];
-                        Spawing_enemy(name, space_off_x, space_off_y);
+                        name = fighting.currentEnemies[i].EnemyName;
+                            EnemyStatAdder(name);
+                        Spawing_enemy(name, space_off_x, space_off_y, i);
                     }
                     break;
                 case 3:
@@ -480,8 +496,9 @@ namespace Koncoročný_projekt__RPG_game
                             space_off_x += 300;
                             space_off_y = -100;
                         }
-                        name = fighting.currentEnemies[i];
-                        Spawing_enemy(name, space_off_x, space_off_y);
+                        name = fighting.currentEnemies[i].EnemyName;
+                        EnemyStatAdder(name);
+                        Spawing_enemy(name, space_off_x, space_off_y, i);
                     }
                     break;
                 case 4:
@@ -507,19 +524,21 @@ namespace Koncoročný_projekt__RPG_game
                             space_off_x = 220;
                             space_off_y = 220;
                         }
-                        name = fighting.currentEnemies[i];
-                        Spawing_enemy(name, space_off_x, space_off_y);
+                        name = fighting.currentEnemies[i].EnemyName;
+                        EnemyStatAdder(name);
+                        Spawing_enemy(name, space_off_x, space_off_y, i);
                     }
                     break;
             }
         }
-        private void Spawing_enemy(string name, int space_off_x, int space_off_y)
+        private void Spawing_enemy(string name, int space_off_x, int space_off_y, int enemy_num)
         {
-            Fighting_EnemySpawner fighting_EnemySpawner = new Fighting_EnemySpawner(fighting, name);
+            Fighting_EnemySpawner fighting_EnemySpawner = new Fighting_EnemySpawner(fighting, name, fighting.currentEnemies[enemy_num]);
             fighting_EnemySpawner.Margin = new Thickness(space_off_x, space_off_y, 0, 0);
             Enemy_Grid.Children.Add(fighting_EnemySpawner);
 
             current_enemies.Add(fighting_EnemySpawner);
+
         }
 
         private void Attack_Click(object sender, RoutedEventArgs e)
@@ -530,7 +549,44 @@ namespace Koncoročný_projekt__RPG_game
             //current_enemies[0].stuff[0].atkLabel.Content = "10";
             //current_enemies[0].stuff[0].defLabel.Content = "5";
 
-            fighting.PlayerAttack();
+            string result = fighting.PlayerAttack();
+            int i = 0;
+
+            foreach (var enemy in current_enemies)
+            {
+                
+                int hpMax = 1;
+                foreach (var enemy_case in fighting.enemies)
+                {
+                    if (enemy_case.name == fighting.currentEnemies[i].EnemyName)
+                    {
+                        hpMax = enemy_case.hp;
+                        break;
+                    }
+                }
+
+
+                enemy.stuff[0].prog.Value = (int)((double)fighting.currentEnemies[i].EnemyHP / hpMax * 100);
+                enemy.stuff[0].progLab.Content = $"{fighting.currentEnemies[i].EnemyHP}hp";
+                enemy.Background = Brushes.DarkGray;
+                i++;
+            }
+
+            if ( result == "enemyDead")
+            {
+                //bye bye dude
+                Enemy_Grid.Children.Clear();
+                current_enemies.Clear();
+                Spawing_Enemies();
+            }
+            else if ( result == "ContinueFight")
+            {
+                foreach (var enemy in current_enemies)
+                {
+                    
+                }
+                fighting.EnemyTurn();
+            }
         }
         private void Enemy_Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {

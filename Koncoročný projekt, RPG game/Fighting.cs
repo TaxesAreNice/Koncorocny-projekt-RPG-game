@@ -13,7 +13,9 @@ namespace Koncoročný_projekt__RPG_game
 {
     internal class Fighting
     {
-        public List<string> currentEnemies = new List<string>();
+        //public List<string> currentEnemies = new List<string>();
+        public List<Enemy> currentEnemies = new List<Enemy>();
+
         public string selectedEnemy = "";
         public bool enemySelected = false;
 
@@ -46,7 +48,7 @@ namespace Koncoročný_projekt__RPG_game
             (300, 40, 20, "Dragon"),
             (100, 1, 50, "Mythical Pig")
         };
-        private void EnemyTurn()
+        public void EnemyTurn()
         {
             if (State != TurnState.EnemyTurn)
                 return;
@@ -89,7 +91,7 @@ namespace Koncoročný_projekt__RPG_game
 
         public string EnemySelected(string name)
         {
-            if (!enemySelected) 
+            if (!enemySelected)
             {
                 selectedEnemy = name;
                 enemySelected = true;
@@ -104,9 +106,54 @@ namespace Koncoročný_projekt__RPG_game
             return "false";
         }
 
-        public void PlayerAttack()
+        public string PlayerAttack()
         {
+            if (!enemySelected) { return "nothingSelected"; }
+            enemySelected = false;
             
+            State = TurnState.PlayerTurn;
+            monster.MonsterName = selectedEnemy;
+
+            foreach (var enemy in currentEnemies)
+            {
+                if (enemy.EnemyName == selectedEnemy)
+                {
+                    monster.MonsterHP = enemy.EnemyHP;
+                    monster.MonsterAttack = enemy.EnemyAttack;
+                    monster.MonsterDefense = enemy.EnemyDefense;
+                    monster.MonsterDamage = 0;
+                }
+            }
+
+            PlayerTurn();
+
+            bool isEnemyDead = enemyDead();
+            if (isEnemyDead)
+            {
+                for (int i = currentEnemies.Count - 1; i >= 0; i--)
+                {
+                    if (currentEnemies[i].EnemyName == selectedEnemy)
+                    {
+                        currentEnemies.RemoveAt(i);
+                        selectedEnemy = "";
+                        return "enemyDead";
+                    }
+                }
+            }
+            else
+            { 
+            foreach (var enemy in currentEnemies)
+            {
+                if (enemy.EnemyName == selectedEnemy)
+                {
+                    enemy.EnemyHP = monster.MonsterHP;
+                }
+
+            }
+        }
+            selectedEnemy = "";
+            State = TurnState.EnemyTurn;
+            return "ContinueFight";
         }
     }
 }

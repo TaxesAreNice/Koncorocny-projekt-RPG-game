@@ -17,9 +17,12 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         public List<(Label progLab, ProgressBar prog, Label atkLabel, Label defLabel, string name)> stuff = new List<(Label progLab, ProgressBar prog, Label atkLabel, Label defLabel, string name)>();
 
         Fighting Fighting;
-        public Fighting_EnemySpawner(Fighting fight, string name)
+        Enemy Enemy;
+        public Fighting_EnemySpawner(Fighting fight, string name, Enemy enemy)
         {
-            Fighting = fight;
+            
+            this.Fighting = fight;
+            this.Enemy = enemy;
             Height = 200;
             Width = 210;
             Margin = new System.Windows.Thickness(2);
@@ -34,12 +37,12 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
                 Background = System.Windows.Media.Brushes.Gray,
                 Foreground = System.Windows.Media.Brushes.Red,
                 Margin = new System.Windows.Thickness(5),
-                Value = 50
+                Value = (int)((double)enemy.EnemyHP / enemy.EnemyHP * 100)
             };
 
             Label progressLabel = new Label()
             {
-                Content = "50hp",
+                Content = $"{enemy.EnemyHP}hp",
                 HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
                 VerticalAlignment = System.Windows.VerticalAlignment.Center,
                 FontSize = 20,
@@ -93,7 +96,8 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
                 Margin = new System.Windows.Thickness(5, 5, 5, 5),
                 FontSize = 15,
                 Foreground = System.Windows.Media.Brushes.Black,
-                Content = $"   -"
+               /// Content = $"   -"
+               Content = $"{enemy.EnemyAttack}"
             };
 
             Label DefNum = new Label()
@@ -106,7 +110,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
                 Margin = new System.Windows.Thickness(60, 5, 5, 5),
                 FontSize = 15,
                 Foreground = System.Windows.Media.Brushes.Black,
-                Content = "   -"
+                Content = $"{enemy.EnemyDefense}"
             };
 
             progressBar.VerticalAlignment = System.Windows.VerticalAlignment.Top;
