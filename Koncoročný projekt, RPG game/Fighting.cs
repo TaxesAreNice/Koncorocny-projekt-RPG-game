@@ -13,7 +13,7 @@ namespace Koncoročný_projekt__RPG_game
 {
     internal class Fighting
     {
-        public List<string> currentEnemies = new List<string>();
+        public List<Monster> currentEnemies = new List<Monster>();
 
         Player player = new Player();
         Monster monster = new Monster();

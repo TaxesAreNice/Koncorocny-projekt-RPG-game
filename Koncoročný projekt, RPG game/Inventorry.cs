@@ -133,14 +133,15 @@ namespace Koncoročný_projekt__RPG_game
             {
                 Name = "Cursed Scroll",
                 Type = ItemType.FightOnly,
-                Description = "Used on opponent causes him to lose 50% of his attack",                  //DOROBIT
+                Description = "Used on opponent causes him to lose 50% of his attack",
+                Weaken = true,
             };
             var LightningScroll = new Item
             {
                 Name = "Lightning Scroll",
-                Type = ItemType.FightOnly,
+                Type = ItemType.AoE,
                 Description = "Deals 20 damage to all enemies",
-                Attack = 20,
+                AoEDamage = 20,
             };
             var HealingScroll = new Item
             {
@@ -194,8 +195,9 @@ namespace Koncoročný_projekt__RPG_game
             var FireBreathOrb = new Item
             {
                 Name = "Fire Breath Orb",
-                Type = ItemType.FightOnly,
-                Description = "Does 25 AoE damage",              // DOROBIT
+                Type = ItemType.AoE,
+                Description = "Does 25 AoE damage",
+                AoEDamage = 25,
             };
             var GuardianAmulet = new Item
             {
