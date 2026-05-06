@@ -14,6 +14,7 @@ namespace Koncoročný_projekt__RPG_game
             FightOnly,
             Wearable,
             Support,
+            AoE,
         }
     }
 }
