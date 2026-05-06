@@ -47,24 +47,27 @@ namespace Koncoročný_projekt__RPG_game
             {
                 monster.MonsterDamage += 10; //fire scroll
             }
-            if (roll == 1)
+            else if (roll == 1)
             {
                 monster.MonsterDamage += 20; //lightning scroll
             }
-            if (roll == 2)
+            else if (roll == 2)
             {
                 monster.MonsterHP += 25; //healing scroll
             }
-            if (roll == 3)
+            else if (roll == 3)
             {
-                monster.MonsterDefense += 15; //shield scroll
+                monster.MonsterDefense += 20; //shield scroll
             }
-            if (roll == 4)
+            else if (roll == 4 && monster.MonsterHP <= 0)
             {
-                monster.MonsterHP = 0; //revive scroll
+                monster.MonsterHP = 100; //revive scroll
             }
-             monster.CalculateDamage(player);
-             monster.DoDamage(player);
+            else
+            {
+                monster.CalculateDamage(player);
+                monster.DoDamage(player);
+            }
         }
         public void PlayerSpecials()
         {
