@@ -79,6 +79,10 @@ namespace Koncoročný_projekt__RPG_game
                     }
                     break;
             }
+            if (player.PlayerHP > 100)
+            {
+                player.PlayerHP = 100;
+            }
         }
     }
 }
