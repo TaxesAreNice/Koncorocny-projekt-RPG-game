@@ -60,9 +60,9 @@ namespace Koncoročný_projekt__RPG_game
 
 
         }
-        public void E_Pressed(string name) // uses items
+        public string E_Pressed(string name) // uses items
         {
-            checkingItemType(name);
+            return checkingItemType(name);
 
 
         }

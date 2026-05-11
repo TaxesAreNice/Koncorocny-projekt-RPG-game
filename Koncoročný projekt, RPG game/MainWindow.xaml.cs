@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +13,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using Koncoročný_projekt__RPG_game.UI_Generations;
+using static Koncoročný_projekt__RPG_game.Fighting;
 using static Koncoročný_projekt__RPG_game.UI_Generations.MapBlocks_Insides;
 
 namespace Koncoročný_projekt__RPG_game
@@ -31,6 +33,8 @@ namespace Koncoročný_projekt__RPG_game
         private bool Started = false;
         private bool inventory_on_slot = false;
         private bool inventory_on_slot_q = false;
+
+        private bool inventory_while_Fighting = false;
 
         private string CurrentState = "Main"; //Main
         private string CurrentMain = "Map";
@@ -219,7 +223,12 @@ namespace Koncoročný_projekt__RPG_game
 
         private void FightingMovement(bool success, string key, KeyEventArgs e)
         {
-
+            if (e.Key == Key.Escape)
+            {
+                inventory_while_Fighting = true;
+                Inventory_Open();
+                CurrentState = "Inventory";
+            } 
         }
 
         private void InventoryMovement(bool success, string key, KeyEventArgs e)
@@ -234,12 +243,23 @@ namespace Koncoročný_projekt__RPG_game
                     {
                         string contentE = Inventory_Code[y].names[x];
 
-                        inventoryMovementClass.E_Pressed(contentE);
+                        string itemType = inventoryMovementClass.E_Pressed(contentE);
 
                         Inventory_Code[y].slots[x].image.Source = null;
                         Inventory_Code[y].names[x] = "";
 
                         inventoryMovementClass.ClearSlot(x, y);
+
+                        if (inventory_while_Fighting)
+                        {
+                            if (itemType == "FightOnly")
+                            {
+                                Inventory_Open();
+                                inventory_while_Fighting = false;
+                                CurrentState = "Fight";
+                                UpdatePlayerStats();
+                            }
+                        }
                     }
                     break;
 
@@ -257,6 +277,12 @@ namespace Koncoročný_projekt__RPG_game
 
                 case Key.Escape:
                     Inventory_Open();
+
+                    if (inventory_while_Fighting)
+                    {
+                        inventory_while_Fighting = false;
+                        CurrentState = "Fight";
+                    }
                     break;
             }
         }
@@ -415,7 +441,7 @@ namespace Koncoročný_projekt__RPG_game
             Fighting_UI.Visibility = Visibility.Visible;
             CurrentState = "Fight";
             Spawing_Enemies();
-
+            UpdatePlayerStats();
         }
 
         private void Enemy_Num_TextChanged(object sender, TextChangedEventArgs e)
@@ -558,36 +584,73 @@ namespace Koncoročný_projekt__RPG_game
                 int hpMax = 1;
                 foreach (var enemy_case in fighting.enemies)
                 {
-                    if (enemy_case.name == fighting.currentEnemies[i].EnemyName)
+                    if (i >= fighting.currentEnemies.Count) { break; }
+                    if (enemy_case.name == fighting.currentEnemies[i].EnemyName) // error for killin' an enemy
                     {
                         hpMax = enemy_case.hp;
                         break;
                     }
                 }
 
-
+                if (i >= fighting.currentEnemies.Count) { break; }
                 enemy.stuff[0].prog.Value = (int)((double)fighting.currentEnemies[i].EnemyHP / hpMax * 100);
                 enemy.stuff[0].progLab.Content = $"{fighting.currentEnemies[i].EnemyHP}hp";
                 enemy.Background = Brushes.DarkGray;
                 i++;
             }
 
-            if ( result == "enemyDead")
+            if (result == "enemyDead")
             {
                 //bye bye dude
                 Enemy_Grid.Children.Clear();
                 current_enemies.Clear();
                 Spawing_Enemies();
             }
-            else if ( result == "ContinueFight")
+            else if (result == "ContinueFight")
             {
-                foreach (var enemy in current_enemies)
-                {
-                    
-                }
-                fighting.EnemyTurn();
+                EnemiesAttack();
             }
         }
+        private void EnemiesAttack()
+        {
+            fighting.EnemyAttacks();
+            //fighting.State = TurnState.EnemyTurn;
+            bool playerDead = fighting.playerDead();
+            if (playerDead)
+            {
+                GameOver();
+            }
+            else
+            {
+                UpdatePlayerStats();
+            }
+        }
+        private void GameOver()
+        {
+            MessageBox.Show("You died! Game over.");
+            Fighting_UI.Visibility = Visibility.Hidden;
+            CurrentState = "Main";
+            Enemy_Grid.Children.Clear();
+            current_enemies.Clear();
+        }
+
+        private void UpdatePlayerStats()
+        {
+            List<int> playerStats = fighting.GetPlayerStats();
+
+            if (playerStats.Count != 4) 
+            {
+                MessageBox.Show("Error: Player stats list does not contain the expected number of elements.");
+                return; 
+            } // Just a safety check
+
+            PlayerHp_Label.Content = $"{playerStats[0]}hp";
+            PlayerHp_Bar.Value = (double)playerStats[0] / 100 * 100; // Assuming max HP is 100
+            Player_Mana.Content = $"{playerStats[1]}";
+            Player_Defence.Content = $"{playerStats[2]}";
+            Player_Attack.Content = $"{playerStats[3]}";
+        }
+
         private void Enemy_Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.OriginalSource != sender) { return; }
