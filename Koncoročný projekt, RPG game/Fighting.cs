@@ -84,8 +84,8 @@ namespace Koncoročný_projekt__RPG_game
                 monster.DoDamage(player);
             }
 
-            monster.CalculateDamage(player);
-            monster.DoDamage(player);
+           // monster.CalculateDamage(player);
+       //     monster.DoDamage(player);
         }
 
         private void PlayerTurn()

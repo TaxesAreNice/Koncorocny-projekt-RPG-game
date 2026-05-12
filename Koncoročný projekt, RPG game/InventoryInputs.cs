@@ -62,8 +62,8 @@ namespace Koncoročný_projekt__RPG_game
         }
         public string E_Pressed(string name) // uses items
         {
-            return checkingItemType(name);
-
+           // return checkingItemType(name); this one.. dude. The one under is a tester
+           return "FightOnly";
 
         }
 

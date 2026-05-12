@@ -226,6 +226,7 @@ namespace Koncoročný_projekt__RPG_game
             if (e.Key == Key.Escape)
             {
                 inventory_while_Fighting = true;
+                Fighting_UI.Visibility = Visibility.Hidden;
                 Inventory_Open();
                 CurrentState = "Inventory";
             } 
@@ -255,8 +256,10 @@ namespace Koncoročný_projekt__RPG_game
                             if (itemType == "FightOnly")
                             {
                                 Inventory_Open();
+                                Fighting_UI.Visibility = Visibility.Visible;
                                 inventory_while_Fighting = false;
                                 CurrentState = "Fight";
+                                EnemiesAttack();
                                 UpdatePlayerStats();
                             }
                         }
@@ -282,6 +285,7 @@ namespace Koncoročný_projekt__RPG_game
                     {
                         inventory_while_Fighting = false;
                         CurrentState = "Fight";
+                        Fighting_UI.Visibility = Visibility.Visible;
                     }
                     break;
             }
@@ -390,6 +394,7 @@ namespace Koncoročný_projekt__RPG_game
 
         private void item_name_TextChanged(object sender, TextChangedEventArgs e)
         {
+
             itemNAME = item_name.Text;
         }
 
@@ -448,7 +453,25 @@ namespace Koncoročný_projekt__RPG_game
         {
             if (Enemy_Num.Text is int) { return; }
 
+            string backup = enemy_name;
+            bool isMonster = false;
+
             enemy_name = Enemy_Num.Text;
+
+            foreach (var enemy in fighting.enemies)
+            {
+                if (enemy.name == Enemy_Num.Text)
+                {
+                    isMonster = true;
+                    break;
+                }
+            }
+
+            if (!isMonster)
+            {
+                enemy_name = backup;
+                return;
+            }
 
             if (fighting.currentEnemies.Count < 4)
             {
@@ -646,9 +669,9 @@ namespace Koncoročný_projekt__RPG_game
 
             PlayerHp_Label.Content = $"{playerStats[0]}hp";
             PlayerHp_Bar.Value = (double)playerStats[0] / 100 * 100; // Assuming max HP is 100
-            Player_Mana.Content = $"{playerStats[1]}";
+            Player_Mana.Content = $"{playerStats[3]}";
             Player_Defence.Content = $"{playerStats[2]}";
-            Player_Attack.Content = $"{playerStats[3]}";
+            Player_Attack.Content = $"{playerStats[1]}";
         }
 
         private void Enemy_Grid_MouseDown(object sender, MouseButtonEventArgs e)
