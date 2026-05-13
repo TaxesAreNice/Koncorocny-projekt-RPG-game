@@ -31,8 +31,8 @@ namespace Koncoročný_projekt__RPG_game
         private Image Player_ima = new Image();
 
         private bool Started = false;
-        private bool inventory_on_slot = false;
-        private bool inventory_on_slot_q = false;
+        public bool inventory_on_slot = false;
+        public bool inventory_on_slot_q = false;
 
         private bool inventory_while_Fighting = false;
 
@@ -94,6 +94,7 @@ namespace Koncoročný_projekt__RPG_game
             }
             else
             {
+                if (inventory_on_slot) { return; }
                 Inventory_butons[row].slots[inventoryMovementClass.chosed_But_x - minesar].Background = Brushes.DarkGray; // changes the current position
                 inventory_on_slot_q = inventoryMovementClass.q_pressed;
             }
@@ -114,6 +115,7 @@ namespace Koncoročný_projekt__RPG_game
             }
             else
             {
+                if (inventory_on_slot_q) { return; }
                 Inventory_Code[inventoryMovementClass.backup_chosed_y].slots[inventoryMovementClass.backup_chosed_x].Background = Brushes.DarkGray;
 
                 inventory_on_slot = inventoryMovementClass.slot_pressed;
@@ -239,14 +241,25 @@ namespace Koncoročný_projekt__RPG_game
         {
             int x = inventoryMovementClass.chosed_x;
             int y = inventoryMovementClass.chosed_y;
+            int XX = inventoryMovementClass.chosed_But_x;
 
             switch (e.Key)
             {
                 case Key.E:
+                    string contentE = "";
                     if (inventory_on_slot)
                     {
-                        string contentE = Inventory_Code[y].names[x];
-
+                        if (inventory_on_slot_q)
+                        {
+                            int row = XX % 4;
+                            contentE = Inventory_butons[row].Names[XX * row];
+                        }
+                        else
+                        {
+                            contentE = Inventory_Code[y].names[x];
+                        }
+                         
+                        //Inventory_butons
                         Player player = fighting.RequestPlayer();
                         Monster monster = fighting.RequestMonster();
 

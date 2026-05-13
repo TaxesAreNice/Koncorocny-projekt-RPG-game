@@ -11,8 +11,9 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
     internal class Inventory_Buttons : Grid
     {
         private int box_position = 5;
-        public List<Label> slots = new List<Label>(); //here too
+        public List<mhhhINVButtons_insides> slots = new List<mhhhINVButtons_insides>(); //here too
         private InventoryInputs inventoryMovementClass;
+        public List<string> Names = new List<string>();
         private List<string> names = new List<string>() { "Helmet:", "Chestplate:", "Leggins:", "Boots:", "Sword:", "Ring:", "2nd hand:", "Accessory:" };
 
         public Inventory_Buttons(InventoryInputs inventoryMovementClass, int list_pos)
@@ -42,29 +43,19 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             {
                 int current = list_pos;
 
+                mhhhINVButtons_insides tempButton = new mhhhINVButtons_insides(box_position, list_pos, 110);
+                
                 var tempLabel = new Label()
-                {
-                    Height = 95,
-                    Width = 100,
-                    FontSize = 20,
-                    VerticalAlignment = System.Windows.VerticalAlignment.Top,
-                    Margin = new System.Windows.Thickness(5, box_position, 5, 5),
-                    Background = System.Windows.Media.Brushes.DarkGray,
-                    Content = names[current],
-                    HorizontalAlignment = System.Windows.HorizontalAlignment.Left
-                };
-
-                var tempButton = new Label()
                 {
                     Height = 95,
                     Width = 100,
                     FontSize = 30,
                     VerticalAlignment = System.Windows.VerticalAlignment.Top,
-                    Margin = new System.Windows.Thickness(110, box_position, 5, 5),
+                    Margin = new System.Windows.Thickness(5, box_position, 5, 5),
                     Background = System.Windows.Media.Brushes.DarkGray,
                     HorizontalAlignment = System.Windows.HorizontalAlignment.Left
                 };
-
+                
                 tempButton.MouseDown += (s, e) =>
                 {
                     inventoryMovementClass.Equip_Pressed(names[current], current);
@@ -74,6 +65,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
                 Children.Add(tempLabel);
 
                 slots.Add(tempButton);
+                Names.Add("");
 
                 box_position += 100;
                 list_pos++;

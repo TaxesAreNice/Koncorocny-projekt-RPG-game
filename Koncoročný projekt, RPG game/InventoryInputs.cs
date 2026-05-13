@@ -75,8 +75,19 @@ namespace Koncoročný_projekt__RPG_game
         // Update the signature to accept the live game objects
         public string E_Pressed(string name, Player realPlayer, Monster realMonster, Fighting realFight)
         {
-            return CheckingItemType(name, realPlayer, realMonster, realFight);
+            if (q_pressed)
+            {
+
+
+
+                return "AddItem_" + name;
+            }
+            else
+            {
+                return CheckingItemType(name, realPlayer, realMonster, realFight);
+            }
         }
+            
 
         private string CheckingItemType(string name, Player p, Monster m, Fighting f)
         {
@@ -106,6 +117,10 @@ namespace Koncoročný_projekt__RPG_game
         {
             chosed_But_x = pos;
             q_pressed = true;
+
+            slot_pressed = false;
+            
+            
         }
 
         public void Pressed(int x, int y)
@@ -114,8 +129,7 @@ namespace Koncoročný_projekt__RPG_game
             chosed_y = y;
             slot_pressed = true;
 
-
-
+            q_pressed = false;
         }
 
         public void PressedTick()
