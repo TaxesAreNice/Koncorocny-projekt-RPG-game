@@ -48,6 +48,24 @@ namespace Koncoročný_projekt__RPG_game
             (300, 40, 20, "Dragon"),
             (100, 1, 50, "Mythical Pig")
         };
+
+        public void EnemyAttacks( )
+        {
+            State = TurnState.EnemyTurn;
+
+
+            foreach (var enemy in currentEnemies)
+            {
+                    monster.MonsterHP = enemy.EnemyHP;
+                    monster.MonsterAttack = enemy.EnemyAttack;
+                    monster.MonsterDefense = enemy.EnemyDefense;
+                    monster.MonsterDamage = 0;
+                
+                EnemyTurn();
+            }
+        }
+        
+
         public void EnemyTurn()
         {
             if (State != TurnState.EnemyTurn)
@@ -66,8 +84,8 @@ namespace Koncoročný_projekt__RPG_game
                 monster.DoDamage(player);
             }
 
-            monster.CalculateDamage(player);
-            monster.DoDamage(player);
+           // monster.CalculateDamage(player);
+       //     monster.DoDamage(player);
         }
 
         private void PlayerTurn()
@@ -87,6 +105,21 @@ namespace Koncoročný_projekt__RPG_game
                 return true;
             }
             return false;
+        }
+        
+        public bool playerDead()
+        {
+            if (player.PlayerHP <= 0)
+            {
+                State = TurnState.EnemyTurn;
+                return true;
+            }
+            return false;
+        }
+        
+        public List<int> GetPlayerStats()
+        {
+            return new List<int> { player.PlayerHP, player.PlayerAttack, player.PlayerDefense, player.PlayerMana };
         }
 
         public string EnemySelected(string name)

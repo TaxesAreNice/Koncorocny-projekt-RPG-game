@@ -7,12 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="750" Width="1500" KeyDown="Window_KeyDown">
     <Grid>
+        
+        
+        
         <Button x:Name="start" Content="Load Map" HorizontalAlignment="Left" Margin="1342,257,0,0" VerticalAlignment="Top" Height="150" Width="104" Click="start_Click" FontSize="20"/>
         <Grid x:Name="Map_UI" Margin="0,0,213,98" Background="#FFA7A7A7"/>
         <Button x:Name="Add_Item" Content="Add Item" HorizontalAlignment="Left" Margin="1342,509,0,0" VerticalAlignment="Top" Height="74" Width="144" FontSize="30" Click="Add_Item_Click"/>
         <TextBox x:Name="item_name" HorizontalAlignment="Left" Margin="1332,620,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="158" Height="55" TextChanged="item_name_TextChanged"/>
+
         <Grid x:Name="Inventory" Background="#FF444242" MouseDown="Inventory_MouseDown" Visibility="Collapsed">
             <Grid x:Name="Item_Stuff" Margin="0,502,1030,0" Background="Gray">
+
                 <Label Content="Item Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="0,10,0,0" Width="235" FontSize="30"/>
                 <Label Content="Mana Usage:" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="0,144,0,0" Width="235" FontSize="30"/>
                 <Label Content="Item Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Width="235" FontSize="30" Margin="0,79,0,0"/>
@@ -21,6 +26,7 @@
                 <Label x:Name="Item_Name" Content="           -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="245,10,0,0" Width="200" FontSize="30"/>
             </Grid>
         </Grid>
+
         <Grid x:Name="Fighting_UI" Background="#FF444242" Visibility="Collapsed">
             <Grid x:Name="Player_Grid" Margin="38,123,952,162" Background="DarkGray">
                 <Grid.RowDefinitions>
@@ -33,7 +39,7 @@
                 <Label Content="Mana:" HorizontalAlignment="Left" Margin="10,138,0,0" VerticalAlignment="Top" Background="Gray" Height="47" Width="70" FontSize="15" Grid.Row="1"/>
                 <Label Content="Defence:" HorizontalAlignment="Left" Margin="160,138,0,0" VerticalAlignment="Top" Background="Gray" Height="47" Width="70" FontSize="15" Grid.Row="1"/>
                 <Label x:Name="Player_Mana" Content="   -" HorizontalAlignment="Left" Margin="85,128,0,0" VerticalAlignment="Top" Background="Gray" Height="57" Width="70" FontSize="30" Grid.Row="1"/>
-                <Label x:Name="Player_Mana_Copy3" Content="   -" HorizontalAlignment="Left" Margin="385,128,0,0" VerticalAlignment="Top" Background="Gray" Height="57" Width="70" FontSize="30" Grid.Row="1"/>
+                <Label x:Name="Player_Attack" Content="   -" HorizontalAlignment="Left" Margin="385,128,0,0" VerticalAlignment="Top" Background="Gray" Height="57" Width="70" FontSize="30" Grid.Row="1"/>
                 <Label x:Name="Player_Defence" Content="   -" HorizontalAlignment="Left" Margin="235,128,0,0" VerticalAlignment="Top" Background="Gray" Height="57" Width="70" FontSize="30" Grid.Row="1"/>
                 <Label Content="Attack:" HorizontalAlignment="Left" Margin="310,138,0,0" VerticalAlignment="Top" Background="Gray" Height="47" Width="70" FontSize="15" Grid.Row="1"/>
             </Grid>
@@ -43,8 +49,10 @@
         <Button x:Name="StartFight_but" Content="Fight" HorizontalAlignment="Left" Margin="1342,94,0,0" VerticalAlignment="Top" Height="79" Width="89" Click="StartFight_but_Click" FontSize="20"/>
         <TextBox x:Name="Enemy_Num" HorizontalAlignment="Left" Margin="1342,178,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="144" Height="59" TextChanged="Enemy_Num_TextChanged"/>
         <Button x:Name="StudioAct" Content="Button" HorizontalAlignment="Left" Margin="1183,648,0,0" VerticalAlignment="Top" Height="46" Width="72" Click="StudioAct_Click"/>
-        <Grid x:Name="Studio" Margin="1292,0,0,0" Background="#FF7D7D7D" Visibility="Visible">
+        <Grid x:Name="Studio" Margin="1292,0,0,0" Background="#FF7D7D7D" Visibility="Collapsed">
             <Label x:Name="CurrentBlockType" Content="Current block:" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Background="#FFB2B2B2" Height="48" Width="172" FontSize="18"/>
+
+           
 
             <Grid x:Name="Buttons_Grid_Studio" Margin="0,69,0,381" Background="#FF615F5F" Visibility="Visible">
                 <Button x:Name="Left_Walls_Studio" Content="Left Walls" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Height="52" Width="80" FontSize="18" Click="Left_Walls_Studio_Click_1"/>
@@ -65,7 +73,7 @@
             </Grid>
 
         </Grid>
-        <Label x:Name="Text_Of_All_Texts" Content="Fafafela" HorizontalAlignment="Left" Margin="0,648,0,0" VerticalAlignment="Top" Height="72" Width="1152" FontSize="50" Background="DarkGray"/>
+        <Label x:Name="Text_Of_All_Texts" Content="Fafafela" HorizontalAlignment="Left" Margin="0,648,0,0" VerticalAlignment="Top" Height="72" Width="1152" FontSize="50" Background="DarkGray" Visibility="Collapsed"/>
 
     </Grid>
 </Window>
