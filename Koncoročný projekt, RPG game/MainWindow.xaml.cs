@@ -729,13 +729,13 @@ namespace Koncoročný_projekt__RPG_game
 
         private List<List<string>> Studio_Names = new List<List<string>>
         {
-            {new List<string> { "gray", "red", "none", "none" }  },
-            {new List<string> { "gray", "red", "none", "none" }  },
-            {new List<string> { "gray", "red", "none", "none" }  },
-            {new List<string> { "gray", "red", "none", "none" }  },
-            {new List<string> { "gray", "red", "none", "none" }  },
+            {new List<string> { "wood", "stone", "andezit", "none" }  },
+            {new List<string> { "wood", "stone", "andezit", "none" }  },
+            {new List<string> { "wood", "stone", "andezit", "none" }  },
+            {new List<string> { "wood", "stone", "andezit", "none" }  },
+            {new List<string> { "wood", "stone", "andezit", "none" }  },
             {new List<string> { "Krankenwagen", "Bloxy_Cola", "none", "none" }  },
-            {new List<string> { "Gerry", "Fafafela", "fa_ulty", "none" }  },
+            {new List<string> { "gemini", "grok", "fa_ulty", "Fafafela" }  },
         };
 
         private List<Button> Studio_Buttons = new List<Button>();
