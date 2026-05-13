@@ -69,5 +69,9 @@ namespace Koncoročný_projekt__RPG_game
                 monster.DoDamage(player);
             }
         }
+        public void PlayerSpecials()
+        {
+            //ak ma hrac eqquiped scythe,tak urobi scytheDamage metodu
+        }
     }
 }

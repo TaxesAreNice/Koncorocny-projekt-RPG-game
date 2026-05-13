@@ -5,22 +5,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Koncoročný_projekt__RPG_game.UI_Generations
 {
     internal class Fighting_EnemySpawner : Grid
     {
+        string name;
 
-        public List<(Label progLab, ProgressBar prog, Label atkLabel, Label defLabel)> stuff = new List<(Label progLab, ProgressBar prog, Label atkLabel, Label defLabel)>();
+        public List<(Label progLab, ProgressBar prog, Label atkLabel, Label defLabel, string name)> stuff = new List<(Label progLab, ProgressBar prog, Label atkLabel, Label defLabel, string name)>();
 
-        public Fighting_EnemySpawner()
+        Fighting Fighting;
+        Enemy Enemy;
+        public Fighting_EnemySpawner(Fighting fight, string name, Enemy enemy)
         {
+            
+            this.Fighting = fight;
+            this.Enemy = enemy;
             Height = 200;
             Width = 210;
             Margin = new System.Windows.Thickness(2);
             Background = System.Windows.Media.Brushes.DarkGray;
-
+            this.name = name;
 
 
             ProgressBar progressBar = new ProgressBar()
@@ -30,12 +37,12 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
                 Background = System.Windows.Media.Brushes.Gray,
                 Foreground = System.Windows.Media.Brushes.Red,
                 Margin = new System.Windows.Thickness(5),
-                Value = 50
+                Value = (int)((double)enemy.EnemyHP / enemy.EnemyHP * 100)
             };
 
             Label progressLabel = new Label()
             {
-                Content = "50hp",
+                Content = $"{enemy.EnemyHP}hp",
                 HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
                 VerticalAlignment = System.Windows.VerticalAlignment.Center,
                 FontSize = 20,
@@ -89,7 +96,8 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
                 Margin = new System.Windows.Thickness(5, 5, 5, 5),
                 FontSize = 15,
                 Foreground = System.Windows.Media.Brushes.Black,
-                Content = $"   -"
+               /// Content = $"   -"
+               Content = $"{enemy.EnemyAttack}"
             };
 
             Label DefNum = new Label()
@@ -102,7 +110,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
                 Margin = new System.Windows.Thickness(60, 5, 5, 5),
                 FontSize = 15,
                 Foreground = System.Windows.Media.Brushes.Black,
-                Content = "   -"
+                Content = $"{enemy.EnemyDefense}"
             };
 
             progressBar.VerticalAlignment = System.Windows.VerticalAlignment.Top;
@@ -116,7 +124,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             Children.Add(progressBar);
             Children.Add(progressLabel);
 
-            stuff.Add((progressLabel, progressBar, AtkNum, DefNum));
+            stuff.Add((progressLabel, progressBar, AtkNum, DefNum,name));
             /*
                 var tempButton = new Label()
                 {
@@ -138,6 +146,25 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
     
 
             */
+            this.AddHandler(MouseLeftButtonDownEvent, new MouseButtonEventHandler(this.OnMouseLeftButtonDown), true);
+
+           
+        }
+        void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            string isSelected = Fighting.EnemySelected(name);
+
+            if (isSelected == "true")
+            {
+                this.Background = System.Windows.Media.Brushes.Black;
+            }
+            else if (isSelected == "unselect")
+            {
+                this.Background = System.Windows.Media.Brushes.DarkGray;
+            }
+        }
+
         }
     }
-}
+
+

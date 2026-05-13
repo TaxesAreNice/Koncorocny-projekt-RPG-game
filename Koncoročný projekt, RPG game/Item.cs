@@ -75,7 +75,7 @@ namespace Koncoročný_projekt__RPG_game
                 case ItemType.AoE:
                     foreach (var m in fighting.currentEnemies)
                     {
-                        m.MonsterHP -= AoEDamage;
+                        m.EnemyHP -= AoEDamage;
                     }
                     break;
             }
