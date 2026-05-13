@@ -47,7 +47,10 @@ namespace Koncoročný_projekt__RPG_game
 
         PlayerMovementClass playerMovement = new PlayerMovementClass();
         InventoryInputs inventoryMovementClass = new InventoryInputs();
+
         Fighting fighting = new Fighting();
+        
+
         public enum MapEdge { None, Top, Bottom, Left, Right, TopLeft, TopRight, BottomLeft, BottomRight }
 
         public MainWindow()
@@ -244,24 +247,36 @@ namespace Koncoročný_projekt__RPG_game
                     {
                         string contentE = Inventory_Code[y].names[x];
 
-                        string itemType = inventoryMovementClass.E_Pressed(contentE);
+                        Player player = fighting.RequestPlayer();
+                        Monster monster = fighting.RequestMonster();
 
+                        // E_Pressed handles the actual stat changes (healing, etc.)
+                        string itemType = inventoryMovementClass.E_Pressed(contentE, player, monster, fighting);
+
+                        // Clear the UI and list data immediately
                         Inventory_Code[y].slots[x].image.Source = null;
                         Inventory_Code[y].names[x] = "";
-
                         inventoryMovementClass.ClearSlot(x, y);
+
+                        if (itemType == "Wearable" && inventory_while_Fighting)
+                        {
+                            inventoryMovementClass.SettingWearablesBack(player);
+                        }
 
                         if (inventory_while_Fighting)
                         {
-                            if (itemType == "FightOnly")
-                            {
-                                Inventory_Open();
-                                Fighting_UI.Visibility = Visibility.Visible;
-                                inventory_while_Fighting = false;
-                                CurrentState = "Fight";
-                                EnemiesAttack();
-                                UpdatePlayerStats();
-                            }
+
+                            Inventory_Open();
+
+                            Fighting_UI.Visibility = Visibility.Visible;
+
+                            inventory_while_Fighting = false;
+
+                            CurrentState = "Fight";
+
+                            EnemiesAttack();
+
+                            UpdatePlayerStats();
                         }
                     }
                     break;

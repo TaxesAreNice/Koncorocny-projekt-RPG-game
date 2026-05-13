@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace Koncoročný_projekt__RPG_game
 {
-    internal class Fighting
+    public class Fighting
     {
         //public List<string> currentEnemies = new List<string>();
         public List<Enemy> currentEnemies = new List<Enemy>();
@@ -187,6 +187,16 @@ namespace Koncoročný_projekt__RPG_game
             selectedEnemy = "";
             State = TurnState.EnemyTurn;
             return "ContinueFight";
+        }
+
+        internal Player RequestPlayer()
+        {
+            return player;
+        }
+
+        internal Monster RequestMonster()
+        {
+            return monster;
         }
     }
 }

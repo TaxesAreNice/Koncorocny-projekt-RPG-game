@@ -12,11 +12,16 @@ namespace Koncoročný_projekt__RPG_game
 {
     internal class InventoryInputs
     {
+       // private Player player = new Player();
         private ItemTypes itemTypes = new ItemTypes();
-
+        private Inventoryy Items = new Inventoryy();
 
         public int chosed_x = 0;
         public int chosed_y = 0;
+
+        private int PlayerBackUpDefense = 0;
+        private int PlayerBackUpAttack = 0;
+        private int MonsterBackUpDefense = 0;
 
         public int chosed_But_x = 0;
         public int backup_chosed_But_x = 0;
@@ -60,20 +65,41 @@ namespace Koncoročný_projekt__RPG_game
 
 
         }
-        public string E_Pressed(string name) // uses items
-        {
-           // return checkingItemType(name); this one.. dude. The one under is a tester
-           return "FightOnly";
+       
 
+        public void SettingWearablesBack(Player player)
+        {
+            player.PlayerDefense = PlayerBackUpDefense;
+            player.PlayerAttack = PlayerBackUpAttack;
+        }
+        // Update the signature to accept the live game objects
+        public string E_Pressed(string name, Player realPlayer, Monster realMonster, Fighting realFight)
+        {
+            return CheckingItemType(name, realPlayer, realMonster, realFight);
         }
 
-        private string checkingItemType(string name)
+        private string CheckingItemType(string name, Player p, Monster m, Fighting f)
         {
-            string returner = "";
+            string returner = "Item not found";
 
+            foreach (Item item in Items.Items)
+            {
+                if (item.Name == name)
+                {
+                    // Record stats before use if it's a wearable (for your "SettingBack" logic)
+                    if (item.Type == ItemTypes.ItemType.Wearable)
+                    {
+                        PlayerBackUpDefense = p.PlayerDefense;
+                        PlayerBackUpAttack = p.PlayerAttack;
+                    }
 
+                    returner = item.Type.ToString();
 
-
+                    // PASS THE REAL OBJECTS HERE
+                    item.UseItem(p, m, f);
+                    break;
+                }
+            }
             return returner;
         }
         public void Equip_Pressed(string name, int pos) // equips items
