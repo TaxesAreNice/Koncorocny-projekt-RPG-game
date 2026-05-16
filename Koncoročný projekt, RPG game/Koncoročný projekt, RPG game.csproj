@@ -23,34 +23,34 @@
   <ItemGroup>
     <None Remove="Images\AGuy.png" />
     <None Remove="Images\Blocks\Buttom_Walls\andezit_tops.png" />
-    <None Remove="Images\Blocks\Buttom_Walls\wood_tops.png" />
+    <None Remove="Images\Blocks\Buttom_Walls\stone_tops.png" />
     <None Remove="Images\Blocks\Flores\andezit_block.png" />
+    <None Remove="Images\Blocks\Flores\stone_block.png" />
     <None Remove="Images\Blocks\Items\Bloxy_Cola_item.png" />
     <None Remove="Images\Blocks\Items\Krankenwagen_item.png" />
     <None Remove="Images\Blocks\Left_Walls\andezit_sides.png" />
-    <None Remove="Images\Blocks\Left_Walls\wood_sides.png" />
-    <None Remove="Images\Blocks\Right_Walls\wood_sides.png" />
+    <None Remove="Images\Blocks\Left_Walls\stone_sides.png" />
+    <None Remove="Images\Blocks\Right_Walls\stone_sides.png" />
     <None Remove="Images\Blocks\Top_Walls\andezit_tops.png" />
-    <None Remove="Images\Blocks\Top_Walls\wood_tops.png" />
+    <None Remove="Images\Blocks\Top_Walls\stone_tops.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Images\Blocks\Buttom_Walls\andezit_tops.png" />
-    <Resource Include="Images\Blocks\Buttom_Walls\wood_tops.png" />
+    <Resource Include="Images\Blocks\Buttom_Walls\stone_tops.png" />
     <Resource Include="Images\Blocks\Flores\andezit_block.png" />
+    <Resource Include="Images\Blocks\Flores\stone_block.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\Blocks\Flores\wood_block.png" />
     <Resource Include="Images\Blocks\Items\Bloxy_Cola_item.png" />
     <Resource Include="Images\Blocks\Items\Krankenwagen_item.png" />
     <Resource Include="Images\Blocks\Left_Walls\andezit_sides.png" />
-    <Resource Include="Images\Blocks\Left_Walls\wood_sides.png" />
-    <Resource Include="Images\Blocks\Right_Walls\wood_sides.png" />
+    <Resource Include="Images\Blocks\Left_Walls\stone_sides.png" />
+    <Resource Include="Images\Blocks\Right_Walls\andezit_sides.png" />
+    <Resource Include="Images\Blocks\Right_Walls\stone_sides.png" />
     <Resource Include="Images\Blocks\Top_Walls\andezit_tops.png" />
-    <Resource Include="Images\Blocks\Top_Walls\wood_tops.png" />
-    <Resource Include="Images\Characters\gemini_npc.png" />
-    <Resource Include="Images\Characters\grok_npc.png" />
+    <Resource Include="Images\Blocks\Top_Walls\stone_tops.png" />
     <Resource Include="Images\Characters\Player\AGuy.png" />
     <Resource Include="Images\Items\faf\None.png" />
     <Resource Include="Images\Items\faf\AGuy.png" />
