@@ -103,7 +103,9 @@ namespace Koncoročný_projekt__RPG_game
                         PlayerBackUpDefense = p.PlayerDefense;
                         PlayerBackUpAttack = p.PlayerAttack;
 
-
+                        returner = "AddItem_" + name; 
+                        item.UseItem(p, m, f);
+                        break;
                     }
 
                     returner = item.Type.ToString();

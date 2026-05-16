@@ -246,29 +246,37 @@ namespace Koncoročný_projekt__RPG_game
             int x = inventoryMovementClass.chosed_x;
             int y = inventoryMovementClass.chosed_y;
             int XX = inventoryMovementClass.chosed_But_x;
+            int row = (XX / 4);
 
             switch (e.Key)
             {
                 case Key.E:
                     string contentE = "";
-                    if (inventory_on_slot)
+                    if (inventory_on_slot_q)
                     {
-                        if (inventory_on_slot_q)
-                        {
-                            int row = XX % 4;
-                            contentE = Inventory_butons[row].Names[XX * row];
-                        }
-                        else
-                        {
-                            contentE = Inventory_Code[y].names[x];
-                        }
-                         
-                     
+
+                        contentE = Inventory_butons[row].Names[XX / (row + 1)];
+                        if (contentE == "") {return;}
+
+                        Inventory_butons[row].slots[XX / (row + 1)].Background = Brushes.DarkGray; // changes the last position
+                        Inventory_butons[row].slots[XX / (row + 1)].image.Source = null;
+                        Inventory_butons[row].Names[XX / (row + 1)] = "";
+                        itemNAME = contentE;
+                        Add_Item_To_Inventory();
+
+                        //SettingWearablesBack; Also this... Tho it gotta be spesific to each category
+                    }
+                    else if (inventory_on_slot)
+                    {
+                        contentE = Inventory_Code[y].names[x];
+ 
                         Player player = fighting.RequestPlayer();
                         Monster monster = fighting.RequestMonster();
 
                         string itemType = inventoryMovementClass.E_Pressed(contentE, player, monster, fighting);
-                        string theItem = Inventory_Code[y].names[x];
+                        string JustInCaseWearable = "";
+
+                        
 
                         Inventory_Code[y].slots[x].image.Source = null;
                         Inventory_Code[y].names[x] = "";
@@ -279,10 +287,14 @@ namespace Koncoročný_projekt__RPG_game
                             inventoryMovementClass.SettingWearablesBack(player);
                         }
 
-                        if (itemType == "Wearable")
+                        if (itemType.Contains("_"))
                         {
-                            SetGameImage(Inventory_butons[0].slots[0].image, "Items", "faf", "AGuy");
-                            Inventory_butons[0].Names[0] = theItem;
+                            JustInCaseWearable = itemType.Split('_')[0];
+                        }
+                        if (JustInCaseWearable == "AddItem") //here, you gotta somehow figure out how to find the items category
+                        {
+                            SetGameImage(Inventory_butons[row].slots[XX / (row + 1)].image, "Items", "faf", "AGuy"); 
+                           Inventory_butons[row].Names[XX / (row + 1)] = contentE; 
 
                         }
 
