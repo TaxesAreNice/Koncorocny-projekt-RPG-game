@@ -15,10 +15,9 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
     {
         public Image image = new Image()
         {
-            Height = 85,
-            Width = 90,
             HorizontalAlignment = HorizontalAlignment.Center,
-            VerticalAlignment = VerticalAlignment.Center
+            VerticalAlignment = VerticalAlignment.Center,
+            Stretch = Stretch.Uniform
         };
         public mhhhINVButtons_insides(int box_position, int y, int ff)
         {
@@ -28,6 +27,8 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             Margin = new Thickness(5 + ff, box_position, 5, 5);
             Name = "_" + y.ToString();
             HorizontalAlignment = HorizontalAlignment.Left;
+
+            image.Margin = new Thickness(5);
 
             Children.Add(image);
         }

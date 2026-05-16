@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Koncoročný_projekt__RPG_game.UI_Generations
 {
-    internal class Inventory_Buttons : Grid
+    internal class Inventory_Buttons : Canvas
     {
         private int box_position = 5;
-        public List<mhhhINVButtons_insides> slots = new List<mhhhINVButtons_insides>(); //here too
+        public List<mhhhINVButtons_insides> slots = new List<mhhhINVButtons_insides>();
         private InventoryInputs inventoryMovementClass;
         public List<string> Names = new List<string>();
         private List<string> names = new List<string>() { "Helmet:", "Chestplate:", "Leggins:", "Boots:", "Sword:", "Ring:", "2nd hand:", "Accessory:" };
@@ -20,49 +22,40 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         {
             Height = 400;
             Width = 215;
-            Margin = new System.Windows.Thickness(2);
-            Background = System.Windows.Media.Brushes.Gray;
-            VerticalAlignment = System.Windows.VerticalAlignment.Top;
-
-            /*
-            var tempButton1 = new Button()
-            {
-                Height = 100,
-                Width = 100,
-                FontSize = 30,
-                Margin = new System.Windows.Thickness(5),
-                Background = System.Windows.Media.Brushes.DarkGray,
-                Content = "Use",
-                HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
-                VerticalAlignment = System.Windows.VerticalAlignment.Top
-                
-            };
-            */
+            Margin = new Thickness(2);
+            Background = Brushes.Gray;
 
             for (int i = 0; i < 4; i++)
             {
-                int current = list_pos;
+                int buttonIndex = list_pos; 
 
-                mhhhINVButtons_insides tempButton = new mhhhINVButtons_insides(box_position, list_pos, 110);
-                
+                mhhhINVButtons_insides tempButton = new mhhhINVButtons_insides(0, buttonIndex, 0);
+
                 var tempLabel = new Label()
                 {
                     Height = 95,
                     Width = 100,
-                    FontSize = 30,
-                    VerticalAlignment = System.Windows.VerticalAlignment.Top,
-                    Margin = new System.Windows.Thickness(5, box_position, 5, 5),
-                    Background = System.Windows.Media.Brushes.DarkGray,
-                    HorizontalAlignment = System.Windows.HorizontalAlignment.Left
-                };
-                
-                tempButton.MouseDown += (s, e) =>
-                {
-                    inventoryMovementClass.Equip_Pressed(names[current], current);
+                    FontSize = 15,
+                    Background = Brushes.DarkGray,
+                    Content = names[buttonIndex]
                 };
 
-                Children.Add(tempButton);
+                tempButton.MouseDown += (s, e) =>
+                {
+                    inventoryMovementClass.Equip_Pressed(names[buttonIndex], buttonIndex);
+                };
+
+               
+              
+                Canvas.SetLeft(tempLabel, 5);
+                Canvas.SetTop(tempLabel, box_position);
+
+             
+                Canvas.SetLeft(tempButton, 110);
+                Canvas.SetTop(tempButton, box_position);
+
                 Children.Add(tempLabel);
+                Children.Add(tempButton);
 
                 slots.Add(tempButton);
                 Names.Add("");

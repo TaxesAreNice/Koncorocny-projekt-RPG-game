@@ -67,7 +67,7 @@ namespace Koncoročný_projekt__RPG_game
             Studio_Buttons.Add(Slot_3_Studio);
             Studio_Buttons.Add(Slot_4_Studio);
         }
-
+        //q_pressed
         private void Inventory_Q_Click_Checker_Tick(object? sender, EventArgs e)
         {
             int rowB = 0;
@@ -187,12 +187,16 @@ namespace Koncoročný_projekt__RPG_game
                 rowY += 100;
                 Yrow++;
             }
-
             for (int j = 0; j < 2; j++)
             {
                 Inventory_Buttons inventory_Buttons = new Inventory_Buttons(inventoryMovementClass, Equeps_list_num);
+
+              
                 inventory_Buttons.HorizontalAlignment = HorizontalAlignment.Left;
-                inventory_Buttons.Margin = new Thickness(EquepsX, 5, 5, 5);
+                inventory_Buttons.VerticalAlignment = VerticalAlignment.Top;
+
+              
+                inventory_Buttons.Margin = new Thickness(EquepsX, 5, 0, 0);
 
                 Inventory_butons.Add(inventory_Buttons);
                 Inventory.Children.Add(inventory_Buttons);
@@ -259,14 +263,13 @@ namespace Koncoročný_projekt__RPG_game
                             contentE = Inventory_Code[y].names[x];
                         }
                          
-                        //Inventory_butons
+                     
                         Player player = fighting.RequestPlayer();
                         Monster monster = fighting.RequestMonster();
 
-                        // E_Pressed handles the actual stat changes (healing, etc.)
                         string itemType = inventoryMovementClass.E_Pressed(contentE, player, monster, fighting);
+                        string theItem = Inventory_Code[y].names[x];
 
-                        // Clear the UI and list data immediately
                         Inventory_Code[y].slots[x].image.Source = null;
                         Inventory_Code[y].names[x] = "";
                         inventoryMovementClass.ClearSlot(x, y);
@@ -274,6 +277,13 @@ namespace Koncoročný_projekt__RPG_game
                         if (itemType == "Wearable" && inventory_while_Fighting)
                         {
                             inventoryMovementClass.SettingWearablesBack(player);
+                        }
+
+                        if (itemType == "Wearable")
+                        {
+                            SetGameImage(Inventory_butons[0].slots[0].image, "Items", "faf", "AGuy");
+                            Inventory_butons[0].Names[0] = theItem;
+
                         }
 
                         if (inventory_while_Fighting)

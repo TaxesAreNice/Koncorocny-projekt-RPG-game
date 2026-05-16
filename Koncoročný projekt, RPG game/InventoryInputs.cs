@@ -102,6 +102,8 @@ namespace Koncoročný_projekt__RPG_game
                     {
                         PlayerBackUpDefense = p.PlayerDefense;
                         PlayerBackUpAttack = p.PlayerAttack;
+
+
                     }
 
                     returner = item.Type.ToString();
@@ -119,7 +121,7 @@ namespace Koncoročný_projekt__RPG_game
             q_pressed = true;
 
             slot_pressed = false;
-            
+
             
         }
 
