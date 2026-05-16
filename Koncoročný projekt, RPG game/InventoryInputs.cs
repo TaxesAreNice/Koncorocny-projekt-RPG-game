@@ -103,7 +103,7 @@ namespace Koncoročný_projekt__RPG_game
                         PlayerBackUpDefense = p.PlayerDefense;
                         PlayerBackUpAttack = p.PlayerAttack;
 
-                        returner = "AddItem_" + name; 
+                        returner = "AddItem_" + name;  // idea.. change it to just name and the Wearable names will have a _ at the end with the category after it
                         item.UseItem(p, m, f);
                         break;
                     }

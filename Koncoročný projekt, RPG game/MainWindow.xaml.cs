@@ -282,7 +282,7 @@ namespace Koncoročný_projekt__RPG_game
                         Inventory_Code[y].names[x] = "";
                         inventoryMovementClass.ClearSlot(x, y);
 
-                        if (itemType == "Wearable" && inventory_while_Fighting)
+                        if (itemType == "Wearable" && inventory_while_Fighting) // and fix this too
                         {
                             inventoryMovementClass.SettingWearablesBack(player);
                         }
