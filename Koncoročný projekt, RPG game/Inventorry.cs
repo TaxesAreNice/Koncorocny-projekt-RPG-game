@@ -35,6 +35,7 @@ namespace Koncoročný_projekt__RPG_game
                 Name = "BloodThorn Sword",
                 Type = ItemType.Wearable,
                 Description = "Every attack will give user a 30% of users damage",
+                Attack = 20,
                 LifeLeech = 30,
             };
             var BreakerRing = new Item
@@ -76,7 +77,7 @@ namespace Koncoročný_projekt__RPG_game
             {
                 Name = "Knight Sword",
                 Type = ItemType.Wearable,
-                Description = "+15 attack",
+                Description = "+13 attack",
                 Attack = 13,
             };
             var MythicalMeal = new Item
@@ -146,7 +147,7 @@ namespace Koncoročný_projekt__RPG_game
             var HealingScroll = new Item
             {
                 Name = "Healing Scroll",
-                Type = ItemType.FightOnly,
+                Type = ItemType.Support,
                 Description = "Heals 50HP",
                 Heal = 50,
             };
