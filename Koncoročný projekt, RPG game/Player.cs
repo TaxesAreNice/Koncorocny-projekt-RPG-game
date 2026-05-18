@@ -2,7 +2,7 @@
 
 namespace Koncoročný_projekt__RPG_game
 {
-    internal class Player
+    public class Player
     {
         public int PlayerHP = 100;
         public int PlayerDamage = 0;
@@ -14,7 +14,7 @@ namespace Koncoročný_projekt__RPG_game
 
         public void DoDamage(Monster monster)
         {
-            monster.MonsterHP -= PlayerDamage;
+            monster.MonsterHP -= (PlayerDamage + monster.MonsterHPStatus);
         }
 
         public void TakeDamage(int damage)
@@ -24,7 +24,7 @@ namespace Koncoročný_projekt__RPG_game
 
         public int CalculateDamage(Monster monster)
         {
-            PlayerDamage = PlayerAttack - monster.MonsterDefense;
+            PlayerDamage = PlayerAttack - (monster.MonsterDefense - monster.MonsterDefenceStatus);
 
             if (PlayerDamage < 0)
                 PlayerDamage = 0;
