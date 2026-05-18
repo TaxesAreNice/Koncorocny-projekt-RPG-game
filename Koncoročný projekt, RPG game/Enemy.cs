@@ -9,7 +9,6 @@ namespace Koncoročný_projekt__RPG_game
     internal class Enemy
     {
         public Enemy() { }
-        //int hp, int attack, int defense, string name
 
         public int EnemyHP { get; set; }
         public int EnemyAttack { get; set; }
