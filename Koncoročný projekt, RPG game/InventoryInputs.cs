@@ -19,9 +19,16 @@ namespace Koncoročný_projekt__RPG_game
         public int chosed_x = 0;
         public int chosed_y = 0;
 
-        private int PlayerBackUpDefense = 0;
-        private int PlayerBackUpAttack = 0;
-        private int MonsterBackUpDefense = 0;
+        private int PlayerBackUpSwordAttack = 0;
+        private int PlayerBackUpHelmetDefence = 0;
+        private int PlayerBackUpChestplateDefence = 0;
+        private int PlayerBackUpLegginsDefence = 0;
+        private int PlayerBackUpBootsDefence = 0;
+        private int PlayerBackUpAccessoryDefence = 0;
+        private int EnemyBackUpRingDefense = 0;
+
+
+        ///Helmet", "Chestplate", "Leggins", "Boots
 
         public int chosed_But_x = 0;
         public int backup_chosed_But_x = 0;
@@ -67,11 +74,62 @@ namespace Koncoročný_projekt__RPG_game
         }
        
 
-        public void SettingWearablesBack(Player player)
+        public void SettingWearablesBack(Player player, string category)
         {
-            player.PlayerDefense = PlayerBackUpDefense;
-            player.PlayerAttack = PlayerBackUpAttack;
-        }
+            //player.PlayerDefense = PlayerBackUpDefense;
+            // player.PlayerAttack = PlayerBackUpAttack;
+            if (!category.Contains("_"))
+            {
+                foreach (Item item in Items.Items)
+                {
+                    string justInCaseEHEMWEARABLES = "";
+                    string ItemName = item.Name;
+                    if (item.Name.Contains("_"))
+                    {
+                        ItemName = item.Name.Split("_")[0];
+                        justInCaseEHEMWEARABLES = "_" + item.Name.Split("_")[1];
+
+                    }
+                    if (ItemName == category)
+                    {
+                        category = justInCaseEHEMWEARABLES;
+                    }
+                }
+                if (!category.Contains("_"))
+                {
+                    return;
+                }
+            }
+
+                if (category == "_Sword")
+                {
+                    player.PlayerAttack -= PlayerBackUpSwordAttack;
+                }
+                else if (category == "_Helmet")
+                {
+                    player.PlayerDefense -= PlayerBackUpHelmetDefence;
+                }
+                else if (category == "_Chestplate")
+                {
+                    player.PlayerDefense -= PlayerBackUpChestplateDefence;
+                }
+                else if (category == "_Leggins")
+                {
+                    player.PlayerDefense -= PlayerBackUpLegginsDefence;
+                }
+                else if (category == "_Boots")
+                {
+                    player.PlayerDefense -= PlayerBackUpBootsDefence;
+                }
+                else if (category == "_Accessory")
+                {
+                    player.PlayerDefense -= PlayerBackUpAccessoryDefence;
+                }
+            }
+              
+            
+        
+
         // Update the signature to accept the live game objects
         public string E_Pressed(string name, Player realPlayer, Monster realMonster, Fighting realFight)
         {
@@ -95,27 +153,78 @@ namespace Koncoročný_projekt__RPG_game
 
             foreach (Item item in Items.Items)
             {
-                if (item.Name == name)
+                if (item.Name == "Rusty Helmet_Helmet") // for testing, yup
                 {
-                    // Record stats before use if it's a wearable (for your "SettingBack" logic)
+                    // fahhh
+                }
+                string justInCaseEHEMWEARABLES = "";
+                string ItemName = item.Name;
+                if (item.Name.Contains("_"))
+                {
+                    ItemName = item.Name.Split("_")[0];
+                    justInCaseEHEMWEARABLES = "_" + item.Name.Split("_")[1];
+                }
+                if (ItemName == name)
+                {
+                    
                     if (item.Type == ItemTypes.ItemType.Wearable)
                     {
-                        PlayerBackUpDefense = p.PlayerDefense;
-                        PlayerBackUpAttack = p.PlayerAttack;
+                        // PlayerBackUpDefense = p.PlayerDefense;
+                        //PlayerBackUpAttack = p.PlayerAttack;
+                        SavingBackUpStats(p,m, justInCaseEHEMWEARABLES, item);
 
-                        returner = "AddItem_" + name;  // idea.. change it to just name and the Wearable names will have a _ at the end with the category after it
+                        returner =  name + justInCaseEHEMWEARABLES;  
                         item.UseItem(p, m, f);
                         break;
                     }
 
                     returner = item.Type.ToString();
 
-                    // PASS THE REAL OBJECTS HERE
+                    
                     item.UseItem(p, m, f);
                     break;
                 }
             }
             return returner;
+        }
+
+        private void SavingBackUpStats(Player p, Monster m, string type, Item item)
+        {
+            List<string> categories = new List<string>() { "Helmet", "Chestplate", "Leggins", "Boots", "Sword", "Ring", "2nd hand", "Accessory" };
+
+            foreach (string category in categories)
+            {
+                if (type == "_" + category)
+                {
+                    switch (category)
+                    {
+                        case "Helmet":
+                            PlayerBackUpHelmetDefence = item.Defense;
+                            break;
+                        case "Chestplate":
+                            PlayerBackUpChestplateDefence = item.Defense; 
+                            break;
+                        case "Leggins":
+                            PlayerBackUpLegginsDefence = item.Defense; 
+                            break;
+                        case "Boots":
+                            PlayerBackUpBootsDefence = item.Defense; 
+                            break;
+                        case "Sword":
+                            PlayerBackUpSwordAttack = item.Attack;
+                            break;
+                       case "Ring":
+                            EnemyBackUpRingDefense = item.EnemyDefense;
+                            break;
+                        case "2nd hand":
+                            //uhh pshhhh
+                            break;
+                        case "Accessory":
+                            PlayerBackUpAccessoryDefence = item.Defense;
+                            break;
+                    }
+                }
+            }
         }
         public void Equip_Pressed(string name, int pos) // equips items
         {

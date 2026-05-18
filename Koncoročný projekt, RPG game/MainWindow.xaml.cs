@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Text;
 using System.Timers;
 using System.Windows;
@@ -205,7 +206,7 @@ namespace Koncoročný_projekt__RPG_game
                 Equeps_list_num += 4;
             }
 
-
+            UpdatePlayerStatsInInventory();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -246,7 +247,8 @@ namespace Koncoročný_projekt__RPG_game
             int x = inventoryMovementClass.chosed_x;
             int y = inventoryMovementClass.chosed_y;
             int XX = inventoryMovementClass.chosed_But_x;
-            int row = (XX / 4);
+            int row = XX / 4;
+            int col = XX % 4;
 
             switch (e.Key)
             {
@@ -255,20 +257,24 @@ namespace Koncoročný_projekt__RPG_game
                     if (inventory_on_slot_q)
                     {
 
-                        contentE = Inventory_butons[row].Names[XX / (row + 1)];
+                        contentE = Inventory_butons[row].Names[col  ];
                         if (contentE == "") {return;}
 
-                        Inventory_butons[row].slots[XX / (row + 1)].Background = Brushes.DarkGray; // changes the last position
-                        Inventory_butons[row].slots[XX / (row + 1)].image.Source = null;
-                        Inventory_butons[row].Names[XX / (row + 1)] = "";
+                        Player player = fighting.RequestPlayer();
+
+                        Inventory_butons[row].slots[col].Background = Brushes.DarkGray; // changes the last position
+                        Inventory_butons[row].slots[col].image.Source = null;
+                        Inventory_butons[row].Names[col] = "";
                         itemNAME = contentE;
                         Add_Item_To_Inventory();
 
-                        //SettingWearablesBack; Also this... Tho it gotta be spesific to each category
+                        inventoryMovementClass.SettingWearablesBack(player, contentE);
+                        // Also this... Tho it gotta be spesific to each category
                     }
                     else if (inventory_on_slot)
                     {
-                        contentE = Inventory_Code[y].names[x];
+                         List<string> categories = new List<string>() { "Helmet", "Chestplate", "Leggins", "Boots", "Sword", "Ring", "2nd hand", "Accessory" };
+                         contentE = Inventory_Code[y].names[x];
  
                         Player player = fighting.RequestPlayer();
                         Monster monster = fighting.RequestMonster();
@@ -276,29 +282,49 @@ namespace Koncoročný_projekt__RPG_game
                         string itemType = inventoryMovementClass.E_Pressed(contentE, player, monster, fighting);
                         string JustInCaseWearable = "";
 
-                        
 
-                        Inventory_Code[y].slots[x].image.Source = null;
-                        Inventory_Code[y].names[x] = "";
-                        inventoryMovementClass.ClearSlot(x, y);
-
-                        if (itemType == "Wearable" && inventory_while_Fighting) // and fix this too
-                        {
-                            inventoryMovementClass.SettingWearablesBack(player);
-                        }
 
                         if (itemType.Contains("_"))
                         {
-                            JustInCaseWearable = itemType.Split('_')[0];
+                            JustInCaseWearable = itemType.Split('_')[1];
                         }
-                        if (JustInCaseWearable == "AddItem") //here, you gotta somehow figure out how to find the items category
+
+                        bool nonoFight = false;
+                        int fahh = 0;
+                        foreach (var category in categories)
                         {
-                            SetGameImage(Inventory_butons[row].slots[XX / (row + 1)].image, "Items", "faf", "AGuy"); 
-                           Inventory_butons[row].Names[XX / (row + 1)] = contentE; 
+                            if (JustInCaseWearable == category) //here, you gotta somehow figure out how to find the items category
+                            {
+                                if (Inventory_butons[fahh / 4].Names[fahh % 4] == contentE)
+                                {
+                                    inventoryMovementClass.SettingWearablesBack(player, contentE);
+                                    MessageBox.Show("You can't equip an item that's already equipped! Take it out of the equipment slot first.");
+                                    return;
+                                }
+                                if (inventory_while_Fighting)
+                                {
+                                    inventoryMovementClass.SettingWearablesBack(player, JustInCaseWearable);
+                                    nonoFight = true;
+                                    continue;
+                                }
 
+                                SetGameImage(Inventory_butons[fahh / 4].slots[fahh % 4].image, "Items", "faf", "AGuy");
+                                Inventory_butons[fahh / 4].Names[fahh % 4] = contentE;
+
+                            }
+                            fahh++;
                         }
+                        
 
-                        if (inventory_while_Fighting)
+                        if (!nonoFight)
+                        {
+                            Inventory_Code[y].slots[x].image.Source = null;
+                            Inventory_Code[y].names[x] = "";
+                            inventoryMovementClass.ClearSlot(x, y);
+                        }
+                        
+
+                        if (inventory_while_Fighting && !nonoFight)
                         {
 
                             Inventory_Open();
@@ -313,7 +339,22 @@ namespace Koncoročný_projekt__RPG_game
 
                             UpdatePlayerStats();
                         }
+                        else if (inventory_while_Fighting && nonoFight)
+                        {
+                            nonoFight = false;
+
+                            Inventory_Open();
+
+                            Fighting_UI.Visibility = Visibility.Visible;
+
+                            inventory_while_Fighting = false;
+
+                            CurrentState = "Fight";
+                        }
                     }
+
+
+                    UpdatePlayerStatsInInventory();
                     break;
 
                 case Key.Q: 
@@ -339,6 +380,15 @@ namespace Koncoročný_projekt__RPG_game
                     }
                     break;
             }
+        }
+
+        private void UpdatePlayerStatsInInventory()
+        {
+            Player player = fighting.RequestPlayer();
+
+            PlayerHP_UI .Content = $"{player.PlayerHP}hp";
+            PlayerDefence_UI.Content = $"{player.PlayerDefense}";
+            PlayerAttack_UI.Content = $"{player.PlayerAttack}";
         }
 
         private void MapMovement(string key, KeyEventArgs e) // made by Mahutik, tho changed by ai.. tho more like just the idea by me at this point
@@ -423,6 +473,7 @@ namespace Koncoročný_projekt__RPG_game
             CurrentState = "Inventory";
             inventory_click_checker.Start();
             inventory_q_click_checker.Start();
+            UpdatePlayerStatsInInventory();
 
         }
 

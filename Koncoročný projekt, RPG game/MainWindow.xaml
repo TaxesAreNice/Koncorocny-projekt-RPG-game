@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="750" Width="1500" KeyDown="Window_KeyDown">
     <Grid>
-        
-        
-        
+
+
+
         <Button x:Name="start" Content="Load Map" HorizontalAlignment="Left" Margin="1342,257,0,0" VerticalAlignment="Top" Height="150" Width="104" Click="start_Click" FontSize="20"/>
         <Grid x:Name="Map_UI" Margin="0,0,213,98" Background="#FFA7A7A7"/>
         <Button x:Name="Add_Item" Content="Add Item" HorizontalAlignment="Left" Margin="1342,509,0,0" VerticalAlignment="Top" Height="74" Width="144" FontSize="30" Click="Add_Item_Click"/>
@@ -24,6 +24,19 @@
                 <Label x:Name="Mana_Usage" Content="           -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="245,144,0,0" Width="200" FontSize="30"/>
                 <Label x:Name="Item_Description" Content="           -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="245,79,0,0" Width="200" FontSize="30"/>
                 <Label x:Name="Item_Name" Content="           -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="245,10,0,0" Width="200" FontSize="30"/>
+            </Grid>
+            <Grid x:Name="Item_Stuff_Copy" Margin="475,502,578,0" Background="Gray">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="29*"/>
+                    <ColumnDefinition Width="437*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Player HP:" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="10,10,0,0" Width="225" FontSize="30" Grid.ColumnSpan="2"/>
+                <Label Content="Player Attack:" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="10,144,0,0" Width="225" FontSize="30" Grid.ColumnSpan="2"/>
+                <Label Content="Player Defence:" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Width="225" FontSize="30" Margin="10,79,0,0" Grid.ColumnSpan="2"/>
+                <Label x:Name="PlayerAttack_UI" Content="         -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="216,144,0,0" Width="171" FontSize="30" Grid.Column="1"/>
+                <Label x:Name="PlayerDefence_UI" Content="         -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="216,79,0,0" Width="171" FontSize="30" Grid.Column="1"/>
+                <Label x:Name="PlayerHP_UI" Content="         -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="216,10,0,0" Width="171" FontSize="30" Grid.Column="1"/>
             </Grid>
         </Grid>
 
@@ -52,7 +65,7 @@
         <Grid x:Name="Studio" Margin="1292,0,0,0" Background="#FF7D7D7D" Visibility="Collapsed">
             <Label x:Name="CurrentBlockType" Content="Current block:" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Background="#FFB2B2B2" Height="48" Width="172" FontSize="18"/>
 
-           
+
 
             <Grid x:Name="Buttons_Grid_Studio" Margin="0,69,0,381" Background="#FF615F5F" Visibility="Visible">
                 <Button x:Name="Left_Walls_Studio" Content="Left Walls" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Height="52" Width="80" FontSize="18" Click="Left_Walls_Studio_Click_1"/>
@@ -74,6 +87,7 @@
 
         </Grid>
         <Label x:Name="Text_Of_All_Texts" Content="Fafafela" HorizontalAlignment="Left" Margin="0,648,0,0" VerticalAlignment="Top" Height="72" Width="1152" FontSize="50" Background="DarkGray" Visibility="Collapsed"/>
+        <Grid/>
 
     </Grid>
 </Window>
