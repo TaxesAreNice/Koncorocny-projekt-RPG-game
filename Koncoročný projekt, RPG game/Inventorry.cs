@@ -47,6 +47,7 @@ namespace Koncoročný_projekt__RPG_game
                 Name = "BloodThorn Sword_Sword",
                 Type = ItemType.Wearable,
                 Description = "Every attack will give user a 30% of users damage",
+                Attack = 20,
                 LifeLeech = 30,
             });
 
