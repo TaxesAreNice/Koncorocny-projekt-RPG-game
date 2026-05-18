@@ -85,9 +85,10 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         };
         public Image Downer_wall = new Image()
         {
-            Height = 20,
+            Height = 20,//20
             Width = 100,
             VerticalAlignment = VerticalAlignment.Bottom,
+            Margin = new Thickness(0, 0, 0, 10) // change somethin' here
         };
         public Image Flore = new Image()
         {
