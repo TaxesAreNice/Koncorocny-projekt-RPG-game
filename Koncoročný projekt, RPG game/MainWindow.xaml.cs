@@ -92,12 +92,32 @@ namespace Koncoročný_projekt__RPG_game
                 Inventory_butons[rowB].slots[inventoryMovementClass.backup_chosed_But_x - minesarB].Background = Brushes.DarkGray; // changes the last position
                 Inventory_butons[row].slots[inventoryMovementClass.chosed_But_x - minesar].Background = Brushes.Gray; // changes the current position
                 inventoryMovementClass.PressedTick_Q();
+
+                string Itemdescription = inventoryMovementClass.CheckingForItemDescriptionQ(Inventory_butons[row].Names[inventoryMovementClass.chosed_But_x - minesar]);
+                // Inventory_butons[row].slots[inventoryMovementClass.chosed_But_x - minesar]
+                Item_Name.Content = Inventory_butons[row].Names[inventoryMovementClass.chosed_But_x - minesar];
+                Item_Description.Content = Itemdescription; //32
+                Mana_Usage.Content = "No...";
+
+                if (Itemdescription != "           -")
+                {
+                    Item_Description.FontSize = 12;
+                }
+                else
+                {
+                    Item_Description.FontSize = 30;
+                }
             }
             else
             {
                 if (inventory_on_slot) { return; }
                 Inventory_butons[row].slots[inventoryMovementClass.chosed_But_x - minesar].Background = Brushes.DarkGray; // changes the current position
                 inventory_on_slot_q = inventoryMovementClass.q_pressed;
+
+                Item_Name.Content = "           -";
+                Item_Description.Content = "           -";
+                Item_Description.FontSize = 30;
+                Mana_Usage.Content = "           -";
             }
         }
 
@@ -112,7 +132,20 @@ namespace Koncoročný_projekt__RPG_game
                 Inventory_Code[inventoryMovementClass.backup_chosed_y].slots[inventoryMovementClass.backup_chosed_x].Background = Brushes.DarkGray; // changes the last position
                 Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Background = Brushes.Gray;
                 inventoryMovementClass.PressedTick();
+                List<string> Itemdescription = inventoryMovementClass.CheckingForItemDescription();
+                //Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x]
+                Item_Name.Content = Itemdescription[0];
+                Item_Description.Content = Itemdescription[1]; //32
+                Mana_Usage.Content = Itemdescription[2];
 
+                if (Itemdescription[1] != "           -")
+                {
+                    Item_Description.FontSize = 12;
+                }
+                else
+                {
+                    Item_Description.FontSize = 30;
+                }
             }
             else
             {
@@ -120,6 +153,11 @@ namespace Koncoročný_projekt__RPG_game
                 Inventory_Code[inventoryMovementClass.backup_chosed_y].slots[inventoryMovementClass.backup_chosed_x].Background = Brushes.DarkGray;
 
                 inventory_on_slot = inventoryMovementClass.slot_pressed;
+
+                Item_Name.Content = "           -";
+                Item_Description.Content = "           -";
+                Item_Description.FontSize = 30;
+                Mana_Usage.Content = "           -";
             }
         }
 

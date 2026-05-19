@@ -345,5 +345,87 @@ namespace Koncoročný_projekt__RPG_game
                 }
             }
         }
+
+        internal List<string> CheckingForItemDescription()
+        {
+           List<string> description = new List<string>();
+            string itemName = inventory[chosed_y][chosed_x];
+            
+
+            foreach (Item item in Items.Items)
+            {
+                string CurrentitemName = item.Name.Split("_")[0];
+
+                if (CurrentitemName == itemName)
+                {
+                    description.Add(CurrentitemName);
+                    
+                    string desc = item.Description;
+                    desc =  WordWrap(desc);
+                    description.Add(desc);
+
+
+                    description.Add(item.Mana.ToString());
+                    break;
+                }
+            }
+            if (description.Count == 0)
+                {
+                description.Add("           -");
+                description.Add("           -");
+                description.Add("           -");
+            }
+            return description;
+        }
+
+        public string WordWrap(string text, int maxLineLength = 32) // AI.. i AIN'T doing this
+        {
+            if (string.IsNullOrEmpty(text)) return text;
+
+            string[] words = text.Split(' ');
+            StringBuilder wrappedText = new StringBuilder();
+            StringBuilder currentLine = new StringBuilder();
+
+            foreach (string word in words)
+            {
+                // Check if adding the next word exceeds the 32-character limit
+                if (currentLine.Length + word.Length + (currentLine.Length > 0 ? 1 : 0) > maxLineLength)
+                {
+                    wrappedText.AppendLine(currentLine.ToString());
+                    currentLine.Clear();
+                }
+
+                if (currentLine.Length > 0)
+                {
+                    currentLine.Append(" ");
+                }
+                currentLine.Append(word);
+            }
+
+            if (currentLine.Length > 0)
+            {
+                wrappedText.Append(currentLine.ToString());
+            }
+
+            return wrappedText.ToString();
+        }
+
+        internal string CheckingForItemDescriptionQ(string itemName)
+        {
+            string description = "";
+            
+            foreach (Item item in Items.Items)
+            {
+                string CurrentitemName = item.Name.Split("_")[0];
+
+                if (CurrentitemName == itemName)
+                {
+                    description = item.Description;
+                    description = WordWrap(description);
+                    break;
+                }
+            }
+                return description;
+        }
     }
 }
