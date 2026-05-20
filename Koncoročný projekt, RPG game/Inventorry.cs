@@ -30,7 +30,7 @@ namespace Koncoročný_projekt__RPG_game
             {
                 Name = "Scythe_Sword",
                 Type = ItemType.Wearable,
-                Description = "You will attack enemy from behind and ignore his defense",
+                Description = "You will attack the enemy from behind and ignore their defense",
                 Attack = 25,
             });
 
