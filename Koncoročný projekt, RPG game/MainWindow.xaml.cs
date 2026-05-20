@@ -166,7 +166,7 @@ namespace Koncoročný_projekt__RPG_game
                 Margin = new Thickness(playerMovement.Player_Pixel_X, playerMovement.Player_Pixel_Y, 0, 0)
             };
 
-            SetGameImage(Player_ima, "Characters", "Player", "AGuy");
+            SetGameImage(Player_ima, "Characters", "Player", "Player");
             Map_UI.Children.Add(Player_ima);
         }
         private void GeneretingInventory()
@@ -308,7 +308,7 @@ namespace Koncoročný_projekt__RPG_game
                                     continue;
                                 }
 
-                                SetGameImage(Inventory_butons[fahh / 4].slots[fahh % 4].image, "Items", "faf", "AGuy");
+                                SetGameImage(Inventory_butons[fahh / 4].slots[fahh % 4].image, "Items", "faf", contentE);
                                 Inventory_butons[fahh / 4].Names[fahh % 4] = contentE;
 
                             }
@@ -516,7 +516,7 @@ namespace Koncoročný_projekt__RPG_game
             int ty = inventoryMovementClass.ender_y;
 
             // 3. Draw the item
-            SetGameImage(Inventory_Code[ty].slots[tx].image, "Items", "faf", "AGuy");
+            SetGameImage(Inventory_Code[ty].slots[tx].image, "Items", "faf", itemNAME);
             Inventory_Code[ty].names[tx] = itemNAME;
 
             // 4. Handle the pointers
