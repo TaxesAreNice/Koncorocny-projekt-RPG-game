@@ -58,6 +58,9 @@
             </Grid>
             <Grid x:Name="Enemy_Grid" Margin="852,75,38,75" Background="Gray" MouseDown="Enemy_Grid_MouseDown" />
             <Button x:Name="Attack" Content="Attack" HorizontalAlignment="Left" Margin="642,0,0,0" VerticalAlignment="Center" Height="106" Width="108" FontSize="20" Click="Attack_Click"/>
+            <Grid x:Name="EventTeller" Margin="559,0,660,530" Background="#FF797878">
+                <ListBox x:Name="Eventer" d:ItemsSource="{d:SampleData ItemCount=5}" Background="Gray" FontSize="20"/>
+            </Grid>
         </Grid>
         <Button x:Name="StartFight_but" Content="Fight" HorizontalAlignment="Left" Margin="1342,94,0,0" VerticalAlignment="Top" Height="79" Width="89" Click="StartFight_but_Click" FontSize="20"/>
         <TextBox x:Name="Enemy_Num" HorizontalAlignment="Left" Margin="1342,178,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="144" Height="59" TextChanged="Enemy_Num_TextChanged"/>

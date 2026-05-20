@@ -92,12 +92,32 @@ namespace Koncoročný_projekt__RPG_game
                 Inventory_butons[rowB].slots[inventoryMovementClass.backup_chosed_But_x - minesarB].Background = Brushes.DarkGray; // changes the last position
                 Inventory_butons[row].slots[inventoryMovementClass.chosed_But_x - minesar].Background = Brushes.Gray; // changes the current position
                 inventoryMovementClass.PressedTick_Q();
+
+                string Itemdescription = inventoryMovementClass.CheckingForItemDescriptionQ(Inventory_butons[row].Names[inventoryMovementClass.chosed_But_x - minesar]);
+                // Inventory_butons[row].slots[inventoryMovementClass.chosed_But_x - minesar]
+                Item_Name.Content = Inventory_butons[row].Names[inventoryMovementClass.chosed_But_x - minesar];
+                Item_Description.Content = Itemdescription; //32
+                Mana_Usage.Content = "No...";
+
+                if (Itemdescription != "           -")
+                {
+                    Item_Description.FontSize = 12;
+                }
+                else
+                {
+                    Item_Description.FontSize = 30;
+                }
             }
             else
             {
                 if (inventory_on_slot) { return; }
                 Inventory_butons[row].slots[inventoryMovementClass.chosed_But_x - minesar].Background = Brushes.DarkGray; // changes the current position
                 inventory_on_slot_q = inventoryMovementClass.q_pressed;
+
+                Item_Name.Content = "           -";
+                Item_Description.Content = "           -";
+                Item_Description.FontSize = 30;
+                Mana_Usage.Content = "           -";
             }
         }
 
@@ -112,7 +132,20 @@ namespace Koncoročný_projekt__RPG_game
                 Inventory_Code[inventoryMovementClass.backup_chosed_y].slots[inventoryMovementClass.backup_chosed_x].Background = Brushes.DarkGray; // changes the last position
                 Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Background = Brushes.Gray;
                 inventoryMovementClass.PressedTick();
+                List<string> Itemdescription = inventoryMovementClass.CheckingForItemDescription();
+                //Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x]
+                Item_Name.Content = Itemdescription[0];
+                Item_Description.Content = Itemdescription[1]; //32
+                Mana_Usage.Content = Itemdescription[2];
 
+                if (Itemdescription[1] != "           -")
+                {
+                    Item_Description.FontSize = 12;
+                }
+                else
+                {
+                    Item_Description.FontSize = 30;
+                }
             }
             else
             {
@@ -120,6 +153,11 @@ namespace Koncoročný_projekt__RPG_game
                 Inventory_Code[inventoryMovementClass.backup_chosed_y].slots[inventoryMovementClass.backup_chosed_x].Background = Brushes.DarkGray;
 
                 inventory_on_slot = inventoryMovementClass.slot_pressed;
+
+                Item_Name.Content = "           -";
+                Item_Description.Content = "           -";
+                Item_Description.FontSize = 30;
+                Mana_Usage.Content = "           -";
             }
         }
 
@@ -335,6 +373,8 @@ namespace Koncoročný_projekt__RPG_game
 
                             CurrentState = "Fight";
 
+                            EventerChanger($"Player has used {contentE}");
+
                             EnemiesAttack();
 
                             UpdatePlayerStats();
@@ -416,47 +456,33 @@ namespace Koncoročný_projekt__RPG_game
             }
         }
 
-        private List<MapBlocks_Insides> CheckingForEPrompts()
+        private MapBlocks_Insides CheckingForEPrompts()
         {
             int px = playerMovement.PlayerX;
             int py = playerMovement.PlayerY;
 
-            var positions = new List<(int x, int y)>();
-            List<MapBlocks_Insides> FinishedPositions = new List<MapBlocks_Insides>();
 
-            for (int dx = -1; dx <= 1; dx++)
-            {
-                for (int dy = -1; dy <= 1; dy++)
-                {
-                    if (dx == 0 && dy == 0) continue;
-                    positions.Add((px + dx, py + dy));
-                }
-            }
 
-            foreach (var pos in positions)
-            {
-                try
-                {
-                    var targetBlock = Map[0][pos.y].blocks[pos.x];
-
-                    targetBlock.OutofArrayChecker();
-
-                    FinishedPositions.Add(targetBlock);
-                }
-                catch (Exception)
-                {
-                    continue;
-                }
-            }
-
-            return FinishedPositions;
+            return Map[0][py].blocks[px];
         }
 
         private void ChangingPlayerPosition(string key)
         {
             Player_ima.Margin = new Thickness(playerMovement.Player_Pixel_X, playerMovement.Player_Pixel_Y, 0, 0);
         }
-    
+
+        private void EventerChanger(string eventText)
+        {
+            // 1. If we already have 4 or more items, chop off the oldest one at index 0
+            while (Eventer.Items.Count >= 5)
+            {
+                Eventer.Items.RemoveAt(0);
+            }
+
+            // 2. Always add the new event text
+            Eventer.Items.Add(eventText);
+        }
+
         private void Inventory_Open()
         {
             if (!Started) { return; }
@@ -699,9 +725,15 @@ namespace Koncoročný_projekt__RPG_game
             //current_enemies[0].stuff[0].atkLabel.Content = "10";
             //current_enemies[0].stuff[0].defLabel.Content = "5";
 
+            string justInCase = "";
             string result = fighting.PlayerAttack();
+            if (result.Contains("_"))
+            {
+                justInCase = result.Split('_')[1];
+                result = result.Split('_')[0];
+            }
             int i = 0;
-
+             //currentEnemies.RemoveAt(i);
             foreach (var enemy in current_enemies)
             {
                 
@@ -719,13 +751,18 @@ namespace Koncoročný_projekt__RPG_game
                 if (i >= fighting.currentEnemies.Count) { break; }
                 enemy.stuff[0].prog.Value = (int)((double)fighting.currentEnemies[i].EnemyHP / hpMax * 100);
                 enemy.stuff[0].progLab.Content = $"{fighting.currentEnemies[i].EnemyHP}hp";
+                EventerChanger($"The {fighting.currentEnemies[i].EnemyName} has {fighting.currentEnemies[i].EnemyHP}hp left.");
                 enemy.Background = Brushes.DarkGray;
                 i++;
             }
 
             if (result == "enemyDead")
             {
+                int num = int.Parse(justInCase);
                 //bye bye dude
+                
+                EventerChanger($"The {fighting.currentEnemies[num].EnemyName} has been defeated.");
+                fighting.KillEnemy(num);
                 Enemy_Grid.Children.Clear();
                 current_enemies.Clear();
                 Spawing_Enemies();
@@ -742,10 +779,12 @@ namespace Koncoročný_projekt__RPG_game
             bool playerDead = fighting.playerDead();
             if (playerDead)
             {
+                EventerChanger("The Player has been defeated.");
                 GameOver();
             }
             else
             {
+                EventerChanger($"The Player has {fighting.RequestPlayer().PlayerHP}hp left.");
                 UpdatePlayerStats();
             }
         }
