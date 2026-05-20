@@ -78,7 +78,7 @@ namespace Koncoročný_projekt__RPG_game
             PlayerMovement(key);
             return true;
         }
-        public void CheckingForEPrompts(List<MapBlocks_Insides> the_area)
+        public void CheckingForEPrompts(MapBlocks_Insides the_area)
         {
             //check if in any pos of this there is a prompt, if yes, put it in a list... 
             //then if theres more, just put some extra inputs on the prompts.. 

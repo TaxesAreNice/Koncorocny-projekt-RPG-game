@@ -346,7 +346,7 @@ namespace Koncoročný_projekt__RPG_game
                                     continue;
                                 }
 
-                                SetGameImage(Inventory_butons[fahh / 4].slots[fahh % 4].image, "Items", "faf", "AGuy");
+                                SetGameImage(Inventory_butons[fahh / 4].slots[fahh % 4].image, "Items", "faf", contentE);
                                 Inventory_butons[fahh / 4].Names[fahh % 4] = contentE;
 
                             }
@@ -456,40 +456,14 @@ namespace Koncoročný_projekt__RPG_game
             }
         }
 
-        private List<MapBlocks_Insides> CheckingForEPrompts()
+        private MapBlocks_Insides CheckingForEPrompts()
         {
             int px = playerMovement.PlayerX;
             int py = playerMovement.PlayerY;
 
-            var positions = new List<(int x, int y)>();
-            List<MapBlocks_Insides> FinishedPositions = new List<MapBlocks_Insides>();
 
-            for (int dx = -1; dx <= 1; dx++)
-            {
-                for (int dy = -1; dy <= 1; dy++)
-                {
-                    if (dx == 0 && dy == 0) continue;
-                    positions.Add((px + dx, py + dy));
-                }
-            }
 
-            foreach (var pos in positions)
-            {
-                try
-                {
-                    var targetBlock = Map[0][pos.y].blocks[pos.x];
-
-                    targetBlock.OutofArrayChecker();
-
-                    FinishedPositions.Add(targetBlock);
-                }
-                catch (Exception)
-                {
-                    continue;
-                }
-            }
-
-            return FinishedPositions;
+            return Map[0][py].blocks[px];
         }
 
         private void ChangingPlayerPosition(string key)
@@ -568,7 +542,7 @@ namespace Koncoročný_projekt__RPG_game
             int ty = inventoryMovementClass.ender_y;
 
             // 3. Draw the item
-            SetGameImage(Inventory_Code[ty].slots[tx].image, "Items", "faf", "AGuy");
+            SetGameImage(Inventory_Code[ty].slots[tx].image, "Items", "faf", itemNAME);
             Inventory_Code[ty].names[tx] = itemNAME;
 
             // 4. Handle the pointers
