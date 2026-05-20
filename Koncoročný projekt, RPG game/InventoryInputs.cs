@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.DirectoryServices.ActiveDirectory;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Text;
+using Koncoročný_projekt__RPG_game.UI_Generations;
 
 namespace Koncoročný_projekt__RPG_game
 {
@@ -427,5 +420,7 @@ namespace Koncoročný_projekt__RPG_game
             }
                 return description;
         }
+
+        
     }
 }

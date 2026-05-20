@@ -40,6 +40,10 @@
     <None Remove="Images\Blocks\Top_Walls\wood_tops.png" />
     <None Remove="Images\Characters\Player\JanoUsaty.png" />
     <None Remove="Images\Characters\Player\Player.png" />
+    <None Remove="Images\Items\faf\Steel Boots.png" />
+    <None Remove="Images\Items\faf\Steel Chestplate.png" />
+    <None Remove="Images\Items\faf\Steel Helmet.png" />
+    <None Remove="Images\Items\faf\Steel Leggins.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,9 +70,12 @@
     <Resource Include="Images\Characters\Player\AGuy.png" />
     <Resource Include="Images\Characters\Player\JanoUsaty.png" />
     <Resource Include="Images\Characters\Player\Player.png" />
-    <Resource Include="Images\Items\faf\Iron Helmet.png" />
     <Resource Include="Images\Items\faf\None.png" />
     <Resource Include="Images\Items\faf\AGuy.png" />
+    <Resource Include="Images\Items\faf\Steel Boots.png" />
+    <Resource Include="Images\Items\faf\Steel Chestplate.png" />
+    <Resource Include="Images\Items\faf\Steel Helmet.png" />
+    <Resource Include="Images\Items\faf\Steel Leggins.png" />
   </ItemGroup>
 
 </Project>

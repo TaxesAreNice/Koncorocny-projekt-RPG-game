@@ -20,6 +20,24 @@ namespace Koncoročný_projekt__RPG_game
         public int LastPlayerX = 0;
         public int LastPlayerY = 0;
 
+        public enum DoorPosition
+        {
+            Up_D,
+            Left_D,
+            Down_D,
+            Right_D,
+            None_D
+        }
+        public enum BlockType
+        {
+            Empty_T,
+            Item_T,
+            Chest_T,
+            NPC_T
+        }
+
+        public BlockType blockType = BlockType.Empty_T;
+        public DoorPosition doorPos = DoorPosition.None_D;
         private void PlayerMovement(string key)
         {
             LastPlayerX = PlayerX;
@@ -80,9 +98,38 @@ namespace Koncoročný_projekt__RPG_game
         }
         public void CheckingForEPrompts(MapBlocks_Insides the_area)
         {
+            if (the_area.block_type != MapBlocks_Insides.BlockType.Empty)
+            {
+                blockType = the_area.block_type switch
+                {
+                    MapBlocks_Insides.BlockType.Item => BlockType.Item_T,
+                    MapBlocks_Insides.BlockType.Chest => BlockType.Chest_T,
+                    MapBlocks_Insides.BlockType.NPC => BlockType.NPC_T,
+                    _ => BlockType.Empty_T
+                };
+            }
+            if (the_area.left_wall != MapBlocks_Insides.LeftWallType.None)
+            {
+                doorPos = DoorPosition.Left_D;
+            }
+            else if (the_area.upper_wall != MapBlocks_Insides.UpperWallType.None)
+            {
+                doorPos = DoorPosition.Up_D;
+            }
+            else if (the_area.right_wall != MapBlocks_Insides.RightWallType.None)
+            {
+                doorPos = DoorPosition.Right_D;
+            }
+            else if (the_area.downer_wall != MapBlocks_Insides.DownerWallType.None)
+            {
+                doorPos = DoorPosition.Down_D;
+            }
             //check if in any pos of this there is a prompt, if yes, put it in a list... 
             //then if theres more, just put some extra inputs on the prompts.. 
             // then have this methode return the list of extra inputs.. or just one and the positions of the prompts..
         }
+
+ 
+        }
     }
-}
+
