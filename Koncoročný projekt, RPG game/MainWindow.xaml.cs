@@ -15,6 +15,7 @@ using System.Windows.Threading;
 using System.Xml.Linq;
 using Koncoročný_projekt__RPG_game.UI_Generations;
 using static Koncoročný_projekt__RPG_game.Fighting;
+using static Koncoročný_projekt__RPG_game.PlayerMovementClass;
 using static Koncoročný_projekt__RPG_game.UI_Generations.MapBlocks_Insides;
 
 namespace Koncoročný_projekt__RPG_game
@@ -442,17 +443,15 @@ namespace Koncoročný_projekt__RPG_game
             PlayerAttack_UI.Content = $"{player.PlayerAttack}";
         }
 
-        private void MapMovement(string key, KeyEventArgs e) // made by Mahutik, tho changed by ai.. tho more like just the idea by me at this point
+        private void MapMovement(string key, KeyEventArgs e)
         {
             int px = playerMovement.PlayerX;
             int py = playerMovement.PlayerY;
 
-            string blockType;
-            //YMap
             MapBlocks_Insides current = Map[0][py].blocks[px];
             MapBlocks_Insides neighbor = null;
 
-            // Identify the neighbor block before moving
+          
             switch (e.Key)
             {
                 case Key.W: if (py > 0) neighbor = Map[0][py - 1].blocks[px]; break;
@@ -460,22 +459,92 @@ namespace Koncoročný_projekt__RPG_game
                 case Key.A: if (px > 0) neighbor = Map[0][py].blocks[px - 1]; break;
                 case Key.D: if (px < playerMovement.MAX_x) neighbor = Map[0][py].blocks[px + 1]; break;
                 case Key.E:
-                     MapPresss(current, "E", playerMovement.blockType.ToString());
-                    break;
+                    MapPresss(current, "E", playerMovement.blockType.ToString(), playerMovement.neighborDoorPos.ToString(), CheckingForNeighborsDoors());
+                    return;
                 case Key.F:
-                    MapPresss(current, "F", playerMovement.doorPos.ToString());
-                    break;
-                case Key.Escape: Inventory_Open(); return;
+                    MapPresss(current, "F", playerMovement.doorPos.ToString(), playerMovement.neighborDoorPos.ToString(), CheckingForNeighborsDoors());
+                    return;
+                case Key.Escape:
+                    Inventory_Open();
+                    return;
             }
 
-            if (playerMovement.CheckingForWalls(key, current, neighbor))
+            // 2. Handle movement logic
+            if (neighbor != null && playerMovement.CheckingForWalls(key, current, neighbor))
             {
-               ChangingPlayerPosition(key);
-                playerMovement.CheckingForEPrompts(CheckingForEPrompts());
+                ChangingPlayerPosition(key);
+
+                // --- THE FIX: Refresh positions AFTER moving ---
+                int newPx = playerMovement.PlayerX;
+                int newPy = playerMovement.PlayerY;
+                MapBlocks_Insides freshCurrent = Map[0][newPy].blocks[newPx];
+                // -----------------------------------------------
+
+                playerMovement.CheckingForEPrompts(CheckingForEPrompts(), freshCurrent);
+
+                if (currentStudioState == StudioState.Doors)
+                {
+                    Back_Studio_Click(null, null);
+                }
+
+                // Set base interaction content based on your new tile
+                TheInteractions.Content = playerMovement.blockType != PlayerMovementClass.BlockType.Empty_T
+                    ? "There's something you can interact with (F)"
+                    : "";
+
+                // Inside your MapMovement logic, update the door check to this:
+                if (HasNearbyOrNeighborDoor(newPx, newPy))
+                {
+                    if (!string.IsNullOrEmpty((string?)TheInteractions.Content)) TheInteractions.Content += "\n";
+                    TheInteractions.Content += "There's a door you can interact with (F)";
+                }
             }
-           
         }
-        private void MapPresss(MapBlocks_Insides current, string key, string type)
+
+// Upgraded helper method that checks your block AND neighboring walls facing you
+private bool HasNearbyOrNeighborDoor(int x, int y)
+        {
+            // 1. Check the block the player is currently standing on
+            MapBlocks_Insides current = Map[0][y].blocks[x];
+            if (current.left_wall == LeftWallType.DoorClosed || current.left_wall == LeftWallType.DoorOpen ||
+                current.right_wall == RightWallType.DoorClosed || current.right_wall == RightWallType.DoorOpen ||
+                current.upper_wall == UpperWallType.DoorClosed || current.upper_wall == UpperWallType.DoorOpen ||
+                current.downer_wall == DownerWallType.DoorClosed || current.downer_wall == DownerWallType.DoorOpen)
+            {
+                return true;
+            }
+
+            // 2. Check the Neighbor ABOVE (Does its DOWN wall have a door facing you?)
+            if (y > 0)
+            {
+                var above = Map[0][y - 1].blocks[x];
+                if (above.downer_wall == DownerWallType.DoorClosed || above.downer_wall == DownerWallType.DoorOpen) return true;
+            }
+
+            // 3. Check the Neighbor BELOW (Does its UP wall have a door facing you?)
+            if (y < playerMovement.MAX_y)
+            {
+                var below = Map[0][y + 1].blocks[x];
+                if (below.upper_wall == UpperWallType.DoorClosed || below.upper_wall == UpperWallType.DoorOpen) return true;
+            }
+
+            // 4. Check the Neighbor to the LEFT (Does its RIGHT wall have a door facing you?)
+            if (x > 0)
+            {
+                var left = Map[0][y].blocks[x - 1];
+                if (left.right_wall == RightWallType.DoorClosed || left.right_wall == RightWallType.DoorOpen) return true;
+            }
+
+            // 5. Check the Neighbor to the RIGHT (Does its LEFT wall have a door facing you?)
+            if (x < playerMovement.MAX_x)
+            {
+                var right = Map[0][y].blocks[x + 1];
+                if (right.left_wall == LeftWallType.DoorClosed || right.left_wall == LeftWallType.DoorOpen) return true;
+            }
+
+            return false; // No doors found anywhere around you
+        }
+        private void MapPresss(MapBlocks_Insides current, string key, string type, string neighbor_type,  List<(MapBlocks_Insides, bool OpenedOrClosed, string id)> neighbor)
         {
             string justInCaseEHEMWEARABLES = "";
             if (type.Contains("_"))
@@ -484,11 +553,11 @@ namespace Koncoročný_projekt__RPG_game
                 type = type.Split("_")[0];
             }
 
-            if (key == "E")
+            if (key == "F")
             {
-                DoorOpen_Close(type);
+               playerMovement.DoorOpen_Close(type, current, neighbor, neighbor_type);
             }
-            else if (key == "F")
+            else if (key == "E")
             {
                 ThingyInteraction(type);
             }
@@ -499,10 +568,7 @@ namespace Koncoročný_projekt__RPG_game
             
         }
 
-        private void DoorOpen_Close(string type)
-        {
-            
-        }
+       
 
         private MapBlocks_Insides CheckingForEPrompts()
         {
@@ -512,6 +578,37 @@ namespace Koncoročný_projekt__RPG_game
 
 
             return Map[0][py].blocks[px];
+        }
+        private List<(MapBlocks_Insides, bool OpenedOrClosed, string id)> CheckingForNeighborsDoors()
+        {
+            int px = playerMovement.PlayerX;
+            int py = playerMovement.PlayerY;
+
+            List<(MapBlocks_Insides Wall, bool OpenedOrClosed, string id)> neighbors = new();
+
+           
+            if (px + 1 < Map[0][py].blocks.Count)
+            {
+                if (Map[0][py].blocks[px + 1].left_wall == MapBlocks_Insides.LeftWallType.DoorClosed) { neighbors.Add((Map[0][py].blocks[px + 1], false, "left")); }
+                else if (Map[0][py].blocks[px + 1].left_wall == LeftWallType.DoorOpen) { neighbors.Add((Map[0][py].blocks[px + 1], true, "left")); }
+            }
+            if (px - 1 >= 0)
+            {
+                if (Map[0][py].blocks[px - 1].right_wall == MapBlocks_Insides.RightWallType.DoorClosed) { neighbors.Add((Map[0][py].blocks[px - 1], false, "right")); }
+                else if (Map[0][py].blocks[px - 1].right_wall == RightWallType.DoorOpen) { neighbors.Add((Map[0][py].blocks[px - 1], true, "right")); }
+            }
+            if (py + 1 < Map[0].Count)
+            {
+                if (Map[0][py + 1].blocks[px].upper_wall == MapBlocks_Insides.UpperWallType.DoorClosed) { neighbors.Add((Map[0][py + 1].blocks[px], false, "up")); }
+                else if (Map[0][py + 1].blocks[px].upper_wall == UpperWallType.DoorOpen) { neighbors.Add((Map[0][py + 1].blocks[px], true, "up")); }
+            }
+            if (py - 1 <  Map[0].Count)
+            {
+                if (Map[0][py - 1].blocks[px].downer_wall == MapBlocks_Insides.DownerWallType.DoorClosed) { neighbors.Add((Map[0][py - 1].blocks[px], false, "down")); }
+                else if (Map[0][py - 1].blocks[px].downer_wall == DownerWallType.DoorOpen) { neighbors.Add((Map[0][py - 1].blocks[px], true, "down")); }
+            }
+
+            return neighbors;
         }
 
         private void ChangingPlayerPosition(string key)
@@ -911,7 +1008,8 @@ namespace Koncoročný_projekt__RPG_game
             Flores,
             Items,
             NPCs,
-            Menu
+            Menu,
+            Doors
 
         }
 
@@ -924,6 +1022,7 @@ namespace Koncoročný_projekt__RPG_game
             {new List<string> { "wood", "stone", "andezit", "none" }  },
             {new List<string> { "Krankenwagen", "Bloxy_Cola", "none", "none" }  },
             {new List<string> { "gemini", "grok", "fa_ulty", "Fafafela" }  },
+              {new List<string> { "wood", "stone", "andezit", "none" }  }
         };
 
         private List<Button> Studio_Buttons = new List<Button>();
@@ -982,10 +1081,26 @@ namespace Koncoročný_projekt__RPG_game
             Buttons_Grid_Studio.Visibility = Visibility.Hidden;
             Current_State_Studio.Content = $"Current State: {currentStudioState.ToString()}";
 
-            foreach (Button button in Studio_Buttons)
+            if (i == 7)
             {
-                button.Content = Studio_Names[i][Studio_Buttons.IndexOf(button)];
+                int j = 0;
+                foreach (Button button in Studio_Buttons)
+                {
+                    if (j == 0) { button.Content = Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Left_Wall_Texture + "_" + "Left"; }
+                    else if (j == 1) { button.Content = Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Right_Wall_Texture + "_" + "Right"; }
+                    else if (j == 2) { button.Content = Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Upper_Wall_Texture + "_" + "Top"; }
+                    else if (j == 3) { button.Content = Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Downer_Wall_Texture + "_" + "Buttom"; }
+                    j++;
+                }
             }
+            else
+            {
+                foreach (Button button in Studio_Buttons)
+                {
+                    button.Content = Studio_Names[i][Studio_Buttons.IndexOf(button)];
+                }
+            }
+
 
 
         }
@@ -1004,11 +1119,17 @@ namespace Koncoročný_projekt__RPG_game
 
         void faff(int i)
         {
+            string justInCase = "";
             string taxes = Studio_Buttons[i].Content.ToString();
+            if (taxes.Contains("_"))
+            {
+                justInCase = taxes.Split("_")[0];
+                taxes = taxes.Split("_")[1];
+            }
 
-            
 
-            if (currentStudioState == StudioState.Left_Walls )
+
+            if (currentStudioState == StudioState.Left_Walls)
             {
                 SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Left_wall, "Blocks", currentStudioState.ToString(), taxes + "_sides");
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].left_wall = LeftWallType.Wall;
@@ -1020,20 +1141,20 @@ namespace Koncoročný_projekt__RPG_game
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].right_wall = RightWallType.Wall;
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Right_Wall_Texture = taxes;
             }
-            else if (currentStudioState == StudioState.Top_Walls )
+            else if (currentStudioState == StudioState.Top_Walls)
             {
                 SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Upper_wall, "Blocks", currentStudioState.ToString(), taxes + "_tops");
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].upper_wall = UpperWallType.Wall;
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Upper_Wall_Texture = taxes;
             }
-            else if (currentStudioState == StudioState.Buttom_Walls )
+            else if (currentStudioState == StudioState.Buttom_Walls)
             {
                 SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Downer_wall, "Blocks", currentStudioState.ToString(), taxes + "_tops");
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].downer_wall = DownerWallType.Wall;
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Downer_Wall_Texture = taxes;
-                
+
             }
-            else if (currentStudioState == StudioState.Flores )
+            else if (currentStudioState == StudioState.Flores)
             {
                 SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Flore, "Blocks", currentStudioState.ToString(), taxes + "_block");
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Flore_Texture = taxes;
@@ -1043,9 +1164,43 @@ namespace Koncoročný_projekt__RPG_game
                 SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Item, "Blocks", currentStudioState.ToString(), taxes + "_item");
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Item_Texture = taxes;
             }
+            else if (currentStudioState == StudioState.Doors && i == 0 && taxes != "")
+            {
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Left_wall, "Blocks", "Left_Walls", taxes + "_closed");
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Left_Wall_Texture = taxes;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].left_wall = LeftWallType.DoorClosed;
 
 
-        }
+                Back_Studio_Click(null, null);
+            }
+            else if (currentStudioState == StudioState.Doors && i == 1 && taxes != "")
+            {
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Right_wall, "Blocks", "Right_Walls", taxes + "_closed");
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Right_Wall_Texture = taxes;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].right_wall = RightWallType.DoorClosed;
+                Back_Studio_Click(null, null);
+            }
+            else if (currentStudioState == StudioState.Doors && i == 2 && taxes != "")
+            {
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Upper_wall, "Blocks", "Top_Walls", taxes + "_closed");
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Upper_Wall_Texture = taxes;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].upper_wall = UpperWallType.DoorClosed;
+                Back_Studio_Click(null, null);
+            }
+            else if (currentStudioState == StudioState.Doors && i == 3 && taxes != "")
+            {
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Downer_wall, "Blocks", "Buttom_Walls", taxes + "_closed");
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Downer_Wall_Texture = taxes;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].downer_wall = DownerWallType.DoorClosed;
+                // else if (currentStudioState == StudioState.NPCs)
+                //{
+                //    SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC, "Blocks", currentStudioState.ToString(), taxes + "_npc");
+                //    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Texture = taxes;
+                // }
+
+                Back_Studio_Click(null, null);
+            }
+            }
         private void Slot_1_Studio_Click(object sender, RoutedEventArgs e)
         {
             faff(0);
@@ -1066,7 +1221,11 @@ namespace Koncoročný_projekt__RPG_game
                         faff(3);    
         }
 
-       
+        private void Doors_Studio_Click(object sender, RoutedEventArgs e)
+        {
+            currentStudioState = StudioState.Doors;
+            faf(7);
+        }
     }
 }
 

@@ -18,25 +18,29 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         {
             None,
             Wall,
-            Door
+            DoorOpen,
+            DoorClosed
         }
         public enum RightWallType
         {
             None,
             Wall,
-            Door
+            DoorOpen,
+            DoorClosed
         }
         public enum UpperWallType
         {
             None,
             Wall,
-            Door
+            DoorOpen,
+            DoorClosed
         }
         public enum DownerWallType
         {
             None,
             Wall,
-            Door
+            DoorOpen,
+            DoorClosed
         }
 
         public string current_Left_Wall_Texture = "";
