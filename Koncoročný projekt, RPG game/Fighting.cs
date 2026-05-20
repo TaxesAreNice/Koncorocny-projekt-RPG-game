@@ -167,9 +167,9 @@ namespace Koncoročný_projekt__RPG_game
                 {
                     if (currentEnemies[i].EnemyName == selectedEnemy)
                     {
-                        currentEnemies.RemoveAt(i);
+                       // currentEnemies.RemoveAt(i);
                         selectedEnemy = "";
-                        return "enemyDead";
+                        return "enemyDead_" + i;
                     }
                 }
             }
@@ -198,5 +198,13 @@ namespace Koncoročný_projekt__RPG_game
         {
             return monster;
         }
+
+        public void KillEnemy(int num)
+        {
+            currentEnemies.RemoveAt(num);
+        }
+            
+            
+        }
     }
-}
+

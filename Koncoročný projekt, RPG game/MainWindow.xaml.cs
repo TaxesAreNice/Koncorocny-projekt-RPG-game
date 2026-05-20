@@ -373,6 +373,8 @@ namespace Koncoročný_projekt__RPG_game
 
                             CurrentState = "Fight";
 
+                            EventerChanger($"Player has used {contentE}");
+
                             EnemiesAttack();
 
                             UpdatePlayerStats();
@@ -494,7 +496,19 @@ namespace Koncoročný_projekt__RPG_game
         {
             Player_ima.Margin = new Thickness(playerMovement.Player_Pixel_X, playerMovement.Player_Pixel_Y, 0, 0);
         }
-    
+
+        private void EventerChanger(string eventText)
+        {
+            // 1. If we already have 4 or more items, chop off the oldest one at index 0
+            while (Eventer.Items.Count >= 5)
+            {
+                Eventer.Items.RemoveAt(0);
+            }
+
+            // 2. Always add the new event text
+            Eventer.Items.Add(eventText);
+        }
+
         private void Inventory_Open()
         {
             if (!Started) { return; }
@@ -737,9 +751,15 @@ namespace Koncoročný_projekt__RPG_game
             //current_enemies[0].stuff[0].atkLabel.Content = "10";
             //current_enemies[0].stuff[0].defLabel.Content = "5";
 
+            string justInCase = "";
             string result = fighting.PlayerAttack();
+            if (result.Contains("_"))
+            {
+                justInCase = result.Split('_')[1];
+                result = result.Split('_')[0];
+            }
             int i = 0;
-
+             //currentEnemies.RemoveAt(i);
             foreach (var enemy in current_enemies)
             {
                 
@@ -757,13 +777,18 @@ namespace Koncoročný_projekt__RPG_game
                 if (i >= fighting.currentEnemies.Count) { break; }
                 enemy.stuff[0].prog.Value = (int)((double)fighting.currentEnemies[i].EnemyHP / hpMax * 100);
                 enemy.stuff[0].progLab.Content = $"{fighting.currentEnemies[i].EnemyHP}hp";
+                EventerChanger($"The {fighting.currentEnemies[i].EnemyName} has {fighting.currentEnemies[i].EnemyHP}hp left.");
                 enemy.Background = Brushes.DarkGray;
                 i++;
             }
 
             if (result == "enemyDead")
             {
+                int num = int.Parse(justInCase);
                 //bye bye dude
+                
+                EventerChanger($"The {fighting.currentEnemies[num].EnemyName} has been defeated.");
+                fighting.KillEnemy(num);
                 Enemy_Grid.Children.Clear();
                 current_enemies.Clear();
                 Spawing_Enemies();
@@ -780,10 +805,12 @@ namespace Koncoročný_projekt__RPG_game
             bool playerDead = fighting.playerDead();
             if (playerDead)
             {
+                EventerChanger("The Player has been defeated.");
                 GameOver();
             }
             else
             {
+                EventerChanger($"The Player has {fighting.RequestPlayer().PlayerHP}hp left.");
                 UpdatePlayerStats();
             }
         }
