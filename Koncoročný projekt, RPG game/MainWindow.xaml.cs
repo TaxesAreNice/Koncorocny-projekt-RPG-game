@@ -204,7 +204,7 @@ namespace Koncoročný_projekt__RPG_game
                 Margin = new Thickness(playerMovement.Player_Pixel_X, playerMovement.Player_Pixel_Y, 0, 0)
             };
 
-            SetGameImage(Player_ima, "Characters", "Player", "AGuy");
+            SetGameImage(Player_ima, "Characters", "Player", "Player");
             Map_UI.Children.Add(Player_ima);
         }
         private void GeneretingInventory()
