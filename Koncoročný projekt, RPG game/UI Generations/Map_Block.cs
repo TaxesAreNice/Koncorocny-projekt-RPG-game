@@ -15,7 +15,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         private Grid Box;
         private int box_position = 5;
         public List<MapBlocks_Insides> blocks = [];
-        public Map_Block()
+        public Map_Block(int xMap, int yMap)
         {
             /*Box = new Grid()
             {
@@ -26,14 +26,14 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             };
             */
             Height = 100;
-            Width = 1265;
+            Width = yMap; //1265
             Margin = new Thickness(2);
             Background = Brushes.Gray;
             HorizontalAlignment = HorizontalAlignment.Left;
             VerticalAlignment = VerticalAlignment.Top;
 
 
-            for (int i = 0; i < 12; i++) 
+            for (int i = 0; i < xMap; i++) 
             {
                 MapBlocks_Insides tempBox = new MapBlocks_Insides(box_position);
 

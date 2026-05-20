@@ -90,7 +90,7 @@
 
         </Grid>
         <Label x:Name="Text_Of_All_Texts" Content="Fafafela" HorizontalAlignment="Left" Margin="0,648,0,0" VerticalAlignment="Top" Height="72" Width="1152" FontSize="50" Background="DarkGray" Visibility="Collapsed"/>
-        <Grid/>
+        <TextBox x:Name="MapSize" HorizontalAlignment="Left" Margin="1333,412,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" Height="84" Text="h"/>
 
     </Grid>
 </Window>

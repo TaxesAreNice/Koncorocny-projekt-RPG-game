@@ -43,6 +43,9 @@ namespace Koncoročný_projekt__RPG_game
         private string itemNAME = "";
         private string enemy_name = "";
 
+        private int YMap = 0;
+        private int XMap = 0;
+
         DispatcherTimer inventory_click_checker = new DispatcherTimer();
         DispatcherTimer inventory_q_click_checker = new DispatcherTimer();
 
@@ -163,11 +166,17 @@ namespace Koncoročný_projekt__RPG_game
 
         private void start_Click(object sender, RoutedEventArgs e)
         {
-            Started = true;
+            if (MapSize.Text.Contains("x") || MapSize.Text.Contains("X"))
+            {
+                YMap = int.Parse(MapSize.Text.Split('x', 'X')[0]);
+                XMap = int.Parse(MapSize.Text.Split('x', 'X')[1]);
+                playerMovement.MAX_y = YMap - 1;
+                playerMovement.MAX_x = XMap - 1;
+                Started = true;
 
-            GeneretingMap();
-            GeneretingInventory();
-
+                GeneretingMap();
+                GeneretingInventory();
+            }
 
 
         }
@@ -178,10 +187,12 @@ namespace Koncoročný_projekt__RPG_game
         {
             List<Map_Block> row = [];
             int rowY = 0;
+            int yFafer = 1265;
+            if (YMap < 7) { }
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < YMap; i++)
             {
-                Map_Block roww = new Map_Block();
+                Map_Block roww = new Map_Block(XMap, yFafer);
 
                 row.Add(roww);
 
@@ -436,6 +447,8 @@ namespace Koncoročný_projekt__RPG_game
             int px = playerMovement.PlayerX;
             int py = playerMovement.PlayerY;
 
+            string blockType;
+            //YMap
             MapBlocks_Insides current = Map[0][py].blocks[px];
             MapBlocks_Insides neighbor = null;
 
@@ -446,6 +459,12 @@ namespace Koncoročný_projekt__RPG_game
                 case Key.S: if (py < playerMovement.MAX_y) neighbor = Map[0][py + 1].blocks[px]; break;
                 case Key.A: if (px > 0) neighbor = Map[0][py].blocks[px - 1]; break;
                 case Key.D: if (px < playerMovement.MAX_x) neighbor = Map[0][py].blocks[px + 1]; break;
+                case Key.E:
+                     MapPresss(current, "E", playerMovement.blockType.ToString());
+                    break;
+                case Key.F:
+                    MapPresss(current, "F", playerMovement.doorPos.ToString());
+                    break;
                 case Key.Escape: Inventory_Open(); return;
             }
 
@@ -454,6 +473,35 @@ namespace Koncoročný_projekt__RPG_game
                ChangingPlayerPosition(key);
                 playerMovement.CheckingForEPrompts(CheckingForEPrompts());
             }
+           
+        }
+        private void MapPresss(MapBlocks_Insides current, string key, string type)
+        {
+            string justInCaseEHEMWEARABLES = "";
+            if (type.Contains("_"))
+            {
+                justInCaseEHEMWEARABLES = "_" + type.Split("_")[1];
+                type = type.Split("_")[0];
+            }
+
+            if (key == "E")
+            {
+                DoorOpen_Close(type);
+            }
+            else if (key == "F")
+            {
+                ThingyInteraction(type);
+            }
+        }
+
+        private void ThingyInteraction(string type)
+        {
+            
+        }
+
+        private void DoorOpen_Close(string type)
+        {
+            
         }
 
         private MapBlocks_Insides CheckingForEPrompts()
