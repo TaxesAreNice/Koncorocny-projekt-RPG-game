@@ -44,15 +44,6 @@ namespace Koncoročný_projekt__RPG_game
 
             Items.Add(new Item
             {
-                Name = "BloodThorn Sword_Sword",
-                Type = ItemType.Wearable,
-                Description = "Every attack will give user a 30% of users damage",
-                Attack = 20,
-                LifeLeech = 30,
-            });
-
-            Items.Add(new Item
-            {
                 Name = "Breaker Ring_Ring",
                 Type = ItemType.Wearable,
                 Description = "Instantly breaks through enemy defenses",
@@ -100,7 +91,6 @@ namespace Koncoročný_projekt__RPG_game
             Items.Add(new Item { Name = "Rusty Boots_Boots", Type = ItemType.Wearable, Description = " +1 defense", Defense = 1 });
 
             Items.Add(new Item { Name = "Dull Blade_Sword", Type = ItemType.Wearable, Description = "Just some dull blade", Attack = 5 });
-            Items.Add(new Item { Name = "Iron Sword_Sword", Type = ItemType.Wearable, Description = "A sturdy iron sword", Attack = 10 });
             Items.Add(new Item { Name = "Steel Sword_Sword", Type = ItemType.Wearable, Description = "A sharp steel sword", Attack = 15 });
             Items.Add(new Item { Name = "Diamond Sword_Sword", Type = ItemType.Wearable, Description = "A powerful diamond sword", Attack = 20 });
             Items.Add(new Item { Name = "Excalibur_Sword", Type = ItemType.Wearable, Description = "The legendary sword of King Arthur", Attack = 50 });
@@ -109,11 +99,6 @@ namespace Koncoročný_projekt__RPG_game
             Items.Add(new Item { Name = "Steel Chestplate_Chestplate", Type = ItemType.Wearable, Description = " +8 defense", Defense = 8 });
             Items.Add(new Item { Name = "Steel Leggins_Leggins", Type = ItemType.Wearable, Description = " +7 defense", Defense = 7 });
             Items.Add(new Item { Name = "Steel Boots_Boots", Type = ItemType.Wearable, Description = " +5 defense", Defense = 5 });
-
-            Items.Add(new Item { Name = "Iron Helmet_Helmet", Type = ItemType.Wearable, Description = " +3 defense", Defense = 3 });
-            Items.Add(new Item { Name = "Iron Chestplate_Chestplate", Type = ItemType.Wearable, Description = " +5 defense", Defense = 5 });
-            Items.Add(new Item { Name = "Iron Leggins_Leggins", Type = ItemType.Wearable, Description = " +4 defense", Defense = 4 });
-            Items.Add(new Item { Name = "Iron Boots_Boots", Type = ItemType.Wearable, Description = " +3 defense", Defense = 3 });
         }
     }
 }
