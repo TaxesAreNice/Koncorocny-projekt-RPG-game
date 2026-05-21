@@ -6,7 +6,6 @@ namespace Koncoročný_projekt__RPG_game
 {
     public class Item
     {
-        // Properties
         public string Name { get; set; }
         public ItemType Type { get; set; }
         public string Description { get; set; }
@@ -18,12 +17,10 @@ namespace Koncoročný_projekt__RPG_game
         public bool Weaken { get; set; }
         public bool Revive { get; set; }
         public int AoEDamage { get; set; }
-        public int LifeLeech { get; set; }
 
-        // FIX: We pass the ACTIVE player, monster, and fighting instance into the method
         public void UseItem(Player activePlayer, Monster activeMonster, Fighting activeFight)
         {
-            // Support Items (Potions/Meals)
+
             if (Type == ItemType.Support)
             {
                 activePlayer.PlayerHP += Heal;
@@ -32,37 +29,21 @@ namespace Koncoročný_projekt__RPG_game
                 activePlayer.PlayerAttack += Attack;
             }
 
-            // Combat Scrolls / Throwables
             else if (Type == ItemType.FightOnly)
             {
-                // Note: We use TakeDamage to ensure logic is consistent
                 activeMonster.TakeDamage(Attack - activeMonster.MonsterDefenceStatus);
                 activePlayer.PlayerDefense += Defense;
                 activePlayer.PlayerAttack += Attack;
             }
 
-            // Gear (Scythe, Swords, Armor)
             else if (Type == ItemType.Wearable)
             {
                 activePlayer.PlayerDefense += Defense;
                 activePlayer.PlayerAttack += Attack;
-                // If it's a breaker item, it sets the monster's current defense
                 if (EnemyDefense == 0 && Name == "Breaker Ring")
                     activeMonster.MonsterDefenceStatus = 0;
             }
 
-            // Special Effects
-            if (LifeLeech > 0)
-            {
-                activePlayer.PlayerHP += (activePlayer.PlayerDamage * LifeLeech / 100);
-            }
-
-            if (Weaken && activeMonster != null)
-            {
-                activeMonster.MonsterAttack /= 2;
-            }
-
-            // Area of Effect Logic
             if (Type == ItemType.AoE && activeFight != null)
             {
                 foreach (var enemy in activeFight.currentEnemies)
@@ -71,7 +52,6 @@ namespace Koncoročný_projekt__RPG_game
                 }
             }
 
-            // Global Clamp: Prevent HP from exceeding 100
             if (activePlayer.PlayerHP > 100)
             {
                 activePlayer.PlayerHP = 100;
