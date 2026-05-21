@@ -261,6 +261,10 @@ namespace Koncoročný_projekt__RPG_game
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.M)
+            {
+                AdminToggle();
+            }
             if (!Started) { return; }
 
             bool success = false;
@@ -278,9 +282,18 @@ namespace Koncoročný_projekt__RPG_game
             {
                 FightingMovement(success, key, e);
             }
-
         }
-
+        private void AdminToggle()
+        {
+            if (AdmitGrid.Visibility == Visibility.Visible)
+            {
+                AdmitGrid.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                AdmitGrid.Visibility = Visibility.Visible;
+            }
+        }
         private void FightingMovement(bool success, string key, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
@@ -459,7 +472,7 @@ namespace Koncoročný_projekt__RPG_game
                 case Key.A: if (px > 0) neighbor = Map[0][py].blocks[px - 1]; break;
                 case Key.D: if (px < playerMovement.MAX_x) neighbor = Map[0][py].blocks[px + 1]; break;
                 case Key.E:
-                    MapPresss(current, "E", playerMovement.blockType.ToString(), playerMovement.neighborDoorPos.ToString(), CheckingForNeighborsDoors());
+                    MapPresss(current, "E", current.block_type.ToString(), playerMovement.neighborDoorPos.ToString(), CheckingForNeighborsDoors()); //playerMovement.blockType.ToString()
                     return;
                 case Key.F:
                     MapPresss(current, "F", playerMovement.doorPos.ToString(), playerMovement.neighborDoorPos.ToString(), CheckingForNeighborsDoors());
@@ -567,13 +580,21 @@ namespace Koncoročný_projekt__RPG_game
             }
             else if (key == "E")
             {
-                ThingyInteraction(type);
+                ThingyInteraction(type, current);
             }
         }
 
-        private void ThingyInteraction(string type)
+        private void ThingyInteraction(string type, MapBlocks_Insides current)
         {
-            
+            if (type == "Item")
+            {
+                itemNAME = current.current_item_Texture;
+                Add_Item_To_Inventory();
+
+                current.current_item_Texture = "";
+                current.block_type = MapBlocks_Insides.BlockType.Empty;
+                current.Item.Source = null;
+            }
         }
 
        
@@ -995,6 +1016,7 @@ namespace Koncoročný_projekt__RPG_game
         private void StudioAct_Click(object sender, RoutedEventArgs e)
         {
             if (!Started) { Studio.Visibility = Visibility.Hidden; return; }
+            if (AdmitGrid.Visibility == Visibility.Visible) { AdmitGrid.Visibility = Visibility.Hidden; }
             if (Studio.Visibility == Visibility.Visible)
             {
                 Studio.Visibility = Visibility.Hidden;
@@ -1154,12 +1176,6 @@ namespace Koncoročný_projekt__RPG_game
                 SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Flore, "Blocks", currentStudioState.ToString(), taxes + "_block");
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Flore_Texture = taxes;
             }
-            else if (currentStudioState == StudioState.Items)
-            {
-                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Item, "Blocks", currentStudioState.ToString(), taxes + "_item");
-                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Item_Texture = taxes;
-                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.Item;
-            }
             else if (currentStudioState == StudioState.Doors && i == 0 && taxes != "")
             {
                 SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Left_wall, "Blocks", "Left_Walls", taxes + "_closed");
@@ -1192,12 +1208,7 @@ namespace Koncoročný_projekt__RPG_game
 
                 Back_Studio_Click(null, null);
             }
-            else if (currentStudioState == StudioState.NPCs)
-                {
-                    SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC, "Blocks", currentStudioState.ToString(), taxes + "_npc");
-                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Texture = taxes;
-                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.NPC;
-            }
+           
             }
         private void Slot_1_Studio_Click(object sender, RoutedEventArgs e)
         {
@@ -1223,6 +1234,23 @@ namespace Koncoročný_projekt__RPG_game
         {
             currentStudioState = StudioState.Doors;
             faf(7);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string taxes = Texter_Studio.Text;
+            if (currentStudioState == StudioState.Items)
+            {
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Item, "Items", "faf", taxes);
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_item_Texture = taxes;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.Item;
+            }
+            else if (currentStudioState == StudioState.NPCs)
+            {
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC, "Blocks", currentStudioState.ToString(), taxes + "_npc");
+                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Texture = taxes;
+                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.NPC;
+            }
         }
     }
 }

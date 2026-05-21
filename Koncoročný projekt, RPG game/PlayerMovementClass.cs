@@ -65,67 +65,68 @@ namespace Koncoročný_projekt__RPG_game
         public BlockType blockType = BlockType.Empty_T;
         public DoorPosition doorPos = DoorPosition.None_D;
         public NeighborDoorPosition neighborDoorPos = NeighborDoorPosition.None_N;
+       
         public void DoorOpen_Close(string type, MapBlocks_Insides currentBlock, List<(MapBlocks_Insides door, bool OpenedORClosed, string id)> neighbors, string neighbor_type)
         {
             if (type == "Up")
             {
                 if (currentBlock.upper_wall == MapBlocks_Insides.UpperWallType.DoorOpen)
-                { 
+                {
                     currentBlock.upper_wall = MapBlocks_Insides.UpperWallType.DoorClosed;
                     currentBlock.current_Upper_Wall_Texture = "TopDoor_closed";
                     SetGameImage(currentBlock.Upper_wall, "Blocks", "Top_Walls", "TopDoor_closed");
                 }
-                else if (currentBlock.upper_wall == MapBlocks_Insides.UpperWallType.DoorClosed) 
+                else if (currentBlock.upper_wall == MapBlocks_Insides.UpperWallType.DoorClosed)
                 {
                     currentBlock.upper_wall = MapBlocks_Insides.UpperWallType.DoorOpen;
-                    currentBlock.current_Upper_Wall_Texture = "TopDoor_open";
-                    SetGameImage(currentBlock.Upper_wall, "Blocks", "Top_Walls", "TopDoor_open");
+                    currentBlock.current_Upper_Wall_Texture = "TopDoor_opened";
+                    SetGameImage(currentBlock.Upper_wall, "Blocks", "Top_Walls", "TopDoor_opened");
                 }
             }
             else if (type == "Down")
             {
-                    if (currentBlock.downer_wall == MapBlocks_Insides.DownerWallType.DoorOpen) 
-                { 
-                    currentBlock.downer_wall = MapBlocks_Insides.DownerWallType.DoorClosed; 
+                if (currentBlock.downer_wall == MapBlocks_Insides.DownerWallType.DoorOpen)
+                {
+                    currentBlock.downer_wall = MapBlocks_Insides.DownerWallType.DoorClosed;
                     currentBlock.current_Downer_Wall_Texture = "DownDoor_closed";
-                    SetGameImage(currentBlock.Downer_wall, "Blocks", "Down_Walls", "DownDoor_closed");
+                    SetGameImage(currentBlock.Downer_wall, "Blocks", "Buttom_Walls", "ButtomDoor_closed");
                 }
-                else if (currentBlock.downer_wall == MapBlocks_Insides.DownerWallType.DoorClosed) 
-                { 
-                    currentBlock.downer_wall = MapBlocks_Insides.DownerWallType.DoorOpen; 
-                    currentBlock.current_Downer_Wall_Texture = "DownDoor_open";
-                    SetGameImage(currentBlock.Downer_wall, "Blocks", "Down_Walls", "DownDoor_open");
+                else if (currentBlock.downer_wall == MapBlocks_Insides.DownerWallType.DoorClosed)
+                {
+                    currentBlock.downer_wall = MapBlocks_Insides.DownerWallType.DoorOpen;
+                    currentBlock.current_Downer_Wall_Texture = "DownDoor_opened";
+                    SetGameImage(currentBlock.Downer_wall, "Blocks", "Buttom_Walls", "ButtomDoor_opened");
                 }
             }
             else if (type == "Left")
             {
-                if (currentBlock.left_wall == MapBlocks_Insides.LeftWallType.DoorOpen) 
-                { 
-                    currentBlock.left_wall = MapBlocks_Insides.LeftWallType.DoorClosed; 
+                if (currentBlock.left_wall == MapBlocks_Insides.LeftWallType.DoorOpen)
+                {
+                    currentBlock.left_wall = MapBlocks_Insides.LeftWallType.DoorClosed;
                     currentBlock.current_Left_Wall_Texture = "LeftDoor_closed";
                     SetGameImage(currentBlock.Left_wall, "Blocks", "Left_Walls", "LeftDoor_closed");
                 }
-                else if (currentBlock.left_wall == MapBlocks_Insides.LeftWallType.DoorClosed) 
-                { 
+                else if (currentBlock.left_wall == MapBlocks_Insides.LeftWallType.DoorClosed)
+                {
                     currentBlock.left_wall = MapBlocks_Insides.LeftWallType.DoorOpen;
-                    currentBlock.current_Left_Wall_Texture = "LeftDoor_open";
-                    SetGameImage(currentBlock.Left_wall, "Blocks", "Left_Walls", "LeftDoor_open");
+                    currentBlock.current_Left_Wall_Texture = "LeftDoor_opened";
+                    SetGameImage(currentBlock.Left_wall, "Blocks", "Left_Walls", "LeftDoor_opened");
                 }
             }
             else if (type == "Right")
             {
-                if (currentBlock.right_wall == MapBlocks_Insides.RightWallType.DoorOpen) 
-                { 
-                    currentBlock.right_wall = MapBlocks_Insides.RightWallType.DoorClosed; 
+                if (currentBlock.right_wall == MapBlocks_Insides.RightWallType.DoorOpen)
+                {
+                    currentBlock.right_wall = MapBlocks_Insides.RightWallType.DoorClosed;
                     currentBlock.current_Right_Wall_Texture = "RightDoor_closed";
                     SetGameImage(currentBlock.Right_wall, "Blocks", "Right_Walls", "RightDoor_closed");
                 }
-                else if (currentBlock.right_wall == MapBlocks_Insides.RightWallType.DoorClosed) 
-                { 
-                    currentBlock.right_wall = MapBlocks_Insides.RightWallType.DoorOpen; 
-                    currentBlock.current_Right_Wall_Texture = "RightDoor_open";
-                    SetGameImage(currentBlock.Right_wall, "Blocks", "Right_Walls", "RightDoor_open");
-                }           
+                else if (currentBlock.right_wall == MapBlocks_Insides.RightWallType.DoorClosed)
+                {
+                    currentBlock.right_wall = MapBlocks_Insides.RightWallType.DoorOpen;
+                    currentBlock.current_Right_Wall_Texture = "RightDoor_opened";
+                    SetGameImage(currentBlock.Right_wall, "Blocks", "Right_Walls", "RightDoor_opened");
+                }
             }
 
             foreach (var neighbor in neighbors)
@@ -136,22 +137,65 @@ namespace Koncoročný_projekt__RPG_game
 
                 if (isOpen)
                 {
-                    if (id == "up" ) { theDude.upper_wall = MapBlocks_Insides.UpperWallType.DoorClosed; }
-                    else if (id == "down") { theDude.upper_wall = MapBlocks_Insides.UpperWallType.DoorClosed; }
-                    else if (id == "left") { theDude.left_wall = MapBlocks_Insides.LeftWallType.DoorClosed; }
-                    else if (id == "right") { theDude.right_wall = MapBlocks_Insides.RightWallType.DoorClosed; }
+                    if (id == "up")
+                    {
+                        theDude.upper_wall = MapBlocks_Insides.UpperWallType.DoorClosed;
+                        theDude.current_Upper_Wall_Texture = "TopDoor_closed";
+                        SetGameImage(theDude.Upper_wall, "Blocks", "Top_Walls", "TopDoor_closed");
+                    }
+                    else if (id == "down")
+                    {
+                        theDude.downer_wall = MapBlocks_Insides.DownerWallType.DoorClosed;
+                        theDude.current_Downer_Wall_Texture = "DownDoor_closed";
+                        SetGameImage(theDude.Downer_wall, "Blocks", "Buttom_Walls", "ButtomDoor_closed");
+                    }
+                    else if (id == "left")
+                    {
+                        theDude.left_wall = MapBlocks_Insides.LeftWallType.DoorClosed;
+                        theDude.current_Left_Wall_Texture = "LeftDoor_closed";
+                        SetGameImage(theDude.Left_wall, "Blocks", "Left_Walls", "LeftDoor_closed");
+                    }
+                    else if (id == "right")
+                    {
+                        theDude.right_wall = MapBlocks_Insides.RightWallType.DoorClosed;
+                        theDude.current_Right_Wall_Texture = "RightDoor_closed";
+                        SetGameImage(theDude.Right_wall, "Blocks", "Right_Walls", "RightDoor_closed");
+                    }
                 }
                 else
                 {
-                    if (id == "up") { theDude.upper_wall = MapBlocks_Insides.UpperWallType.DoorOpen; }
-                    else if (id == "down") { theDude.upper_wall = MapBlocks_Insides.UpperWallType.DoorOpen; }
-                    else if (id == "left") { theDude.left_wall = MapBlocks_Insides.LeftWallType.DoorOpen; }
-                    else if (id == "right") { theDude.right_wall = MapBlocks_Insides.RightWallType.DoorOpen; }
+                    if (id == "up")
+                    {
+                        theDude.upper_wall = MapBlocks_Insides.UpperWallType.DoorOpen;
+                        theDude.current_Upper_Wall_Texture = "TopDoor_opened";
+                        SetGameImage(theDude.Upper_wall, "Blocks", "Top_Walls", "TopDoor_opened");
+                    }
+                    else if (id == "down")
+                    {
+                        theDude.downer_wall = MapBlocks_Insides.DownerWallType.DoorOpen;
+                        theDude.current_Downer_Wall_Texture = "DownDoor_opened";
+                        SetGameImage(theDude.Downer_wall, "Blocks", "Buttom_Walls", "ButtomDoor_opened");
+                    }
+                    else if (id == "left")
+                    {
+                        theDude.left_wall = MapBlocks_Insides.LeftWallType.DoorOpen;
+                        theDude.current_Left_Wall_Texture = "LeftDoor_opened";
+                        SetGameImage(theDude.Left_wall, "Blocks", "Left_Walls", "LeftDoor_opened");
+                    }
+                    else if (id == "right")
+                    {
+                        theDude.right_wall = MapBlocks_Insides.RightWallType.DoorOpen;
+                        theDude.current_Right_Wall_Texture = "RightDoor_opened";
+                        SetGameImage(theDude.Right_wall, "Blocks", "Right_Walls", "RightDoor_opened");
+                    }
                 }
             }
+        }
+
+
             //if (neighbor != null && neighbor.left_wall == MapBlocks_Insides.LeftWallType.DoorOpen) { neighbor.left_wall = MapBlocks_Insides.LeftWallType.DoorClosed; }
            // else if (neighbor != null && neighbor.left_wall == MapBlocks_Insides.LeftWallType.DoorClosed) { neighbor.left_wall = MapBlocks_Insides.LeftWallType.DoorOpen; }
-        }
+        
         private void PlayerMovement(string key)
         {
             LastPlayerX = PlayerX;
