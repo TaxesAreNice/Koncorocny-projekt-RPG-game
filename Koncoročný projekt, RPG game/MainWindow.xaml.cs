@@ -1029,8 +1029,8 @@ namespace Koncoročný_projekt__RPG_game
             {new List<string> { "wood", "stone", "andezit", "none" }  },
             {new List<string> { "wood", "stone", "andezit", "none" }  },
             {new List<string> { "Krankenwagen", "Bloxy_Cola", "none", "none" }  },
-            {new List<string> { "gemini", "grok", @"fa_ulty", "Fafafela" }  },
-              {new List<string> { "LeftDoor", "RightDoor", "TopDoor", "ButtomDoor" }  }
+            {new List<string> { "none", "none", @"fa_ulty", "Fafafela" }  },
+            {new List<string> { "LeftDoor", "RightDoor", "TopDoor", "ButtomDoor" }  }
         };
 
         private List<Button> Studio_Buttons = new List<Button>();
