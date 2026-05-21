@@ -9,6 +9,7 @@
     <Grid>
 
 
+        <Label x:Name="TheInteractions" Content="Fahh" HorizontalAlignment="Left" Margin="0,620,0,0" VerticalAlignment="Top" Height="114" Width="1287" FontSize="30" Background="Gray"/>
 
         <Button x:Name="start" Content="Load Map" HorizontalAlignment="Left" Margin="1342,257,0,0" VerticalAlignment="Top" Height="150" Width="104" Click="start_Click" FontSize="20"/>
         <Grid x:Name="Map_UI" Margin="0,0,213,98" Background="#FFA7A7A7"/>
@@ -64,7 +65,10 @@
         </Grid>
         <Button x:Name="StartFight_but" Content="Fight" HorizontalAlignment="Left" Margin="1342,94,0,0" VerticalAlignment="Top" Height="79" Width="89" Click="StartFight_but_Click" FontSize="20"/>
         <TextBox x:Name="Enemy_Num" HorizontalAlignment="Left" Margin="1342,178,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="144" Height="59" TextChanged="Enemy_Num_TextChanged"/>
-        <Button x:Name="StudioAct" Content="Button" HorizontalAlignment="Left" Margin="1183,648,0,0" VerticalAlignment="Top" Height="46" Width="72" Click="StudioAct_Click"/>
+        <TextBox x:Name="MapSize" HorizontalAlignment="Left" Margin="1333,412,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" Height="84" Text="h"/>
+
+
+        <Button x:Name="StudioAct" Content="Button" HorizontalAlignment="Left" Margin="1350,680,0,0" VerticalAlignment="Top" Height="46" Width="72" Click="StudioAct_Click"/>
         <Grid x:Name="Studio" Margin="1292,0,0,0" Background="#FF7D7D7D" Visibility="Collapsed">
             <Label x:Name="CurrentBlockType" Content="Current block:" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Background="#FFB2B2B2" Height="48" Width="172" FontSize="18"/>
 
@@ -78,6 +82,7 @@
                 <Button x:Name="Flores_Studio" Content="Floors" HorizontalAlignment="Left" Margin="0,125,0,0" VerticalAlignment="Top" Height="52" Width="80" FontSize="18" Click="Flores_Studio_Click"/>
                 <Button x:Name="Items_Studio" Content="Items" HorizontalAlignment="Left" Margin="85,125,0,0" VerticalAlignment="Top" Height="52" Width="97" FontSize="18" Click="Items_Studio_Click"/>
                 <Button x:Name="NPCs_Studio" Content="NPCs" HorizontalAlignment="Left" Margin="0,182,0,0" VerticalAlignment="Top" Height="45" Width="80" FontSize="18" Click="NPCs_Studio_Click"/>
+                <Button x:Name="Doors_Studio" Content="Doors" HorizontalAlignment="Left" Margin="85,182,0,0" VerticalAlignment="Top" Height="45" Width="97" FontSize="18" Click="Doors_Studio_Click"/>
             </Grid>
             <Grid>
                 <Button x:Name="Back_Studio" Content="Back" HorizontalAlignment="Left" Margin="131,663,0,0" VerticalAlignment="Top" Height="36" Width="54" FontSize="20" Click="Back_Studio_Click" Visibility="Hidden"/>
@@ -90,7 +95,6 @@
 
         </Grid>
         <Label x:Name="Text_Of_All_Texts" Content="Fafafela" HorizontalAlignment="Left" Margin="0,648,0,0" VerticalAlignment="Top" Height="72" Width="1152" FontSize="50" Background="DarkGray" Visibility="Collapsed"/>
-        <TextBox x:Name="MapSize" HorizontalAlignment="Left" Margin="1333,412,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" Height="84" Text="h"/>
 
     </Grid>
 </Window>
