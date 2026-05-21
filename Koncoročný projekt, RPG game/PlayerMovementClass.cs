@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using Koncoročný_projekt__RPG_game.UI_Generations;
 
 namespace Koncoročný_projekt__RPG_game
@@ -45,6 +48,19 @@ namespace Koncoročný_projekt__RPG_game
             Chest_T,
             NPC_T
         }
+        public void SetGameImage(Image targetControl, string folder, string insiderFolder, string fileName)
+        {
+            try
+            {
+                string path = $"pack://application:,,,/Images/{folder}/{insiderFolder}/{fileName}.png";
+                targetControl.Source = new BitmapImage(new Uri(path));
+            }
+            catch (Exception ex)
+            {
+                // Helpful if you forget to set an image to "Resource"
+                MessageBox.Show($"Failed to load: {fileName}. Error: {ex.Message}");
+            }
+        }
 
         public BlockType blockType = BlockType.Empty_T;
         public DoorPosition doorPos = DoorPosition.None_D;
@@ -53,23 +69,63 @@ namespace Koncoročný_projekt__RPG_game
         {
             if (type == "Up")
             {
-                if (currentBlock.upper_wall == MapBlocks_Insides.UpperWallType.DoorOpen) { currentBlock.upper_wall = MapBlocks_Insides.UpperWallType.DoorClosed; }
-                else if (currentBlock.upper_wall == MapBlocks_Insides.UpperWallType.DoorClosed) { currentBlock.upper_wall = MapBlocks_Insides.UpperWallType.DoorOpen; }
+                if (currentBlock.upper_wall == MapBlocks_Insides.UpperWallType.DoorOpen)
+                { 
+                    currentBlock.upper_wall = MapBlocks_Insides.UpperWallType.DoorClosed;
+                    currentBlock.current_Upper_Wall_Texture = "TopDoor_closed";
+                    SetGameImage(currentBlock.Upper_wall, "Blocks", "Top_Walls", "TopDoor_closed");
+                }
+                else if (currentBlock.upper_wall == MapBlocks_Insides.UpperWallType.DoorClosed) 
+                {
+                    currentBlock.upper_wall = MapBlocks_Insides.UpperWallType.DoorOpen;
+                    currentBlock.current_Upper_Wall_Texture = "TopDoor_open";
+                    SetGameImage(currentBlock.Upper_wall, "Blocks", "Top_Walls", "TopDoor_open");
+                }
             }
             else if (type == "Down")
             {
-                    if (currentBlock.downer_wall == MapBlocks_Insides.DownerWallType.DoorOpen) { currentBlock.downer_wall = MapBlocks_Insides.DownerWallType.DoorClosed; }
-                else if (currentBlock.downer_wall == MapBlocks_Insides.DownerWallType.DoorClosed) { currentBlock.downer_wall = MapBlocks_Insides.DownerWallType.DoorOpen; }
+                    if (currentBlock.downer_wall == MapBlocks_Insides.DownerWallType.DoorOpen) 
+                { 
+                    currentBlock.downer_wall = MapBlocks_Insides.DownerWallType.DoorClosed; 
+                    currentBlock.current_Downer_Wall_Texture = "DownDoor_closed";
+                    SetGameImage(currentBlock.Downer_wall, "Blocks", "Down_Walls", "DownDoor_closed");
+                }
+                else if (currentBlock.downer_wall == MapBlocks_Insides.DownerWallType.DoorClosed) 
+                { 
+                    currentBlock.downer_wall = MapBlocks_Insides.DownerWallType.DoorOpen; 
+                    currentBlock.current_Downer_Wall_Texture = "DownDoor_open";
+                    SetGameImage(currentBlock.Downer_wall, "Blocks", "Down_Walls", "DownDoor_open");
+                }
             }
             else if (type == "Left")
             {
-                if (currentBlock.left_wall == MapBlocks_Insides.LeftWallType.DoorOpen) { currentBlock.left_wall = MapBlocks_Insides.LeftWallType.DoorClosed; }
-                else if (currentBlock.left_wall == MapBlocks_Insides.LeftWallType.DoorClosed) { currentBlock.left_wall = MapBlocks_Insides.LeftWallType.DoorOpen; }
+                if (currentBlock.left_wall == MapBlocks_Insides.LeftWallType.DoorOpen) 
+                { 
+                    currentBlock.left_wall = MapBlocks_Insides.LeftWallType.DoorClosed; 
+                    currentBlock.current_Left_Wall_Texture = "LeftDoor_closed";
+                    SetGameImage(currentBlock.Left_wall, "Blocks", "Left_Walls", "LeftDoor_closed");
+                }
+                else if (currentBlock.left_wall == MapBlocks_Insides.LeftWallType.DoorClosed) 
+                { 
+                    currentBlock.left_wall = MapBlocks_Insides.LeftWallType.DoorOpen;
+                    currentBlock.current_Left_Wall_Texture = "LeftDoor_open";
+                    SetGameImage(currentBlock.Left_wall, "Blocks", "Left_Walls", "LeftDoor_open");
+                }
             }
             else if (type == "Right")
             {
-                if (currentBlock.right_wall == MapBlocks_Insides.RightWallType.DoorOpen) { currentBlock.right_wall = MapBlocks_Insides.RightWallType.DoorClosed; }
-                else if (currentBlock.right_wall == MapBlocks_Insides.RightWallType.DoorClosed) { currentBlock.right_wall = MapBlocks_Insides.RightWallType.DoorOpen; }           
+                if (currentBlock.right_wall == MapBlocks_Insides.RightWallType.DoorOpen) 
+                { 
+                    currentBlock.right_wall = MapBlocks_Insides.RightWallType.DoorClosed; 
+                    currentBlock.current_Right_Wall_Texture = "RightDoor_closed";
+                    SetGameImage(currentBlock.Right_wall, "Blocks", "Right_Walls", "RightDoor_closed");
+                }
+                else if (currentBlock.right_wall == MapBlocks_Insides.RightWallType.DoorClosed) 
+                { 
+                    currentBlock.right_wall = MapBlocks_Insides.RightWallType.DoorOpen; 
+                    currentBlock.current_Right_Wall_Texture = "RightDoor_open";
+                    SetGameImage(currentBlock.Right_wall, "Blocks", "Right_Walls", "RightDoor_open");
+                }           
             }
 
             foreach (var neighbor in neighbors)
@@ -139,6 +195,8 @@ namespace Koncoročný_projekt__RPG_game
                     if (PlayerX <= 0) return false;
                     if (current.left_wall == MapBlocks_Insides.LeftWallType.Wall) return false;
                     if (neighbor != null && neighbor.right_wall == MapBlocks_Insides.RightWallType.Wall) return false;
+                    if (current.left_wall == MapBlocks_Insides.LeftWallType.DoorClosed) return false;
+                    if (neighbor != null && neighbor.right_wall == MapBlocks_Insides.RightWallType.DoorClosed) return false;
                     break;
 
                 case "S":
@@ -153,6 +211,8 @@ namespace Koncoročný_projekt__RPG_game
                     if (PlayerX >= MAX_x) return false;
                     if (current.right_wall == MapBlocks_Insides.RightWallType.Wall) return false;
                     if (neighbor != null && neighbor.left_wall == MapBlocks_Insides.LeftWallType.Wall) return false;
+                    if (current.right_wall == MapBlocks_Insides.RightWallType.DoorClosed) return false;
+                    if (neighbor != null && neighbor.left_wall == MapBlocks_Insides.LeftWallType.DoorClosed) return false;
                     break;
             }
 

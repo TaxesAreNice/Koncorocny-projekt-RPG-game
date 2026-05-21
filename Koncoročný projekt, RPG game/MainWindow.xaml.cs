@@ -501,7 +501,7 @@ namespace Koncoročný_projekt__RPG_game
                 }
 
                 // Inside your MapMovement logic, update the door check to this:
-                if (HasNearbyOrNeighborDoor(newPx, newPy))
+                if (HasNearbyOrNeighborDoor(newPx, newPy, px, py))
                 {
                     if (!string.IsNullOrEmpty((string?)TheInteractions.Content)) TheInteractions.Content += "\n";
                     TheInteractions.Content += "There's a door you can interact with (F)";
@@ -510,7 +510,7 @@ namespace Koncoročný_projekt__RPG_game
         }
 
 // Upgraded helper method that checks your block AND neighboring walls facing you
-            private bool HasNearbyOrNeighborDoor(int x, int y)
+            private bool HasNearbyOrNeighborDoor(int x, int y, int oldX, int oldY)
             { 
             // 1. Check the block the player is currently standing on
             MapBlocks_Insides current = Map[0][y].blocks[x];
@@ -610,7 +610,7 @@ namespace Koncoročný_projekt__RPG_game
                 if (Map[0][py + 1].blocks[px].upper_wall == MapBlocks_Insides.UpperWallType.DoorClosed) { neighbors.Add((Map[0][py + 1].blocks[px], false, "up")); }
                 else if (Map[0][py + 1].blocks[px].upper_wall == UpperWallType.DoorOpen) { neighbors.Add((Map[0][py + 1].blocks[px], true, "up")); }
             }
-            if (py - 1 <  Map[0].Count)
+            if (py - 1 <  Map[0].Count && py > 1) // py - 1...
             {
                 if (Map[0][py - 1].blocks[px].downer_wall == MapBlocks_Insides.DownerWallType.DoorClosed) { neighbors.Add((Map[0][py - 1].blocks[px], false, "down")); }
                 else if (Map[0][py - 1].blocks[px].downer_wall == DownerWallType.DoorOpen) { neighbors.Add((Map[0][py - 1].blocks[px], true, "down")); }
