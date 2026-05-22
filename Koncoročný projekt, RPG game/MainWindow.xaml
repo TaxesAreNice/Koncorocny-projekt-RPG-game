@@ -9,10 +9,10 @@
     <Grid>
 
 
-        <Label x:Name="TheInteractions" Content="Fahh" HorizontalAlignment="Left" Margin="0,620,0,0" VerticalAlignment="Top" Height="114" Width="1287" FontSize="30" Background="Gray"/>
+        <Label x:Name="TheInteractions" Content="Fahh" HorizontalAlignment="Center" Margin="0,620,0,0" VerticalAlignment="Top" Height="114" Width="1500" FontSize="30" Background="Gray"/>
 
 
-        <Grid x:Name="Map_UI" Margin="0,0,213,98" Background="#FFA7A7A7"/>
+        <Grid x:Name="Map_UI" Margin="0,0,0,98" Background="#FFA7A7A7"/>
 
 
         <Grid x:Name="Inventory" Background="#FF444242" MouseDown="Inventory_MouseDown" Visibility="Collapsed">
@@ -97,7 +97,7 @@
         </Grid>
         <Label x:Name="Text_Of_All_Texts" Content="Fafafela" HorizontalAlignment="Left" Margin="0,648,0,0" VerticalAlignment="Top" Height="72" Width="1152" FontSize="50" Background="DarkGray" Visibility="Collapsed"/>
 
-        <Grid x:Name="AdmitGrid" Margin="1292,0,0,0" Background="#FF423252" Visibility="Visible">
+        <Grid x:Name="AdmitGrid" Margin="1292,0,0,0" Background="#FF423252" Visibility="Collapsed">
             <Button x:Name="Add_Item" Content="Add Item" HorizontalAlignment="Center" Margin="0,521,0,0" VerticalAlignment="Top" Height="74" Width="144" FontSize="30" Click="Add_Item_Click"/>
             <TextBox x:Name="item_name" HorizontalAlignment="Center" Margin="0,600,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="158" Height="56" TextChanged="item_name_TextChanged"/>
             <Button x:Name="start" Content="Load Map" HorizontalAlignment="Left" Margin="40,256,0,0" VerticalAlignment="Top" Height="150" Width="104" Click="start_Click" FontSize="20"/>

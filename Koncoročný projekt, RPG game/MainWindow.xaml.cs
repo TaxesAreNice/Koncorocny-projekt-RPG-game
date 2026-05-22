@@ -171,6 +171,16 @@ namespace Koncoročný_projekt__RPG_game
             {
                 YMap = int.Parse(MapSize.Text.Split('x', 'X')[0]);
                 XMap = int.Parse(MapSize.Text.Split('x', 'X')[1]);
+                
+                if (XMap > 14)
+                {
+                    XMap = 14;
+                }
+                if (YMap > 6)
+                {
+                    YMap = 6;
+                }
+
                 playerMovement.MAX_y = YMap - 1;
                 playerMovement.MAX_x = XMap - 1;
                 Started = true;
@@ -188,6 +198,7 @@ namespace Koncoročný_projekt__RPG_game
         {
             List<Map_Block> row = [];
             int rowY = 0;
+            int modifier = 0;
             int yFafer = 1265;
             if (YMap < 7) { }
 
