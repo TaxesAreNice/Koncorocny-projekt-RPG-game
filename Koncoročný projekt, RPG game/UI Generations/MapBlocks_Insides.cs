@@ -50,7 +50,6 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         public string current_Flore_Texture = "";
         public string current_item_Texture = "";
         public string current_Enemy_Texture = "";
-        public string current_Item_Texture = "";
         public string current_NPC_Texture = "";
 
         public BlockType block_type = BlockType.Empty;
