@@ -23,6 +23,7 @@
   <ItemGroup>
     <None Remove="Images\AGuy.png" />
     <None Remove="Images\Blocks\Buttom_Walls\andezit_tops.png" />
+    <None Remove="Images\Blocks\Buttom_Walls\ButtomDoor_closed.png" />
     <None Remove="Images\Blocks\Buttom_Walls\ButtomDoor_opened.png" />
     <None Remove="Images\Blocks\Buttom_Walls\stone_tops.png" />
     <None Remove="Images\Blocks\Buttom_Walls\wood_tops.png" />
