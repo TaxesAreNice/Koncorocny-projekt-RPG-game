@@ -54,8 +54,15 @@ namespace Koncoročný_projekt__RPG_game
         InventoryInputs inventoryMovementClass = new InventoryInputs();
 
         Fighting fighting = new Fighting();
-        
 
+        public enum MapCorner
+        {
+            TopLeft,
+            TopRight,
+            BottomLeft,
+            BottomRight
+        }
+        MapCorner mapCorner = MapCorner.TopLeft; // Default starting corner
         public enum MapEdge { None, Top, Bottom, Left, Right, TopLeft, TopRight, BottomLeft, BottomRight }
 
         public MainWindow()
@@ -169,67 +176,150 @@ namespace Koncoročný_projekt__RPG_game
         {
             if (MapSize.Text.Contains("x") || MapSize.Text.Contains("X"))
             {
+                int tester = 0;
                 YMap = int.Parse(MapSize.Text.Split('x', 'X')[0]);
                 XMap = int.Parse(MapSize.Text.Split('x', 'X')[1]);
+
+                try
+                {
+                    // tester = 
+
+                    string corner = MapSize.Text.Split('x', 'X')[2];
+
+
+                    if (MapSize.Text.Contains("TL") || MapSize.Text.Contains("TopLeft") ||
+                MapSize.Text.Contains("TR") || MapSize.Text.Contains("TopRight") ||
+                MapSize.Text.Contains("BL") || MapSize.Text.Contains("ButtomLeft") ||
+                MapSize.Text.Contains("BR") || MapSize.Text.Contains("ButtomRight") ||
+                MapSize.Text.Contains("x"))
+                    {
+
+
+
+                        // TopLeft,
+                        //TopRight,
+                        //BottomLeft,
+                        //BottomRight
+
+                        if (XMap > 14)
+                        {
+                            XMap = 14;
+                        }
+                        if (YMap > 6)
+                        {
+                            YMap = 6;
+                        }
+
+
+                        if (corner == "TL" || corner == "TopLeft")
+                        {
+                            mapCorner = MapCorner.TopLeft;
+                        }
+                        else if (corner == "TR" || corner == "TopRight")
+                        {
+                            mapCorner = MapCorner.TopRight;
+                            playerMovement.Player_Pixel_X = 105 * XMap;
+                            playerMovement.PlayerX = XMap - 1;
+                        }
+                        else if (corner == "BL" || corner == "ButtomLeft")
+                        {
+                            mapCorner = MapCorner.BottomLeft;
+                            playerMovement.Player_Pixel_Y = 100 * (YMap);
+                            playerMovement.PlayerY = YMap - 1;
+                        }
+                        else if (corner == "BR" || corner == "ButtomRight")
+                        {
+                            mapCorner = MapCorner.BottomRight;
+                            playerMovement.Player_Pixel_X = 105 * XMap;
+                            playerMovement.Player_Pixel_Y = 100 * YMap;
+                            playerMovement.PlayerX = XMap - 1;
+                            playerMovement.PlayerY = YMap - 1;
+                        }
+
+                        playerMovement.MAX_y = YMap - 1;
+                        playerMovement.MAX_x = XMap - 1;
+                        
+                        Started = true;
+
+                        GeneretingMap();
+                        GeneretingInventory();
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("If you want to set the corner, write it like this: (for example) 10x10xTopLeft or 10x10xTL. If you don't want to set the corner, just write the size like this: 10x10");
+                }
+
                 
-                if (XMap > 14)
-                {
-                    XMap = 14;
-                }
-                if (YMap > 6)
-                {
-                    YMap = 6;
-                }
-
-                playerMovement.MAX_y = YMap - 1;
-                playerMovement.MAX_x = XMap - 1;
-                Started = true;
-
-                GeneretingMap();
-                GeneretingInventory();
             }
-
-
         }
-
-
 
         private void GeneretingMap()
         {
             List<Map_Block> row = [];
             int rowY = 0;
             int modifier = 0;
+            if (mapCorner == MapCorner.TopLeft || mapCorner == MapCorner.TopRight)
+            {
+                rowY = 0;
+                modifier = 5;
+            }
+            else
+            {
+                rowY = 500 + (YMap * 5);
+                modifier = -25;
+            }
+
+            bool fromLeft = false;
+
+            if (mapCorner == MapCorner.TopLeft || mapCorner == MapCorner.BottomLeft)
+            {
+                fromLeft = true;
+            }
             int yFafer = 1265;
+
             if (YMap < 7) { }
 
             for (int i = 0; i < YMap; i++)
             {
-                Map_Block roww = new Map_Block(XMap, yFafer);
+                Map_Block roww = new Map_Block(XMap, YMap, fromLeft);
 
                 row.Add(roww);
 
-
-                roww.Margin = new Thickness(0, rowY + 5, 0, 0);
+                roww.Margin = new Thickness(0, rowY + modifier, 0, 0); // if buttom,  modifier = (-25). if top, modifier = (+5)
                 Map_UI.Children.Add(roww);
-                Map.Add(row);
+                 Map.Add(row);
 
-                rowY += 100;
+                if (mapCorner == MapCorner.TopLeft || mapCorner == MapCorner.TopRight)
+                {
+                    rowY += 100;
+                }
+                else
+                {
+                  rowY -= 100 ; //-25 
 
+                }
+                // if top, rowY += 100 + 5; if bottom, rowY -= 100 - 25
+                //+100
             }
-            //row[0].blocks[0].Background = Brushes.Red;
-            // DON'T put "Image" in front of it here, just use the class variable
+
+            // row[0].blocks[0].Background = Brushes.Red;
+             // DON'T put "Image" in front of it here, just use the class variable
             Player_ima = new Image()
             {
                 Height = 50,
                 Width = 50,
-                HorizontalAlignment = HorizontalAlignment.Left, // Important for Margin movement
-                VerticalAlignment = VerticalAlignment.Top,      // Important for Margin movement
+                HorizontalAlignment = HorizontalAlignment.Left, 
+                VerticalAlignment = VerticalAlignment.Top,      
                 Margin = new Thickness(playerMovement.Player_Pixel_X, playerMovement.Player_Pixel_Y, 0, 0)
             };
 
             SetGameImage(Player_ima, "Characters", "Player", "Player");
             Map_UI.Children.Add(Player_ima);
+            // also a thingy here that sets the player's starting position to what ever corner we chose
         }
+
+
         private void GeneretingInventory()
         {
             int rowY = 0;

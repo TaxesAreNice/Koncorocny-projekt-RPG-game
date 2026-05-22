@@ -113,8 +113,8 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
 
         public MapBlocks_Insides(int box_position)
             {
-            Height = 100;
-            Width = 100;
+            Height = 100 ;
+            Width = 100 ;
             Margin = new Thickness(box_position, 5, 5, 5); /// change somethin' here
             Background = Brushes.DarkGray;
 
