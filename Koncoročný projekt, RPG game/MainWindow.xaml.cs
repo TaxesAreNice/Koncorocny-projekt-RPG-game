@@ -218,20 +218,20 @@ namespace Koncoročný_projekt__RPG_game
                         else if (corner == "TR" || corner == "TopRight")
                         {
                             mapCorner = MapCorner.TopRight;
-                            playerMovement.Player_Pixel_X = 105 * XMap;
+                            playerMovement.Player_Pixel_X = (105 * (14 - 1)) + 35;
                             playerMovement.PlayerX = XMap - 1;
                         }
                         else if (corner == "BL" || corner == "ButtomLeft")
                         {
                             mapCorner = MapCorner.BottomLeft;
-                            playerMovement.Player_Pixel_Y = 100 * (YMap);
+                            playerMovement.Player_Pixel_Y = (100 * (6 - 1) + 30);
                             playerMovement.PlayerY = YMap - 1;
                         }
                         else if (corner == "BR" || corner == "ButtomRight")
                         {
                             mapCorner = MapCorner.BottomRight;
-                            playerMovement.Player_Pixel_X = 105 * XMap;
-                            playerMovement.Player_Pixel_Y = 100 * YMap;
+                            playerMovement.Player_Pixel_X = (105 * (14 - 1)) + 35;
+                            playerMovement.Player_Pixel_Y = (100 * (6 - 1)) + 30;
                             playerMovement.PlayerX = XMap - 1;
                             playerMovement.PlayerY = YMap - 1;
                         }
@@ -258,16 +258,13 @@ namespace Koncoročný_projekt__RPG_game
         {
             List<Map_Block> row = [];
             int rowY = 0;
-            int modifier = 0;
             if (mapCorner == MapCorner.TopLeft || mapCorner == MapCorner.TopRight)
             {
                 rowY = 0;
-                modifier = 5;
             }
             else
             {
-                rowY = 500 + (YMap * 5);
-                modifier = -25;
+                rowY = (6 - YMap) * 105;
             }
 
             bool fromLeft = false;
@@ -276,7 +273,6 @@ namespace Koncoročný_projekt__RPG_game
             {
                 fromLeft = true;
             }
-            int yFafer = 1265;
 
             if (YMap < 7) { }
 
@@ -286,19 +282,14 @@ namespace Koncoročný_projekt__RPG_game
 
                 row.Add(roww);
 
-                roww.Margin = new Thickness(0, rowY + modifier, 0, 0); // if buttom,  modifier = (-25). if top, modifier = (+5)
+                roww.Margin = new Thickness(0, rowY + 5, 0, 0); // if buttom,  modifier = (-25). if top, modifier = (+5)
                 Map_UI.Children.Add(roww);
                  Map.Add(row);
 
-                if (mapCorner == MapCorner.TopLeft || mapCorner == MapCorner.TopRight)
-                {
+                
                     rowY += 100;
-                }
-                else
-                {
-                  rowY -= 100 ; //-25 
-
-                }
+                
+               
                 // if top, rowY += 100 + 5; if bottom, rowY -= 100 - 25
                 //+100
             }
@@ -985,6 +976,7 @@ namespace Koncoročný_projekt__RPG_game
         private void Spawing_enemy(string name, int space_off_x, int space_off_y, int enemy_num)
         {
             Fighting_EnemySpawner fighting_EnemySpawner = new Fighting_EnemySpawner(fighting, name, fighting.currentEnemies[enemy_num]);
+            SetGameImage(fighting_EnemySpawner.stuff[0].theImage, "Characters", "Enemies", name);
             fighting_EnemySpawner.Margin = new Thickness(space_off_x, space_off_y, 0, 0);
             Enemy_Grid.Children.Add(fighting_EnemySpawner);
 
