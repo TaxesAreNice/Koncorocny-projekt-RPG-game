@@ -14,7 +14,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
     {
         string name;
 
-        public List<(Label progLab, ProgressBar prog, Label atkLabel, Label defLabel, string name)> stuff = new List<(Label progLab, ProgressBar prog, Label atkLabel, Label defLabel, string name)>();
+        public List<(Label progLab, ProgressBar prog, Label atkLabel, Label defLabel, string name, Image theImage)> stuff = new List<(Label progLab, ProgressBar prog, Label atkLabel, Label defLabel, string name, Image theImage)>();
 
         Fighting Fighting;
         Enemy Enemy;
@@ -50,11 +50,11 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
                 Foreground = System.Windows.Media.Brushes.White
             };
 
-            Label Image_Prompt = new Label()
+            Image Image_Prompt = new Image()
             {
                 Height = 100,
                 Width = 100,
-                Background = System.Windows.Media.Brushes.Gray,
+                Source = null,
                 HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
                 VerticalAlignment = System.Windows.VerticalAlignment.Center,
                 Margin = new System.Windows.Thickness(5, 5, 5, 20),
@@ -124,7 +124,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             Children.Add(progressBar);
             Children.Add(progressLabel);
 
-            stuff.Add((progressLabel, progressBar, AtkNum, DefNum,name));
+            stuff.Add((progressLabel, progressBar, AtkNum, DefNum,name, Image_Prompt));
             /*
                 var tempButton = new Label()
                 {
