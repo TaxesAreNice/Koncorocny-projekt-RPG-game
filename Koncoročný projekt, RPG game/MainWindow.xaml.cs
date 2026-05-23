@@ -47,6 +47,8 @@ namespace Koncoročný_projekt__RPG_game
         private int YMap = 0;
         private int XMap = 0;
 
+        private int NPC_line_index = 1;
+
         DispatcherTimer inventory_click_checker = new DispatcherTimer();
         DispatcherTimer inventory_q_click_checker = new DispatcherTimer();
 
@@ -353,7 +355,7 @@ namespace Koncoročný_projekt__RPG_game
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.M)
+            if (e.Key == Key.F5)
             {
                 AdminToggle();
             }
@@ -374,7 +376,35 @@ namespace Koncoročný_projekt__RPG_game
             {
                 FightingMovement(success, key, e);
             }
+            else if (CurrentState == "NPC")
+            {
+                 NPCMovement(success, key, e);
+            }
         }
+
+        private void NPCMovement(bool success, string key, KeyEventArgs e)
+        {
+            if (e.Key == Key.E)
+            {
+                MapBlocks_Insides current = Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX];
+                if (current.current_NPC_Lines.Count <= NPC_line_index)
+                {                     
+                    TheInteractions.Content = "";
+                    CurrentState = "Main";
+                    NPC_line_index = 1;
+                    return;
+                }
+                TheInteractions.Content = current.current_NPC_Lines[NPC_line_index] + "\n(Press Enter to continue),(Press E to end this conversation)";
+                NPC_line_index++;
+            }
+            else if (e.Key == Key.Q)
+            {
+                TheInteractions.Content = "";
+                CurrentState = "Main";
+                NPC_line_index = 1;
+            }
+        }
+
         private void AdminToggle()
         {
             if (AdmitGrid.Visibility == Visibility.Visible)
@@ -689,8 +719,15 @@ namespace Koncoročný_projekt__RPG_game
             }
             else if (type == "NPC")
             {
-                //TheInteractions
-                
+                if (current.current_NPC_Lines.Count > 0)
+                {
+                    CurrentState = "NPC";
+                    TheInteractions.Content = current.current_NPC_Lines[0] + "\n(Press E to continue or press Q to end this conversation)";
+                }
+                else
+                { 
+                    TheInteractions.Content = "This NPC seems to be silent..."; 
+                }
             }
         }
 
@@ -1137,7 +1174,8 @@ namespace Koncoročný_projekt__RPG_game
             Items,
             NPCs,
             Menu,
-            Doors
+            Doors,
+            Chests
 
         }
 
@@ -1150,7 +1188,9 @@ namespace Koncoročný_projekt__RPG_game
             {new List<string> { "wood", "stone", "andezit", "none" }  },
             {new List<string> { "Krankenwagen", "Bloxy_Cola", "none", "none" }  },
             {new List<string> { "none", "none", @"fa_ulty", "Fafafela" }  },
-            {new List<string> { "LeftDoor", "RightDoor", "TopDoor", "ButtomDoor" }  }
+            {new List<string> { "LeftDoor", "RightDoor", "TopDoor", "ButtomDoor" }  },
+            {new List<string> { "Cheski", "Su", "Velmi", "Gejske" }  }
+
         };
 
         private List<Button> Studio_Buttons = new List<Button>();
@@ -1345,10 +1385,49 @@ namespace Koncoročný_projekt__RPG_game
             }
             else if (currentStudioState == StudioState.NPCs)
             {
-                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC, "Blocks", currentStudioState.ToString(), taxes + "_npc");
-                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Texture = taxes;
-                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.NPC;
+                if (taxes.Contains("/"))
+                {
+                    string theDialog = taxes.Split("/")[1];
+
+                    for (int i = 0; i < theDialog.Split("|").Length; i++)
+                    {
+                         Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Lines.Add(theDialog.Split("|")[i]);
+                    }
+
+                    taxes = taxes.Split("/")[0];
+                    SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC, "Characters", "NPC", taxes);
+                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Texture = taxes;
+                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Name = taxes;
+                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.NPC;
+                }
             }
+            else if (currentStudioState == StudioState.Chests)
+            {
+                if (taxes.Contains(","))
+                {
+                    int y = 0;
+                    for (int i = 0; i < taxes.Split(",").Length; i++)
+                    {
+                        if (i / 5 > y || i == 0) {Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Items.Add(new List<string>()); y++; }
+                        if (i >= 25) { break; }
+
+                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Items[y].Add(taxes.Split(",")[i]);
+                    }
+                }
+                else 
+                {
+                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Items.Add(new List<string>());
+                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Items[0].Add(taxes);
+                }
+
+
+            }
+        }
+
+        private void Chest_Studio_Click(object sender, RoutedEventArgs e)
+        {
+            currentStudioState = StudioState.Chests;
+            faf(8);
         }
     }
 }

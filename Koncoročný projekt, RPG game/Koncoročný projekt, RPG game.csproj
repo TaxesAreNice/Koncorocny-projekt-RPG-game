@@ -110,6 +110,7 @@
 
   <ItemGroup>
     <Folder Include="Images\Characters\Enemies\" />
+    <Folder Include="Images\Characters\NPC\" />
   </ItemGroup>
 
 </Project>

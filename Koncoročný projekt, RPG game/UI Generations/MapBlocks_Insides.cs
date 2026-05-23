@@ -51,8 +51,9 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         public string current_item_Texture = "";
         public string current_Enemy_Texture = "";
         public string current_NPC_Texture = "";
-        public string current_NPC_Name = "";
+        public string current_NPC_Name = "Grrr";
         public List<string> current_NPC_Lines = [];
+        public List<List<string>> current_Chest_Items = [];
 
         public BlockType block_type = BlockType.Empty;
         public LeftWallType left_wall = LeftWallType.None;
@@ -107,8 +108,8 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         };
         public Image NPC = new Image()
         {
-            Height = 50,
-            Width = 50,
+            Height = 75,
+            Width = 75,
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center
         };
