@@ -52,8 +52,9 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         public string current_Enemy_Texture = "";
         public string current_NPC_Texture = "";
         public string current_NPC_Name = "Grrr";
+        public string current_Chest_Texture = "";
         public List<string> current_NPC_Lines = [];
-        public List<List<string>> current_Chest_Items = [];
+        public List<string> current_Chest_Items = [];
 
         public BlockType block_type = BlockType.Empty;
         public LeftWallType left_wall = LeftWallType.None;
@@ -113,6 +114,13 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center
         };
+        public Image Chest = new Image()
+        {
+            Height = 70,
+            Width = 70,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center
+        };
 
         public MapBlocks_Insides(int box_position)
             {
@@ -128,6 +136,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             Children.Add(Downer_wall);
             Children.Add(Item);
             Children.Add(NPC);
+            Children.Add(Chest);
 
         }
     }

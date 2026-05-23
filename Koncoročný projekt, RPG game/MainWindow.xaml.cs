@@ -27,6 +27,7 @@ namespace Koncoročný_projekt__RPG_game
     {
         private List<List<Map_Block>> Map = [];
         private List<Inventory_Slots> Inventory_Code = [];
+        private List<InventoryBlocks_Chest> InventoryChest_Code = [];
         private List<Inventory_Buttons> Inventory_butons = [];
         private List<Fighting_EnemySpawner> current_enemies = [];
 
@@ -80,6 +81,8 @@ namespace Koncoročný_projekt__RPG_game
             Studio_Buttons.Add(Slot_2_Studio);
             Studio_Buttons.Add(Slot_3_Studio);
             Studio_Buttons.Add(Slot_4_Studio);
+
+            GeneretingChestInv();
         }
         //q_pressed
         private void Inventory_Q_Click_Checker_Tick(object? sender, EventArgs e)
@@ -245,6 +248,7 @@ namespace Koncoročný_projekt__RPG_game
 
                         GeneretingMap();
                         GeneretingInventory();
+                        GeneretingChestInv();
                     }
                 }
                 catch
@@ -255,6 +259,8 @@ namespace Koncoročný_projekt__RPG_game
 
             }
         }
+
+        
 
         private void GeneretingMap()
         {
@@ -312,7 +318,24 @@ namespace Koncoročný_projekt__RPG_game
             // also a thingy here that sets the player's starting position to what ever corner we chose
         }
 
+        private void GeneretingChestInv()
+        {
+            int rowY = 0;
+            int Yrow = 0;
 
+            for (int i = 0; i < 3; i++)
+            {
+                InventoryBlocks_Chest roww = new InventoryBlocks_Chest(Yrow, chestMovementClass);
+
+                roww.Margin = new Thickness(15, rowY + 5 + 0, -200, 0); //817
+
+                ChestInventory_Chest.Children.Add(roww);
+                InventoryChest_Code.Add(roww);
+
+                rowY += 80;
+
+            }
+        }
         private void GeneretingInventory()
         {
             int rowY = 0;
@@ -608,7 +631,7 @@ namespace Koncoročný_projekt__RPG_game
             if (neighbor != null && playerMovement.CheckingForWalls(key, current, neighbor))
             {
                 ChangingPlayerPosition(key);
-
+                ChestGrid.Visibility = Visibility.Hidden;
 
                 int newPx = playerMovement.PlayerX;
                 int newPy = playerMovement.PlayerY;
@@ -727,6 +750,17 @@ namespace Koncoročný_projekt__RPG_game
                 else
                 { 
                     TheInteractions.Content = "This NPC seems to be silent..."; 
+                }
+            }
+            else if (type == "Chest")
+            {
+                if (ChestGrid.Visibility == Visibility.Visible)
+                    {
+                    ChestGrid.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    ChestGrid.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -1195,6 +1229,8 @@ namespace Koncoročný_projekt__RPG_game
 
         private List<Button> Studio_Buttons = new List<Button>();
         private StudioState currentStudioState = StudioState.Menu;
+        private ChestMovementClass chestMovementClass;
+
         private void Left_Walls_Studio_Click(object sender, RoutedEventArgs e)
         {
             int i = 0;
@@ -1396,7 +1432,7 @@ namespace Koncoročný_projekt__RPG_game
 
                     taxes = taxes.Split("/")[0];
                     SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC, "Characters", "NPC", taxes);
-                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Texture = taxes;
+                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Texture = taxes; 
                     Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Name = taxes;
                     Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.NPC;
                 }
@@ -1405,22 +1441,19 @@ namespace Koncoročný_projekt__RPG_game
             {
                 if (taxes.Contains(","))
                 {
-                    int y = 0;
                     for (int i = 0; i < taxes.Split(",").Length; i++)
                     {
-                        if (i / 5 > y || i == 0) {Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Items.Add(new List<string>()); y++; }
-                        if (i >= 25) { break; }
-
-                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Items[y].Add(taxes.Split(",")[i]);
+                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Items.Add(taxes.Split(",")[i]);
                     }
                 }
                 else 
                 {
-                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Items.Add(new List<string>());
-                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Items[0].Add(taxes);
+                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Items.Add(taxes);
                 }
 
-
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Chest, "Blocks", "Others", "Chest");
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.Chest;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Texture = "Chest";
             }
         }
 
@@ -1428,6 +1461,11 @@ namespace Koncoročný_projekt__RPG_game
         {
             currentStudioState = StudioState.Chests;
             faf(8);
+        }
+
+        private void Exit_Chest_Click(object sender, RoutedEventArgs e)
+        {
+            ChestGrid.Visibility = Visibility.Hidden;
         }
     }
 }
