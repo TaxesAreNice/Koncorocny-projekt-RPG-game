@@ -31,10 +31,5 @@ namespace Koncoročný_projekt__RPG_game
 
             return PlayerDamage;
         }
-
-        public void ScytheDamage(Monster monster)
-        {
-            monster.MonsterHP -= PlayerAttack;
-        }
     }
 }
