@@ -51,6 +51,8 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         public string current_item_Texture = "";
         public string current_Enemy_Texture = "";
         public string current_NPC_Texture = "";
+        public string current_NPC_Name = "";
+        public List<string> current_NPC_Lines = [];
 
         public BlockType block_type = BlockType.Empty;
         public LeftWallType left_wall = LeftWallType.None;

@@ -687,6 +687,11 @@ namespace Koncoročný_projekt__RPG_game
                 current.block_type = MapBlocks_Insides.BlockType.Empty;
                 current.Item.Source = null;
             }
+            else if (type == "NPC")
+            {
+                //TheInteractions
+                
+            }
         }
 
        
