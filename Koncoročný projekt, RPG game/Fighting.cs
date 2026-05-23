@@ -13,7 +13,6 @@ namespace Koncoročný_projekt__RPG_game
 {
     public class Fighting
     {
-        //public List<string> currentEnemies = new List<string>();
         public List<Enemy> currentEnemies = new List<Enemy>();
 
         public string selectedEnemy = "";
@@ -35,7 +34,6 @@ namespace Koncoročný_projekt__RPG_game
 
         public List<(int hp, int attack, int defense, string name)> enemies = new List<(int hp, int attack, int defense, string name)>()
         {
-            (320, 35, 40, "Possessed King"),
             (200, 30, 30, "Cursed Trader"),
             (35, 4, 0, "Bat"),
             (65, 10, 0, "Vampire"),
@@ -82,9 +80,6 @@ namespace Koncoročný_projekt__RPG_game
                 monster.CalculateDamage(player);
                 monster.DoDamage(player);
             }
-
-           // monster.CalculateDamage(player);
-       //     monster.DoDamage(player);
         }
 
         private void PlayerTurn()
@@ -166,7 +161,6 @@ namespace Koncoročný_projekt__RPG_game
                 {
                     if (currentEnemies[i].EnemyName == selectedEnemy)
                     {
-                       // currentEnemies.RemoveAt(i);
                         selectedEnemy = "";
                         return "enemyDead_" + i;
                     }
