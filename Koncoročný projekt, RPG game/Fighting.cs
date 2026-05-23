@@ -35,8 +35,7 @@ namespace Koncoročný_projekt__RPG_game
 
         public List<(int hp, int attack, int defense, string name)> enemies = new List<(int hp, int attack, int defense, string name)>()
         {
-            (150, 25, 20, "Trader"),
-            (320, 35, 40, "Possessed King"),      //boss
+            (320, 35, 40, "Possessed King"),
             (200, 30, 30, "Cursed Trader"),
             (35, 4, 0, "Bat"),
             (65, 10, 0, "Vampire"),
