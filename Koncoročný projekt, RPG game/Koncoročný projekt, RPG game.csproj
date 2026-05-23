@@ -46,7 +46,6 @@
     <None Remove="Images\Blocks\Top_Walls\TopDoor_closed.png" />
     <None Remove="Images\Blocks\Top_Walls\TopDoor_opened.png" />
     <None Remove="Images\Blocks\Top_Walls\wood_tops.png" />
-    <None Remove="Images\Characters\Player\JanoUsaty.png" />
     <None Remove="Images\Characters\Player\Player.png" />
     <None Remove="Images\Items\faf\Dragon Boots.png" />
     <None Remove="Images\Items\faf\Dragon Chestplate.png" />
@@ -92,7 +91,6 @@
     <Resource Include="Images\Blocks\Top_Walls\TopDoor_opened.png" />
     <Resource Include="Images\Blocks\Top_Walls\wood_tops.png" />
     <Resource Include="Images\Characters\Player\AGuy.png" />
-    <Resource Include="Images\Characters\Player\JanoUsaty.png" />
     <Resource Include="Images\Characters\Player\Player.png" />
     <Resource Include="Images\Items\faf\Dragon Boots.png" />
     <Resource Include="Images\Items\faf\Dragon Chestplate.png" />
