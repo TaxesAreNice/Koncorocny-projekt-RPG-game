@@ -95,8 +95,10 @@ namespace Koncoročný_projekt__RPG_game
                 {
                     currentBlock.downer_wall = MapBlocks_Insides.DownerWallType.DoorOpen;
                     currentBlock.current_Downer_Wall_Texture = "DownDoor_opened";
+
                     SetGameImage(currentBlock.Downer_wall, "Blocks", "Buttom_Walls", "ButtomDoor_opened");
-                    SetGameImage(currentBlock.Downer_wall, "Blocks", "Down_Walls", "DownDoor_opened");
+
+
                 }
             }
             else if (type == "Left")
@@ -148,8 +150,11 @@ namespace Koncoročný_projekt__RPG_game
                     {
                         theDude.downer_wall = MapBlocks_Insides.DownerWallType.DoorClosed;
                         theDude.current_Downer_Wall_Texture = "DownDoor_closed";
+
                         SetGameImage(theDude.Downer_wall, "Blocks", "Buttom_Walls", "ButtomDoor_closed");
+
                         SetGameImage(theDude.Downer_wall, "Blocks", "Down_Walls", "DownDoor_closed");
+
                     }
                     else if (id == "left")
                     {
@@ -176,8 +181,11 @@ namespace Koncoročný_projekt__RPG_game
                     {
                         theDude.downer_wall = MapBlocks_Insides.DownerWallType.DoorOpen;
                         theDude.current_Downer_Wall_Texture = "DownDoor_opened";
+
                         SetGameImage(theDude.Downer_wall, "Blocks", "Buttom_Walls", "ButtomDoor_opened");
+
                         SetGameImage(theDude.Downer_wall, "Blocks", "Down_Walls", "DownDoor_opened");
+
                     }
                     else if (id == "left")
                     {
@@ -194,6 +202,13 @@ namespace Koncoročný_projekt__RPG_game
                 }
             }
         }
+
+
+
+            //if (neighbor != null && neighbor.left_wall == MapBlocks_Insides.LeftWallType.DoorOpen) { neighbor.left_wall = MapBlocks_Insides.LeftWallType.DoorClosed; }
+           // else if (neighbor != null && neighbor.left_wall == MapBlocks_Insides.LeftWallType.DoorClosed) { neighbor.left_wall = MapBlocks_Insides.LeftWallType.DoorOpen; }
+        
+
         private void PlayerMovement(string key)
         {
             LastPlayerX = PlayerX;

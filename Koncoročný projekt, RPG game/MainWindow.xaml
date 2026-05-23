@@ -12,7 +12,7 @@
         <Label x:Name="TheInteractions" Content="Fahh" HorizontalAlignment="Center" Margin="0,620,0,0" VerticalAlignment="Top" Height="114" Width="1500" FontSize="30" Background="Gray"/>
 
 
-        <Grid x:Name="Map_UI" Margin="0,0,0,98" Background="#FFA7A7A7"/>
+        <Grid x:Name="Map_UI" Margin="0,0,0,98" Background="Black"/>
 
 
         <Grid x:Name="Inventory" Background="#FF444242" MouseDown="Inventory_MouseDown" Visibility="Collapsed">
