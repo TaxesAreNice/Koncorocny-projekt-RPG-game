@@ -28,14 +28,6 @@ namespace Koncoročný_projekt__RPG_game
         {
             Items.Add(new Item
             {
-                Name = "Scythe_Sword",
-                Type = ItemType.Wearable,
-                Description = "You will attack the enemy from behind and ignore their defense",
-                Attack = 25,
-            });
-
-            Items.Add(new Item
-            {
                 Name = "Phoenix Feather",
                 Type = ItemType.Support,
                 Description = "Automatically revives user upon dying",

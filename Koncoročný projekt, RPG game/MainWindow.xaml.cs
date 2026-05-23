@@ -238,7 +238,7 @@ namespace Koncoročný_projekt__RPG_game
 
                         playerMovement.MAX_y = YMap - 1;
                         playerMovement.MAX_x = XMap - 1;
-                        
+
                         Started = true;
 
                         GeneretingMap();
@@ -250,7 +250,7 @@ namespace Koncoročný_projekt__RPG_game
                     MessageBox.Show("If you want to set the corner, write it like this: (for example) 10x10xTopLeft or 10x10xTL. If you don't want to set the corner, just write the size like this: 10x10");
                 }
 
-                
+
             }
         }
 
@@ -284,24 +284,24 @@ namespace Koncoročný_projekt__RPG_game
 
                 roww.Margin = new Thickness(0, rowY + 5, 0, 0); // if buttom,  modifier = (-25). if top, modifier = (+5)
                 Map_UI.Children.Add(roww);
-                 Map.Add(row);
+                Map.Add(row);
 
-                
-                    rowY += 100;
-                
-               
+
+                rowY += 100;
+
+
                 // if top, rowY += 100 + 5; if bottom, rowY -= 100 - 25
                 //+100
             }
 
             // row[0].blocks[0].Background = Brushes.Red;
-             // DON'T put "Image" in front of it here, just use the class variable
+            // DON'T put "Image" in front of it here, just use the class variable
             Player_ima = new Image()
             {
                 Height = 50,
                 Width = 50,
-                HorizontalAlignment = HorizontalAlignment.Left, 
-                VerticalAlignment = VerticalAlignment.Top,      
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
                 Margin = new Thickness(playerMovement.Player_Pixel_X, playerMovement.Player_Pixel_Y, 0, 0)
             };
 
@@ -334,11 +334,11 @@ namespace Koncoročný_projekt__RPG_game
             {
                 Inventory_Buttons inventory_Buttons = new Inventory_Buttons(inventoryMovementClass, Equeps_list_num);
 
-              
+
                 inventory_Buttons.HorizontalAlignment = HorizontalAlignment.Left;
                 inventory_Buttons.VerticalAlignment = VerticalAlignment.Top;
 
-              
+
                 inventory_Buttons.Margin = new Thickness(EquepsX, 5, 0, 0);
 
                 Inventory_butons.Add(inventory_Buttons);
@@ -394,7 +394,7 @@ namespace Koncoročný_projekt__RPG_game
                 Fighting_UI.Visibility = Visibility.Hidden;
                 Inventory_Open();
                 CurrentState = "Inventory";
-            } 
+            }
         }
 
         private void InventoryMovement(bool success, string key, KeyEventArgs e)
@@ -412,8 +412,8 @@ namespace Koncoročný_projekt__RPG_game
                     if (inventory_on_slot_q)
                     {
 
-                        contentE = Inventory_butons[row].Names[col  ];
-                        if (contentE == "") {return;}
+                        contentE = Inventory_butons[row].Names[col];
+                        if (contentE == "") { return; }
 
                         Player player = fighting.RequestPlayer();
 
@@ -428,9 +428,9 @@ namespace Koncoročný_projekt__RPG_game
                     }
                     else if (inventory_on_slot)
                     {
-                         List<string> categories = new List<string>() { "Helmet", "Chestplate", "Leggins", "Boots", "Sword", "Ring", "2nd hand", "Accessory" };
-                         contentE = Inventory_Code[y].names[x];
- 
+                        List<string> categories = new List<string>() { "Helmet", "Chestplate", "Leggins", "Boots", "Sword", "Ring", "2nd hand", "Accessory" };
+                        contentE = Inventory_Code[y].names[x];
+
                         Player player = fighting.RequestPlayer();
                         Monster monster = fighting.RequestMonster();
 
@@ -469,7 +469,7 @@ namespace Koncoročný_projekt__RPG_game
                             }
                             fahh++;
                         }
-                        
+
 
                         if (!nonoFight)
                         {
@@ -477,7 +477,7 @@ namespace Koncoročný_projekt__RPG_game
                             Inventory_Code[y].names[x] = "";
                             inventoryMovementClass.ClearSlot(x, y);
                         }
-                        
+
 
                         if (inventory_while_Fighting && !nonoFight)
                         {
@@ -514,7 +514,7 @@ namespace Koncoročný_projekt__RPG_game
                     UpdatePlayerStatsInInventory();
                     break;
 
-                case Key.Q: 
+                case Key.Q:
                     if (inventory_on_slot)
                     {
                         inventoryMovementClass.Q_Pressed();
@@ -543,7 +543,7 @@ namespace Koncoročný_projekt__RPG_game
         {
             Player player = fighting.RequestPlayer();
 
-            PlayerHP_UI .Content = $"{player.PlayerHP}hp";
+            PlayerHP_UI.Content = $"{player.PlayerHP}hp";
             PlayerDefence_UI.Content = $"{player.PlayerDefense}";
             PlayerAttack_UI.Content = $"{player.PlayerAttack}";
         }
@@ -556,7 +556,7 @@ namespace Koncoročný_projekt__RPG_game
             MapBlocks_Insides current = Map[0][py].blocks[px];
             MapBlocks_Insides neighbor = null;
 
-          
+
             switch (e.Key)
             {
                 case Key.W: if (py > 0) neighbor = Map[0][py - 1].blocks[px]; break;
@@ -574,12 +574,12 @@ namespace Koncoročný_projekt__RPG_game
                     return;
             }
 
-     
+
             if (neighbor != null && playerMovement.CheckingForWalls(key, current, neighbor))
             {
                 ChangingPlayerPosition(key);
 
-               
+
                 int newPx = playerMovement.PlayerX;
                 int newPy = playerMovement.PlayerY;
                 MapBlocks_Insides freshCurrent = Map[0][newPy].blocks[newPx];
@@ -614,9 +614,9 @@ namespace Koncoročný_projekt__RPG_game
             }
         }
 
-// Upgraded helper method that checks your block AND neighboring walls facing you
-            private bool HasNearbyOrNeighborDoor(int x, int y, int oldX, int oldY)
-            { 
+        // Upgraded helper method that checks your block AND neighboring walls facing you
+        private bool HasNearbyOrNeighborDoor(int x, int y, int oldX, int oldY)
+        {
             // 1. Check the block the player is currently standing on
             MapBlocks_Insides current = Map[0][y].blocks[x];
             if (current.left_wall == LeftWallType.DoorClosed || current.left_wall == LeftWallType.DoorOpen ||
@@ -657,7 +657,7 @@ namespace Koncoročný_projekt__RPG_game
 
             return false; // No doors found anywhere around you
         }
-        private void MapPresss(MapBlocks_Insides current, string key, string type, string neighbor_type,  List<(MapBlocks_Insides, bool OpenedOrClosed, string id)> neighbor)
+        private void MapPresss(MapBlocks_Insides current, string key, string type, string neighbor_type, List<(MapBlocks_Insides, bool OpenedOrClosed, string id)> neighbor)
         {
             string justInCaseEHEMWEARABLES = "";
             if (type.Contains("_"))
@@ -668,7 +668,7 @@ namespace Koncoročný_projekt__RPG_game
 
             if (key == "F")
             {
-               playerMovement.DoorOpen_Close(type, current, neighbor, neighbor_type);
+                playerMovement.DoorOpen_Close(type, current, neighbor, neighbor_type);
             }
             else if (key == "E")
             {
@@ -689,7 +689,7 @@ namespace Koncoročný_projekt__RPG_game
             }
         }
 
-       
+
 
         private MapBlocks_Insides CheckingForEPrompts()
         {
@@ -707,7 +707,7 @@ namespace Koncoročný_projekt__RPG_game
 
             List<(MapBlocks_Insides Wall, bool OpenedOrClosed, string id)> neighbors = new();
 
-           
+
             if (px + 1 < Map[0][py].blocks.Count)
             {
                 if (Map[0][py].blocks[px + 1].left_wall == MapBlocks_Insides.LeftWallType.DoorClosed) { neighbors.Add((Map[0][py].blocks[px + 1], false, "left")); }
@@ -723,7 +723,7 @@ namespace Koncoročný_projekt__RPG_game
                 if (Map[0][py + 1].blocks[px].upper_wall == MapBlocks_Insides.UpperWallType.DoorClosed) { neighbors.Add((Map[0][py + 1].blocks[px], false, "up")); }
                 else if (Map[0][py + 1].blocks[px].upper_wall == UpperWallType.DoorOpen) { neighbors.Add((Map[0][py + 1].blocks[px], true, "up")); }
             }
-            if (py - 1 <  Map[0].Count && py > 1) // py - 1...
+            if (py - 1 < Map[0].Count && py > 1) // py - 1...
             {
                 if (Map[0][py - 1].blocks[px].downer_wall == MapBlocks_Insides.DownerWallType.DoorClosed) { neighbors.Add((Map[0][py - 1].blocks[px], false, "down")); }
                 else if (Map[0][py - 1].blocks[px].downer_wall == DownerWallType.DoorOpen) { neighbors.Add((Map[0][py - 1].blocks[px], true, "down")); }
@@ -877,7 +877,7 @@ namespace Koncoročný_projekt__RPG_game
             foreach (var enemy in fighting.enemies)
             {
                 if (enemy.name == name)
-                { 
+                {
                     fighting.currentEnemies[fighting.currentEnemies.Count - 1].EnemyAttack = enemy.attack;
                     fighting.currentEnemies[fighting.currentEnemies.Count - 1].EnemyDefense = enemy.defense;
                     fighting.currentEnemies[fighting.currentEnemies.Count - 1].EnemyHP = enemy.hp;
@@ -891,7 +891,7 @@ namespace Koncoročný_projekt__RPG_game
             int space_off_x = 0;
             int space_off_y = 0;
             string name = enemy_name;
-           // List<string> enemy_names = new List<string>();
+            // List<string> enemy_names = new List<string>();
             //enemy_names.Add(name);
 
 
@@ -917,7 +917,7 @@ namespace Koncoročný_projekt__RPG_game
                             space_off_x = -200;
                         }
                         name = fighting.currentEnemies[i].EnemyName;
-                            EnemyStatAdder(name);
+                        EnemyStatAdder(name);
                         Spawing_enemy(name, space_off_x, space_off_y, i);
                     }
                     break;
@@ -1000,10 +1000,10 @@ namespace Koncoročný_projekt__RPG_game
                 result = result.Split('_')[0];
             }
             int i = 0;
-             //currentEnemies.RemoveAt(i);
+            //currentEnemies.RemoveAt(i);
             foreach (var enemy in current_enemies)
             {
-                
+
                 int hpMax = 1;
                 foreach (var enemy_case in fighting.enemies)
                 {
@@ -1027,7 +1027,7 @@ namespace Koncoročný_projekt__RPG_game
             {
                 int num = int.Parse(justInCase);
                 //bye bye dude
-                
+
                 EventerChanger($"The {fighting.currentEnemies[num].EnemyName} has been defeated.");
                 fighting.KillEnemy(num);
                 Enemy_Grid.Children.Clear();
@@ -1068,10 +1068,10 @@ namespace Koncoročný_projekt__RPG_game
         {
             List<int> playerStats = fighting.GetPlayerStats();
 
-            if (playerStats.Count != 4) 
+            if (playerStats.Count != 4)
             {
                 MessageBox.Show("Error: Player stats list does not contain the expected number of elements.");
-                return; 
+                return;
             } // Just a safety check
 
             PlayerHp_Label.Content = $"{playerStats[0]}hp";
@@ -1204,16 +1204,16 @@ namespace Koncoročný_projekt__RPG_game
             Buttons_Grid_Studio.Visibility = Visibility.Hidden;
             Current_State_Studio.Content = $"Current State: {currentStudioState.ToString()}";
 
-        
-                foreach (Button button in Studio_Buttons)
-                {
-                    button.Content = Studio_Names[i][Studio_Buttons.IndexOf(button)];
-                }
+
+            foreach (Button button in Studio_Buttons)
+            {
+                button.Content = Studio_Names[i][Studio_Buttons.IndexOf(button)];
             }
+        }
 
 
 
-        
+
 
         private void Back_Studio_Click(object sender, RoutedEventArgs e)
         {
@@ -1301,8 +1301,8 @@ namespace Koncoročný_projekt__RPG_game
 
                 Back_Studio_Click(null, null);
             }
-           
-            }
+
+        }
         private void Slot_1_Studio_Click(object sender, RoutedEventArgs e)
         {
             faff(0);
@@ -1315,12 +1315,12 @@ namespace Koncoročný_projekt__RPG_game
 
         private void Slot_3_Studio_Click(object sender, RoutedEventArgs e)
         {
-                        faff(2);    
+            faff(2);
         }
 
         private void Slot_4_Studio_Click(object sender, RoutedEventArgs e)
         {
-                        faff(3);    
+            faff(3);
         }
 
         private void Doors_Studio_Click(object sender, RoutedEventArgs e)
@@ -1340,11 +1340,10 @@ namespace Koncoročný_projekt__RPG_game
             }
             else if (currentStudioState == StudioState.NPCs)
             {
-                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC, "Blocks", currentStudioState.ToString(), taxes + "_npc");
-                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Texture = taxes;
-                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.NPC;
+                SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC, "Characters", "NPC", taxes);
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Texture = taxes;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.NPC;
             }
         }
     }
 }
-
