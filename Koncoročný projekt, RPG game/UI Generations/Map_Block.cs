@@ -31,41 +31,29 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             Width = (105 * xMap) + 5; // 1265, 1475
             Margin = new Thickness(2,2,2,2);
             Background = Brushes.Gray;
-            if  (fromLeft)
-            {
-                HorizontalAlignment = HorizontalAlignment.Left;
-            }
-            else
-            {
-                HorizontalAlignment = HorizontalAlignment.Right;
-            }
+            
             VerticalAlignment = VerticalAlignment.Top;
 
             if (fromLeft)
             {
+               
+                HorizontalAlignment = HorizontalAlignment.Left;
                 box_position = 5;
             }
             else
             {
-                box_position = (105 * xMap) + 5 - 105;
+                //box_position = (105 * (14 - xMap)) + 5;
+                box_position = 5;
+                HorizontalAlignment = HorizontalAlignment.Right;
+            }
 
-
-             
-                }
             for (int i = 0; i < xMap; i++)
             {
                 MapBlocks_Insides tempBox = new MapBlocks_Insides(box_position);
 
                 tempBox.HorizontalAlignment = HorizontalAlignment.Left;
                 Children.Add(tempBox);
-                if (fromLeft)
-                {
-                    box_position += 100 + 5;
-                }
-                else
-                {
-                    box_position -= 100 + 5;
-                }
+                box_position += 100 + 5;
                 blocks.Add(tempBox);
             }
         }

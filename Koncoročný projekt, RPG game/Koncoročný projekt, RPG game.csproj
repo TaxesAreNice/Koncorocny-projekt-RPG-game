@@ -110,4 +110,8 @@
     <Resource Include="Images\Items\faf\Steel Leggins.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Images\Characters\Enemies\" />
+  </ItemGroup>
+
 </Project>
