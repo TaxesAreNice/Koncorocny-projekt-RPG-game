@@ -67,16 +67,7 @@ namespace Koncoročný_projekt__RPG_game
 
             Items.Add(new Item { Name = "Health Potion", Type = ItemType.Support, Description = "Heals 25HP", Heal = 25 });
             Items.Add(new Item { Name = "Big Health Potion", Type = ItemType.Support, Description = "Heals 50HP", Heal = 50 });
-            Items.Add(new Item { Name = "Mana Potion", Type = ItemType.Support, Description = "Restores 25 mana", Mana = 25 });
-            Items.Add(new Item { Name = "Big Mana Potion", Type = ItemType.Support, Description = "Restores 50 mana", Mana = 50 });
             Items.Add(new Item { Name = "Damage Potion", Type = ItemType.Support, Description = "Increases damage by 15", Attack = 15 });
-
-            Items.Add(new Item { Name = "Fireball Scroll", Type = ItemType.FightOnly, Description = "Deals 25 damage to a single enemy", Attack = 25 });
-            Items.Add(new Item { Name = "Cursed Scroll", Type = ItemType.FightOnly, Description = "Used on opponent causes him to lose 50% of his attack", Weaken = true });
-            Items.Add(new Item { Name = "Lightning Scroll", Type = ItemType.AoE, Description = "Deals 20 damage to all enemies", AoEDamage = 20 });
-            Items.Add(new Item { Name = "Healing Scroll", Type = ItemType.FightOnly, Description = "Heals 50HP", Heal = 50 });
-            Items.Add(new Item { Name = "Shield Scroll", Type = ItemType.FightOnly, Description = "Gives user 20 defense", Defense = 20 });
-            Items.Add(new Item { Name = "Revive Scroll", Type = ItemType.FightOnly, Description = "Automatically revives user upon dying", Revive = true });
 
             Items.Add(new Item { Name = "Dragon Helmet_Helmet", Type = ItemType.Wearable, Description = "+10 defense", Defense = 10 });
             Items.Add(new Item { Name = "Dragon Chestplate_Chestplate", Type = ItemType.Wearable, Description = "+10 defense", Defense = 10 });
@@ -92,7 +83,7 @@ namespace Koncoročný_projekt__RPG_game
 
             Items.Add(new Item { Name = "Dull Blade_Sword", Type = ItemType.Wearable, Description = "Just some dull blade", Attack = 5 });
             Items.Add(new Item { Name = "Steel Sword_Sword", Type = ItemType.Wearable, Description = "A sharp steel sword", Attack = 15 });
-            Items.Add(new Item { Name = "Diamond Sword_Sword", Type = ItemType.Wearable, Description = "A powerful diamond sword", Attack = 20 });
+            Items.Add(new Item { Name = "Dragon Sword_Sword", Type = ItemType.Wearable, Description = "A powerful dragon sword", Attack = 20 });
             Items.Add(new Item { Name = "Excalibur_Sword", Type = ItemType.Wearable, Description = "The legendary sword of King Arthur", Attack = 50 });
 
             Items.Add(new Item { Name = "Steel Helmet_Helmet", Type = ItemType.Wearable, Description = " +5 defense", Defense = 5 });
