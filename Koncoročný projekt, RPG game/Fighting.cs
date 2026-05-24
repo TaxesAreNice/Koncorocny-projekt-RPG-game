@@ -34,16 +34,16 @@ namespace Koncoročný_projekt__RPG_game
 
         public List<(int hp, int attack, int defense, string name)> enemies = new List<(int hp, int attack, int defense, string name)>()
         {
-            (200, 30, 30, "Cursed Trader"),
-            (35, 4, 0, "Bat"),
-            (65, 10, 0, "Vampire"),
+            (200, 30, 30, "Cursed Trader"), // 0
+            (35, 4, 0, "Bat"), // 0
+            (65, 10, 0, "Vampire"), // 0
             (80, 30, 20, "Jester"),
-            (250, 10, 0, "Shield Spirit"),
+            (250, 10, 50, "Shield Spirit"),
             (180, 25, 10, "Knight"),
             (150, 20, 0, "Mage"),
             (220, 30, 10, "Phoenix"),
             (300, 40, 20, "Dragon"),
-            (100, 1, 50, "Mythical Pig")
+            (100, 1, 50, "Mythical Pig") // 0
         };
 
         public void EnemyAttacks()
