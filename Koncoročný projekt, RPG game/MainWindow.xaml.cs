@@ -27,7 +27,8 @@ namespace Koncoročný_projekt__RPG_game
     {
         private List<List<Map_Block>> Map = [];
         private List<Inventory_Slots> Inventory_Code = [];
-        private List<InventoryBlocks_Chest> InventoryChest_Code = [];
+        private List<List<string>> InventoryChest_Code = [];
+        private List<InventoryBlocks_Chest> InventoryChest = [];
         private List<Inventory_Buttons> Inventory_butons = [];
         private List<Fighting_EnemySpawner> current_enemies = [];
 
@@ -36,6 +37,7 @@ namespace Koncoročný_projekt__RPG_game
         private bool Started = false;
         public bool inventory_on_slot = false;
         public bool inventory_on_slot_q = false;
+        public bool inventory_on_slot_chest = false;
 
         private bool inventory_while_Fighting = false;
 
@@ -51,6 +53,7 @@ namespace Koncoročný_projekt__RPG_game
         private int NPC_line_index = 1;
 
         DispatcherTimer inventory_click_checker = new DispatcherTimer();
+        DispatcherTimer inventory_Chest_click_checker = new DispatcherTimer();
         DispatcherTimer inventory_q_click_checker = new DispatcherTimer();
 
         PlayerMovementClass playerMovement = new PlayerMovementClass();
@@ -76,14 +79,19 @@ namespace Koncoročný_projekt__RPG_game
             inventory_click_checker.Tick += Inventory_Click_Checker_Tick;
             inventory_q_click_checker.Interval = TimeSpan.FromMilliseconds(20);
             inventory_q_click_checker.Tick += Inventory_Q_Click_Checker_Tick;
+            inventory_Chest_click_checker.Interval = TimeSpan.FromMilliseconds(20);
+            inventory_Chest_click_checker.Tick += Inventory_Chest_Click_Checker_Tick;
 
             Studio_Buttons.Add(Slot_1_Studio);
             Studio_Buttons.Add(Slot_2_Studio);
             Studio_Buttons.Add(Slot_3_Studio);
             Studio_Buttons.Add(Slot_4_Studio);
 
-            GeneretingChestInv();
+           // GeneretingChestInv(); // don't forget to remove this later
         }
+
+        
+
         //q_pressed
         private void Inventory_Q_Click_Checker_Tick(object? sender, EventArgs e)
         {
@@ -136,7 +144,31 @@ namespace Koncoročný_projekt__RPG_game
                 Mana_Usage.Content = "           -";
             }
         }
-
+        private void Inventory_Chest_Click_Checker_Tick(object? sender, EventArgs e)
+        {
+            if (inventory_on_slot_chest)
+            {
+                try
+                {
+                    itemNAME = InventoryChest_Code[chestMovementClass.ChosenY][chestMovementClass.ChosenX];
+                }
+                catch
+                {
+                    return;
+                }
+                if (itemNAME == "") { return; }
+                Add_Item_To_Inventory();
+                InventoryChest[chestMovementClass.ChosenY].slots[chestMovementClass.ChosenX].image.Source = null;
+                inventory_on_slot_chest = false;
+                chestMovementClass.isPressed = false;
+                InventoryChest_Code[chestMovementClass.ChosenY][chestMovementClass.ChosenX] = "";
+            }
+            else
+            {
+                inventory_on_slot_chest = chestMovementClass.isPressed;
+               
+            }
+        }
         private void Inventory_Click_Checker_Tick(object? sender, EventArgs e)
         {
 
@@ -322,15 +354,16 @@ namespace Koncoročný_projekt__RPG_game
         {
             int rowY = 0;
             int Yrow = 0;
+   
 
             for (int i = 0; i < 3; i++)
             {
-                InventoryBlocks_Chest roww = new InventoryBlocks_Chest(Yrow, chestMovementClass);
+                InventoryBlocks_Chest roww = new InventoryBlocks_Chest(i, chestMovementClass);
 
                 roww.Margin = new Thickness(15, rowY + 5 + 0, -200, 0); //817
 
                 ChestInventory_Chest.Children.Add(roww);
-                InventoryChest_Code.Add(roww);
+                InventoryChest.Add(roww);
 
                 rowY += 80;
 
@@ -402,6 +435,18 @@ namespace Koncoročný_projekt__RPG_game
             else if (CurrentState == "NPC")
             {
                  NPCMovement(success, key, e);
+            }
+            else if (CurrentState == "Chest")
+                {
+                    ChestMovement(success, key, e);
+            }
+        }
+
+        private void ChestMovement(bool success, string key, KeyEventArgs e)
+        {
+            if (e.Key == Key.E)
+            {
+              
             }
         }
 
@@ -755,12 +800,37 @@ namespace Koncoročný_projekt__RPG_game
             else if (type == "Chest")
             {
                 if (ChestGrid.Visibility == Visibility.Visible)
-                    {
+                {
+                    CurrentState = "Main";
                     ChestGrid.Visibility = Visibility.Hidden;
+
+                    inventory_Chest_click_checker.Stop();
+                    InventoryChest_Code.Clear();
                 }
                 else
                 {
+                    CurrentState = "Chest";
                     ChestGrid.Visibility = Visibility.Visible;
+                    
+                    inventory_Chest_click_checker.Start();
+                    //current_Chest_Items
+                    int y = 0;
+                    int x = 0;
+                    for (int i = 0; i < current.current_Chest_Items.Count; i++)
+                    {
+                        x = i;
+                        if (i > 11)
+                        {
+                            x = i - (11 * y);
+                        }
+                        if (x == 11) { InventoryChest_Code.Add(new List<string>()); y++; x = 0; }
+                        else if (i == 0) { InventoryChest_Code.Add(new List<string>()); }
+
+                        SetGameImage(InventoryChest[y].slots[x].image, "Items", "faf", current.current_Chest_Items[i]);
+                        InventoryChest_Code[y].Add(current.current_Chest_Items[i]);
+
+                    }
+                   
                 }
             }
         }
@@ -1229,7 +1299,7 @@ namespace Koncoročný_projekt__RPG_game
 
         private List<Button> Studio_Buttons = new List<Button>();
         private StudioState currentStudioState = StudioState.Menu;
-        private ChestMovementClass chestMovementClass;
+        private ChestMovementClass chestMovementClass = new ChestMovementClass();
 
         private void Left_Walls_Studio_Click(object sender, RoutedEventArgs e)
         {
@@ -1465,7 +1535,16 @@ namespace Koncoročný_projekt__RPG_game
 
         private void Exit_Chest_Click(object sender, RoutedEventArgs e)
         {
+            CurrentState = "Main";
             ChestGrid.Visibility = Visibility.Hidden;
+
+            inventory_Chest_click_checker.Stop();
+            InventoryChest_Code.Clear();
+        }
+
+        private void ChestGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

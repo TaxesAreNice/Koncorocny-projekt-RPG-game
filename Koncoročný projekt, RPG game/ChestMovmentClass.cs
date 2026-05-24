@@ -11,6 +11,10 @@ namespace Koncoročný_projekt__RPG_game
     {
         public int ChosenX = 0;
         public int ChosenY = 0;
+
+        public int BackupX = 0;
+        public int BackupY = 0;
+
         public bool isPressed = false;
 
         public void Pressed(int x, int y )
@@ -19,5 +23,9 @@ namespace Koncoročný_projekt__RPG_game
             ChosenY = y;
             isPressed = true;
         }
+
+     
+
+        
     }
 }
