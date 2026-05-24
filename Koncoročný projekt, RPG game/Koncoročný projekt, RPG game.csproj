@@ -46,6 +46,9 @@
     <None Remove="Images\Blocks\Top_Walls\TopDoor_closed.png" />
     <None Remove="Images\Blocks\Top_Walls\TopDoor_opened.png" />
     <None Remove="Images\Blocks\Top_Walls\wood_tops.png" />
+    <None Remove="Images\Characters\Enemies\Bat.png" />
+    <None Remove="Images\Characters\Enemies\Mythical Pig.png" />
+    <None Remove="Images\Characters\Enemies\Vampire.png" />
     <None Remove="Images\Characters\NPC\KnightNPC.png" />
     <None Remove="Images\Characters\NPC\Trader.png" />
     <None Remove="Images\Characters\Player\Player.png" />
@@ -99,6 +102,10 @@
     <Resource Include="Images\Blocks\Top_Walls\TopDoor_closed.png" />
     <Resource Include="Images\Blocks\Top_Walls\TopDoor_opened.png" />
     <Resource Include="Images\Blocks\Top_Walls\wood_tops.png" />
+    <Resource Include="Images\Characters\Enemies\Bat.png" />
+    <Resource Include="Images\Characters\Enemies\Mythical Pig.png" />
+    <Resource Include="Images\Characters\Enemies\CursedTrader.png" />
+    <Resource Include="Images\Characters\Enemies\Vampire.png" />
     <Resource Include="Images\Characters\NPC\KnightNPC.png" />
     <Resource Include="Images\Characters\NPC\Trader.png" />
     <Resource Include="Images\Characters\Player\AGuy.png" />
@@ -127,7 +134,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\Characters\Enemies\" />
     <Folder Include="Images\Characters\NPC\" />
   </ItemGroup>
 
