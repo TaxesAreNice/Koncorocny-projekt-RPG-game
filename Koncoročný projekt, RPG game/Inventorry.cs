@@ -41,7 +41,7 @@ namespace Koncoročný_projekt__RPG_game
                 Description = "Instantly breaks through enemy defenses",
                 EnemyDefense = 0,
             });
-
+            //guardian amule
             Items.Add(new Item { Name = "Knight Helmet_Helmet", Type = ItemType.Wearable, Description = "+4 defense", Defense = 4 });
             Items.Add(new Item { Name = "Knight Chestplate_Chestplate", Type = ItemType.Wearable, Description = "+6 defense", Defense = 6 });
             Items.Add(new Item { Name = "Knight Leggins_Leggins", Type = ItemType.Wearable, Description = "+5 defense", Defense = 5 });
