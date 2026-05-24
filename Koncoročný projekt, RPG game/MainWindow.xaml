@@ -79,6 +79,7 @@
                 <Button x:Name="Items_Studio" Content="Items" HorizontalAlignment="Left" Margin="85,125,0,0" VerticalAlignment="Top" Height="52" Width="97" FontSize="18" Click="Items_Studio_Click"/>
                 <Button x:Name="NPCs_Studio" Content="NPCs" HorizontalAlignment="Left" Margin="0,182,0,0" VerticalAlignment="Top" Height="45" Width="80" FontSize="18" Click="NPCs_Studio_Click"/>
                 <Button x:Name="Doors_Studio" Content="Doors" HorizontalAlignment="Left" Margin="85,182,0,0" VerticalAlignment="Top" Height="45" Width="97" FontSize="18" Click="Doors_Studio_Click"/>
+                <Button x:Name="Chest_Studio" Content="Chests" HorizontalAlignment="Left" Margin="0,232,0,0" VerticalAlignment="Top" Height="45" Width="80" FontSize="18" Click="Chest_Studio_Click"/>
             </Grid>
             <Grid x:Name="AddThingy_Studio">
                 <Button x:Name="Back_Studio" Content="Back" HorizontalAlignment="Left" Margin="131,663,0,0" VerticalAlignment="Top" Height="36" Width="54" FontSize="20" Click="Back_Studio_Click" Visibility="Hidden"/>

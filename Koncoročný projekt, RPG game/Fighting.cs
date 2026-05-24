@@ -113,7 +113,7 @@ namespace Koncoročný_projekt__RPG_game
         
         public List<int> GetPlayerStats()
         {
-            return new List<int> { player.PlayerHP, player.PlayerAttack, player.PlayerDefense, player.PlayerMana };
+            return new List<int> { player.PlayerHP, player.PlayerAttack, player.PlayerDefense};
         }
 
         public string EnemySelected(string name)

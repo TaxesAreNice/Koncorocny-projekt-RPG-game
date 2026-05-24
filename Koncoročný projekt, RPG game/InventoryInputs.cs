@@ -371,7 +371,7 @@ namespace Koncoročný_projekt__RPG_game
             return description;
         }
 
-        public string WordWrap(string text, int maxLineLength = 32) // AI.. i AIN'T doing this
+        public string WordWrap(string text, int maxLineLength = 32) // AI.. 
         {
             if (string.IsNullOrEmpty(text)) return text;
 

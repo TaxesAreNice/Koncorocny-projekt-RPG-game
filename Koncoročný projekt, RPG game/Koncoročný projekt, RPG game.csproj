@@ -55,7 +55,11 @@
     <None Remove="Images\Items\faf\Dragon Chestplate.png" />
     <None Remove="Images\Items\faf\Dragon Helmet.png" />
     <None Remove="Images\Items\faf\Dragon Leggins.png" />
+    <None Remove="Images\Items\faf\Fire Breath Orb.png" />
+    <None Remove="Images\Items\faf\Guardian Amulet.png" />
     <None Remove="Images\Items\faf\Health Potion.png" />
+    <None Remove="Images\Items\faf\Mythical Meal.png" />
+    <None Remove="Images\Items\faf\Phoenix Feather.png" />
     <None Remove="Images\Items\faf\Rusty Boots.png" />
     <None Remove="Images\Items\faf\Rusty Chestplate.png" />
     <None Remove="Images\Items\faf\Rusty Helmet.png" />
@@ -105,9 +109,13 @@
     <Resource Include="Images\Items\faf\Dragon Chestplate.png" />
     <Resource Include="Images\Items\faf\Dragon Helmet.png" />
     <Resource Include="Images\Items\faf\Dragon Leggins.png" />
+    <Resource Include="Images\Items\faf\Fire Breath Orb.png" />
+    <Resource Include="Images\Items\faf\Guardian Amulet.png" />
     <Resource Include="Images\Items\faf\Health Potion.png" />
+    <Resource Include="Images\Items\faf\Mythical Meal.png" />
     <Resource Include="Images\Items\faf\None.png" />
     <Resource Include="Images\Items\faf\AGuy.png" />
+    <Resource Include="Images\Items\faf\Phoenix Feather.png" />
     <Resource Include="Images\Items\faf\Rusty Boots.png" />
     <Resource Include="Images\Items\faf\Rusty Chestplate.png" />
     <Resource Include="Images\Items\faf\Rusty Helmet.png" />
@@ -120,6 +128,7 @@
 
   <ItemGroup>
     <Folder Include="Images\Characters\Enemies\" />
+    <Folder Include="Images\Characters\NPC\" />
   </ItemGroup>
 
 </Project>

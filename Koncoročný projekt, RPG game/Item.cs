@@ -8,8 +8,8 @@ namespace Koncoročný_projekt__RPG_game
     {
         public string Name { get; set; }
         public ItemType Type { get; set; }
+        public string Mana  { get; set; }
         public string Description { get; set; }
-        public int Mana { get; set; }
         public int Attack { get; set; }
         public int Defense { get; set; }
         public int Heal { get; set; }
@@ -24,7 +24,6 @@ namespace Koncoročný_projekt__RPG_game
             if (Type == ItemType.Support)
             {
                 activePlayer.PlayerHP += Heal;
-                activePlayer.PlayerMana += Mana;
                 activePlayer.PlayerDefense += Defense;
                 activePlayer.PlayerAttack += Attack;
             }
