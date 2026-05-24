@@ -1068,7 +1068,6 @@ namespace Koncoročný_projekt__RPG_game
             if (result == "enemyDead")
             {
                 int num = int.Parse(justInCase);
-                //bye bye dude
 
                 EventerChanger($"The {fighting.currentEnemies[num].EnemyName} has been defeated.");
                 fighting.KillEnemy(num);
@@ -1081,17 +1080,42 @@ namespace Koncoročný_projekt__RPG_game
                 EnemiesAttack();
             }
         }
+        private bool chechingIfPhoenixFeatherIsInInventory()
+        {
+            bool hasPhoenixFeather = false;
+            foreach (var button in Inventory_butons)
+            {
+                foreach (var name in button.Names)
+                {
+                    if (name == "Phoenix_Feather")
+                    {
+                        hasPhoenixFeather = true;
+                    }
+                }
+            }
+
+            if (hasPhoenixFeather)
+            {
+                MessageBox.Show("Your Phoenix Feather has saved you from death! You have been revived.");
+                fighting.RevivePlayer();
+                return true;
+            }
+            else
+            {
+                EventerChanger("The Player has been defeated.");
+                GameOver();
+                return false;
+            }
+        }
         private void EnemiesAttack()
         {
             fighting.EnemyAttacks();
             //fighting.State = TurnState.EnemyTurn;
             bool playerDead = fighting.playerDead();
-            if (playerDead)
+            if (playerDead && chechingIfPhoenixFeatherIsInInventory())
             {
-                EventerChanger("The Player has been defeated.");
-                GameOver();
             }
-            else
+            else if (playerDead)
             {
                 EventerChanger($"The Player has {fighting.RequestPlayer().PlayerHP}hp left.");
                 UpdatePlayerStats();

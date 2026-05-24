@@ -46,22 +46,22 @@ namespace Koncoročný_projekt__RPG_game
             (100, 1, 50, "Mythical Pig")
         };
 
-        public void EnemyAttacks( )
+        public void EnemyAttacks()
         {
             State = TurnState.EnemyTurn;
 
 
             foreach (var enemy in currentEnemies)
             {
-                    monster.MonsterHP = enemy.EnemyHP;
-                    monster.MonsterAttack = enemy.EnemyAttack;
-                    monster.MonsterDefense = enemy.EnemyDefense;
-                    monster.MonsterDamage = 0;
-                
+                monster.MonsterHP = enemy.EnemyHP;
+                monster.MonsterAttack = enemy.EnemyAttack;
+                monster.MonsterDefense = enemy.EnemyDefense;
+                monster.MonsterDamage = 0;
+
                 EnemyTurn();
             }
         }
-        
+
 
         public void EnemyTurn()
         {
@@ -100,7 +100,7 @@ namespace Koncoročný_projekt__RPG_game
             }
             return false;
         }
-        
+
         public bool playerDead()
         {
             if (player.PlayerHP <= 0)
@@ -110,10 +110,10 @@ namespace Koncoročný_projekt__RPG_game
             }
             return false;
         }
-        
+
         public List<int> GetPlayerStats()
         {
-            return new List<int> { player.PlayerHP, player.PlayerAttack, player.PlayerDefense};
+            return new List<int> { player.PlayerHP, player.PlayerAttack, player.PlayerDefense };
         }
 
         public string EnemySelected(string name)
@@ -137,7 +137,7 @@ namespace Koncoročný_projekt__RPG_game
         {
             if (!enemySelected) { return "nothingSelected"; }
             enemySelected = false;
-            
+
             State = TurnState.PlayerTurn;
             monster.MonsterName = selectedEnemy;
 
@@ -167,16 +167,16 @@ namespace Koncoročný_projekt__RPG_game
                 }
             }
             else
-            { 
-            foreach (var enemy in currentEnemies)
             {
-                if (enemy.EnemyName == selectedEnemy)
+                foreach (var enemy in currentEnemies)
                 {
-                    enemy.EnemyHP = monster.MonsterHP;
-                }
+                    if (enemy.EnemyName == selectedEnemy)
+                    {
+                        enemy.EnemyHP = monster.MonsterHP;
+                    }
 
+                }
             }
-        }
             selectedEnemy = "";
             State = TurnState.EnemyTurn;
             return "ContinueFight";
@@ -196,8 +196,9 @@ namespace Koncoročný_projekt__RPG_game
         {
             currentEnemies.RemoveAt(num);
         }
-            
-            
+        public void RevivePlayer()
+        {
+            player.PlayerHP = 100;
         }
     }
-
+}
