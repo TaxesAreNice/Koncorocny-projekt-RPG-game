@@ -149,6 +149,7 @@ namespace Koncoročný_projekt__RPG_game
                     monster.MonsterAttack = enemy.EnemyAttack;
                     monster.MonsterDefense = enemy.EnemyDefense;
                     monster.MonsterDamage = 0;
+                    break;
                 }
             }
 
@@ -173,6 +174,7 @@ namespace Koncoročný_projekt__RPG_game
                     if (enemy.EnemyName == selectedEnemy)
                     {
                         enemy.EnemyHP = monster.MonsterHP;
+                        break;
                     }
 
                 }
