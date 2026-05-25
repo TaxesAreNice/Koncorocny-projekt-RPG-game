@@ -288,50 +288,30 @@ namespace Koncoročný_projekt__RPG_game
             }
         }
 
-        
+
 
         private void GeneretingMap()
         {
-            List<Map_Block> row = [];
             int rowY = 0;
             if (mapCorner == MapCorner.TopLeft || mapCorner == MapCorner.TopRight)
-            {
                 rowY = 0;
-            }
             else
-            {
                 rowY = (6 - YMap) * 105;
-            }
 
-            bool fromLeft = false;
+            bool fromLeft = mapCorner == MapCorner.TopLeft || mapCorner == MapCorner.BottomLeft;
 
-            if (mapCorner == MapCorner.TopLeft || mapCorner == MapCorner.BottomLeft)
-            {
-                fromLeft = true;
-            }
-
-            if (YMap < 7) { }
+            // Make sure Map[0] exists
+            if (Map.Count == 0) Map.Add(new List<Map_Block>());
 
             for (int i = 0; i < YMap; i++)
             {
                 Map_Block roww = new Map_Block(XMap, YMap, fromLeft);
-
-                row.Add(roww);
-
-                roww.Margin = new Thickness(0, rowY + 5, 0, 0); // if buttom,  modifier = (-25). if top, modifier = (+5)
+                roww.Margin = new Thickness(0, rowY + 5, 0, 0);
                 Map_UI.Children.Add(roww);
-                Map.Add(row);
-
-
+                Map[0].Add(roww);  // all rows go into Map[0], which is how the rest of your code expects it
                 rowY += 100;
-
-
-                // if top, rowY += 100 + 5; if bottom, rowY -= 100 - 25
-                //+100
             }
 
-            // row[0].blocks[0].Background = Brushes.Red;
-            // DON'T put "Image" in front of it here, just use the class variable
             Player_ima = new Image()
             {
                 Height = 50,
@@ -343,9 +323,9 @@ namespace Koncoročný_projekt__RPG_game
 
             SetGameImage(Player_ima, "Characters", "Player", "Player");
             Map_UI.Children.Add(Player_ima);
-            // also a thingy here that sets the player's starting position to what ever corner we chose
         }
 
+        
         private void GeneretingChestInv()
         {
             int rowY = 0;
@@ -719,28 +699,24 @@ namespace Koncoročný_projekt__RPG_game
         {
             if (current == null) return;
 
-            int num = 0;
+            int targetX, targetY, targetRoom;
 
             if (WhichOne == "C")
             {
-                playerMovement.PlayerX = current.NextRoomTeleporter_X;
-                playerMovement.PlayerY = current.NextRoomTeleporter_Y;
-                num = current.NextRoomTeleporter_Room;
+                targetX = current.NextRoomTeleporter_X;
+                targetY = current.NextRoomTeleporter_Y;
+                targetRoom = current.NextRoomTeleporter_Room;
             }
-            else if (WhichOne == "N")
+            else // "N"
             {
-                playerMovement.PlayerX = neighbor.NextRoomTeleporter_X;
-                playerMovement.PlayerY = neighbor.NextRoomTeleporter_Y;
-                num = neighbor.NextRoomTeleporter_Room;
+                targetX = neighbor.NextRoomTeleporter_X;
+                targetY = neighbor.NextRoomTeleporter_Y;
+                targetRoom = neighbor.NextRoomTeleporter_Room;
             }
-            playerMovement.Player_Pixel_X = (playerMovement.PlayerX * 105) + 30;
-            playerMovement.Player_Pixel_Y = (playerMovement.PlayerY * 100) + 30;
 
-            ChangingPlayerPosition("GGs");
-
-            //ClearMap();
-            //UploadMap(Num);
+            SwitchRoom(targetRoom, targetX, targetY);
         }
+
 
         // Upgraded helper method that checks your block AND neighboring walls facing you
         private bool HasNearbyOrNeighborDoor(int x, int y, int oldX, int oldY)
@@ -1671,6 +1647,62 @@ namespace Koncoročný_projekt__RPG_game
         {
             currentStudioState = StudioState.RoomDoors;
             faf(9);
+        }
+
+        private void Save_Room_Click(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(Room_ID_Changer_Studio.Text, out int num))
+                RoomSaveLoad.SaveRoom(Map, num, XMap, YMap);
+            else
+                MessageBox.Show("Type a room number in the text box first!");
+        }
+
+        private void Load_Room_Click(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(Room_ID_Changer_Studio.Text, out int num))
+                SwitchRoom(num, 0, 0); // loads room, player starts at 0,0
+            else
+                MessageBox.Show("Type a room number in the text box first!");
+        }
+   
+            private void ClearMap()
+        {
+            if (Map.Count > 0)
+            {
+                foreach (var row in Map[0])
+                    Map_UI.Children.Remove(row);
+                Map.Clear();
+            }
+            Map_UI.Children.Remove(Player_ima);
+        }
+        
+        private void SwitchRoom(int roomNumber, int playerStartX, int playerStartY)
+        {
+            // 1. Read the file first — bail out early if it doesn't exist
+            RoomSaveData? roomData = RoomSaveLoad.ReadRoomFile(roomNumber);
+            if (roomData == null) return;
+
+            // 2. Clear the current map
+            ClearMap();
+
+            // 3. Update size variables so everything still works
+            XMap = roomData.XMap;
+            YMap = roomData.YMap;
+            playerMovement.MAX_x = XMap - 1;
+            playerMovement.MAX_y = YMap - 1;
+
+            // 4. Regenerate the map UI at the new size
+            GeneretingMap();
+
+            // 5. Apply saved block data + textures onto the fresh map
+            RoomSaveLoad.ApplyRoomData(Map, roomData, SetGameImage);
+
+            // 6. Move the player to the correct spawn point
+            playerMovement.PlayerX = playerStartX;
+            playerMovement.PlayerY = playerStartY;
+            playerMovement.Player_Pixel_X = (playerStartX * 105) + 30;
+            playerMovement.Player_Pixel_Y = (playerStartY * 100) + 30;
+            ChangingPlayerPosition("switch");
         }
     }
 }
