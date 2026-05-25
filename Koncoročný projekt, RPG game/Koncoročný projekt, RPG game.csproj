@@ -46,6 +46,9 @@
     <None Remove="Images\Blocks\Top_Walls\TopDoor_closed.png" />
     <None Remove="Images\Blocks\Top_Walls\TopDoor_opened.png" />
     <None Remove="Images\Blocks\Top_Walls\wood_tops.png" />
+    <None Remove="Images\Characters\Enemies\Bat.png" />
+    <None Remove="Images\Characters\Enemies\Mythical Pig.png" />
+    <None Remove="Images\Characters\Enemies\Vampire.png" />
     <None Remove="Images\Characters\NPC\KnightNPC.png" />
     <None Remove="Images\Characters\NPC\Trader.png" />
     <None Remove="Images\Characters\Player\Player.png" />
@@ -55,7 +58,11 @@
     <None Remove="Images\Items\faf\Dragon Chestplate.png" />
     <None Remove="Images\Items\faf\Dragon Helmet.png" />
     <None Remove="Images\Items\faf\Dragon Leggins.png" />
+    <None Remove="Images\Items\faf\Fire Breath Orb.png" />
+    <None Remove="Images\Items\faf\Guardian Amulet.png" />
     <None Remove="Images\Items\faf\Health Potion.png" />
+    <None Remove="Images\Items\faf\Mythical Meal.png" />
+    <None Remove="Images\Items\faf\Phoenix Feather.png" />
     <None Remove="Images\Items\faf\Rusty Boots.png" />
     <None Remove="Images\Items\faf\Rusty Chestplate.png" />
     <None Remove="Images\Items\faf\Rusty Helmet.png" />
@@ -95,6 +102,10 @@
     <Resource Include="Images\Blocks\Top_Walls\TopDoor_closed.png" />
     <Resource Include="Images\Blocks\Top_Walls\TopDoor_opened.png" />
     <Resource Include="Images\Blocks\Top_Walls\wood_tops.png" />
+    <Resource Include="Images\Characters\Enemies\Bat.png" />
+    <Resource Include="Images\Characters\Enemies\Mythical Pig.png" />
+    <Resource Include="Images\Characters\Enemies\CursedTrader.png" />
+    <Resource Include="Images\Characters\Enemies\Vampire.png" />
     <Resource Include="Images\Characters\NPC\KnightNPC.png" />
     <Resource Include="Images\Characters\NPC\Trader.png" />
     <Resource Include="Images\Characters\Player\AGuy.png" />
@@ -105,9 +116,13 @@
     <Resource Include="Images\Items\faf\Dragon Chestplate.png" />
     <Resource Include="Images\Items\faf\Dragon Helmet.png" />
     <Resource Include="Images\Items\faf\Dragon Leggins.png" />
+    <Resource Include="Images\Items\faf\Fire Breath Orb.png" />
+    <Resource Include="Images\Items\faf\Guardian Amulet.png" />
     <Resource Include="Images\Items\faf\Health Potion.png" />
+    <Resource Include="Images\Items\faf\Mythical Meal.png" />
     <Resource Include="Images\Items\faf\None.png" />
     <Resource Include="Images\Items\faf\AGuy.png" />
+    <Resource Include="Images\Items\faf\Phoenix Feather.png" />
     <Resource Include="Images\Items\faf\Rusty Boots.png" />
     <Resource Include="Images\Items\faf\Rusty Chestplate.png" />
     <Resource Include="Images\Items\faf\Rusty Helmet.png" />

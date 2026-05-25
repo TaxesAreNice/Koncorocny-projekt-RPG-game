@@ -34,26 +34,16 @@ namespace Koncoročný_projekt__RPG_game
                 Revive = true,
             });
 
-            Items.Add(new Item
-            {
-                Name = "Breaker Ring_Ring",
-                Type = ItemType.Wearable,
-                Description = "Instantly breaks through enemy defenses",
-                EnemyDefense = 0,
-            });
-            //guardian amule
             Items.Add(new Item { Name = "Knight Helmet_Helmet", Type = ItemType.Wearable, Description = "+4 defense", Defense = 4 });
             Items.Add(new Item { Name = "Knight Chestplate_Chestplate", Type = ItemType.Wearable, Description = "+6 defense", Defense = 6 });
             Items.Add(new Item { Name = "Knight Leggins_Leggins", Type = ItemType.Wearable, Description = "+5 defense", Defense = 5 });
             Items.Add(new Item { Name = "Knight Boots_Boots", Type = ItemType.Wearable, Description = "+4 defense", Defense = 4 });
-            Items.Add(new Item { Name = "Knight Sword_Sword", Type = ItemType.Wearable, Description = "+15 attack", Attack = 13 });
 
             Items.Add(new Item
             {
                 Name = "Mythical Meal",
                 Type = ItemType.Support,
-                Description = "Heals 100% of health and mana",
-                Mana = 100,
+                Description = "Heals 100% of health",
                 Heal = 100,
             });
 
@@ -75,7 +65,7 @@ namespace Koncoročný_projekt__RPG_game
 
             Items.Add(new Item { Name = "Dull Blade_Sword", Type = ItemType.Wearable, Description = "Just some dull blade", Attack = 5 });
             Items.Add(new Item { Name = "Steel Sword_Sword", Type = ItemType.Wearable, Description = "A sharp steel sword", Attack = 15 });
-            Items.Add(new Item { Name = "Dragon Sword_Sword", Type = ItemType.Wearable, Description = "A powerful dragon sword", Attack = 20 });
+            Items.Add(new Item { Name = "Dragon Sword_Sword", Type = ItemType.Wearable, Description = "A powerful dragon sword", Attack = 25 });
             Items.Add(new Item { Name = "Excalibur_Sword", Type = ItemType.Wearable, Description = "The legendary sword of King Arthur", Attack = 50 });
 
             Items.Add(new Item { Name = "Steel Helmet_Helmet", Type = ItemType.Wearable, Description = " +5 defense", Defense = 5 });
