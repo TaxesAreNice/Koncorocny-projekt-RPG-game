@@ -47,11 +47,18 @@
     <None Remove="Images\Blocks\Top_Walls\TopDoor_opened.png" />
     <None Remove="Images\Blocks\Top_Walls\wood_tops.png" />
     <None Remove="Images\Characters\Enemies\Bat.png" />
+    <None Remove="Images\Characters\Enemies\Dragon.png" />
+    <None Remove="Images\Characters\Enemies\Jester.png" />
+    <None Remove="Images\Characters\Enemies\Knight.png" />
+    <None Remove="Images\Characters\Enemies\Mage.png" />
     <None Remove="Images\Characters\Enemies\Mythical Pig.png" />
+    <None Remove="Images\Characters\Enemies\Phoenix.png" />
+    <None Remove="Images\Characters\Enemies\Shield Spirit.png" />
     <None Remove="Images\Characters\Enemies\Vampire.png" />
     <None Remove="Images\Characters\NPC\KnightNPC.png" />
     <None Remove="Images\Characters\NPC\Trader.png" />
     <None Remove="Images\Characters\Player\Player.png" />
+    <None Remove="Images\Characters\Player\Player_Fight.png" />
     <None Remove="Images\Items\faf\Big Health Potion.png" />
     <None Remove="Images\Items\faf\Damage Potion.png" />
     <None Remove="Images\Items\faf\Dragon Boots.png" />
@@ -103,13 +110,20 @@
     <Resource Include="Images\Blocks\Top_Walls\TopDoor_opened.png" />
     <Resource Include="Images\Blocks\Top_Walls\wood_tops.png" />
     <Resource Include="Images\Characters\Enemies\Bat.png" />
+    <Resource Include="Images\Characters\Enemies\Cursed Trader.png" />
+    <Resource Include="Images\Characters\Enemies\Dragon.png" />
+    <Resource Include="Images\Characters\Enemies\Jester.png" />
+    <Resource Include="Images\Characters\Enemies\Knight.png" />
+    <Resource Include="Images\Characters\Enemies\Mage.png" />
     <Resource Include="Images\Characters\Enemies\Mythical Pig.png" />
-    <Resource Include="Images\Characters\Enemies\CursedTrader.png" />
+    <Resource Include="Images\Characters\Enemies\Phoenix.png" />
+    <Resource Include="Images\Characters\Enemies\Shield Spirit.png" />
     <Resource Include="Images\Characters\Enemies\Vampire.png" />
     <Resource Include="Images\Characters\NPC\KnightNPC.png" />
     <Resource Include="Images\Characters\NPC\Trader.png" />
     <Resource Include="Images\Characters\Player\AGuy.png" />
     <Resource Include="Images\Characters\Player\Player.png" />
+    <Resource Include="Images\Characters\Player\Player_Fight.png" />
     <Resource Include="Images\Items\faf\Big Health Potion.png" />
     <Resource Include="Images\Items\faf\Damage Potion.png" />
     <Resource Include="Images\Items\faf\Dragon Boots.png" />
@@ -135,7 +149,6 @@
 
   <ItemGroup>
     <Folder Include="Images\Blocks\Others\" />
-    <Folder Include="Images\Characters\Enemies\" />
     <Folder Include="Images\Characters\NPC\" />
   </ItemGroup>
 
