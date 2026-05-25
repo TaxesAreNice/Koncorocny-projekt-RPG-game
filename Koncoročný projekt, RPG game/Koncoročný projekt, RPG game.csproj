@@ -134,6 +134,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Images\Blocks\Others\" />
+    <Folder Include="Images\Characters\Enemies\" />
     <Folder Include="Images\Characters\NPC\" />
   </ItemGroup>
 
