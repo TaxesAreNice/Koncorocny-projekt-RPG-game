@@ -329,7 +329,47 @@ namespace Koncoročný_projekt__RPG_game
             // then have this methode return the list of extra inputs.. or just one and the positions of the prompts..
         }
 
- 
+        internal string CheckingForRoomDoors(string key, MapBlocks_Insides current, MapBlocks_Insides neighbor)
+        {
+            switch (key)
+            {
+                case "W":
+                    if (PlayerY <= 0) return "nope";
+                    if (current.upper_wall == MapBlocks_Insides.UpperWallType.RoomDoor) return "C";
+                    if (neighbor != null && neighbor.downer_wall == MapBlocks_Insides.DownerWallType.RoomDoor) return "N";
+                    if (current.upper_wall == MapBlocks_Insides.UpperWallType.RoomDoor) return "C";
+                    if (neighbor != null && (neighbor.downer_wall == MapBlocks_Insides.DownerWallType.RoomDoor)) return "N";
+
+                    break;
+
+                case "A":
+                    if (PlayerX <= 0) return "nope"; 
+                    if (current.left_wall == MapBlocks_Insides.LeftWallType.RoomDoor) return "C";
+                    if (neighbor != null && neighbor.right_wall == MapBlocks_Insides.RightWallType.RoomDoor) return "N";
+                    if (current.left_wall == MapBlocks_Insides.LeftWallType.RoomDoor) return "C";
+                    if (neighbor != null && neighbor.right_wall == MapBlocks_Insides.RightWallType.RoomDoor) return "N";
+                    break;
+
+                case "S":
+                    if (PlayerY >= MAX_y) return "nope";
+                    if (current.downer_wall == MapBlocks_Insides.DownerWallType.RoomDoor) return "C";
+                    if (current.downer_wall == MapBlocks_Insides.DownerWallType.RoomDoor) return "C";
+                    if (neighbor != null && neighbor.upper_wall == MapBlocks_Insides.UpperWallType.RoomDoor) return "N";
+                    if (neighbor != null && neighbor.upper_wall == MapBlocks_Insides.UpperWallType.RoomDoor) return "N";
+                    break;
+
+                case "D":
+                    if (PlayerX >= MAX_x) return "nope";
+                    if (current.right_wall == MapBlocks_Insides.RightWallType.RoomDoor) return "C";
+                    if (neighbor != null && neighbor.left_wall == MapBlocks_Insides.LeftWallType.RoomDoor) return "N";
+                    if (current.right_wall == MapBlocks_Insides.RightWallType.RoomDoor) return "C";
+                    if (neighbor != null && neighbor.left_wall == MapBlocks_Insides.LeftWallType.RoomDoor) return "N";
+                    break;
+            }
+
+            return "nope";
+
         }
+    }
     }
 
