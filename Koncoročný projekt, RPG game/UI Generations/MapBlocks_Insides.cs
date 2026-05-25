@@ -4,77 +4,129 @@ using System.Windows.Media;
 
 namespace Koncoročný_projekt__RPG_game.UI_Generations
 {
-    internal class MapBlocks_Insides : Grid
+    public class MapBlocks_Insides : Grid
     {
+ 
+        public enum BlockType { Empty, Item, Chest, NPC }
+        public enum LeftWallType { None, Wall, DoorOpen, DoorClosed, RoomDoor }
+        public enum RightWallType { None, Wall, DoorOpen, DoorClosed, RoomDoor }
+        public enum UpperWallType { None, Wall, DoorOpen, DoorClosed, RoomDoor }
+        public enum DownerWallType { None, Wall, DoorOpen, DoorClosed, RoomDoor }
 
-      public enum BlockType
+
+        public BlockData Data { get; set; } = new BlockData();
+
+        // All these short cuts were made by AI... though ONLY the short cuts...
+        public string current_Left_Wall_Texture
         {
-            Empty,
-            Item,
-            Chest,
-            NPC
+            get => Data.current_Left_Wall_Texture;
+            set => Data.current_Left_Wall_Texture = value;
         }
-        public enum LeftWallType
+        public string current_Right_Wall_Texture
         {
-            None,
-            Wall,
-            DoorOpen,
-            DoorClosed,
-            RoomDoor
+            get => Data.current_Right_Wall_Texture;
+            set => Data.current_Right_Wall_Texture = value;
         }
-        public enum RightWallType
+        public string current_Upper_Wall_Texture
         {
-            None,
-            Wall,
-            DoorOpen,
-            DoorClosed,
-            RoomDoor
+            get => Data.current_Upper_Wall_Texture;
+            set => Data.current_Upper_Wall_Texture = value;
         }
-        public enum UpperWallType
+        public string current_Downer_Wall_Texture
         {
-            None,
-            Wall,
-            DoorOpen,
-            DoorClosed,
-            RoomDoor
+            get => Data.current_Downer_Wall_Texture;
+            set => Data.current_Downer_Wall_Texture = value;
         }
-        public enum DownerWallType
+        public string current_Flore_Texture
         {
-            None,
-            Wall,
-            DoorOpen,
-            DoorClosed,
-            RoomDoor
+            get => Data.current_Flore_Texture;
+            set => Data.current_Flore_Texture = value;
+        }
+        public string current_item_Texture
+        {
+            get => Data.current_item_Texture;
+            set => Data.current_item_Texture = value;
+        }
+        public string current_Enemy_Texture
+        {
+            get => Data.current_Enemy_Texture;
+            set => Data.current_Enemy_Texture = value;
+        }
+        public string current_NPC_Texture
+        {
+            get => Data.current_NPC_Texture;
+            set => Data.current_NPC_Texture = value;
+        }
+        public string current_NPC_Name
+        {
+            get => Data.current_NPC_Name;
+            set => Data.current_NPC_Name = value;
+        }
+        public string current_Chest_Texture
+        {
+            get => Data.current_Chest_Texture;
+            set => Data.current_Chest_Texture = value;
         }
 
-        public string current_Left_Wall_Texture = "";
-        public string current_Right_Wall_Texture = "";
-        public string current_Upper_Wall_Texture = "";
-        public string current_Downer_Wall_Texture = "";
-        public string current_Flore_Texture = "";
-        public string current_item_Texture = "";
-        public string current_Enemy_Texture = "";
-        public string current_NPC_Texture = "";
-        public string current_NPC_Name = "Grrr";
-        public string current_Chest_Texture = "";
-        public List<string> current_NPC_Lines = [];
-        public List<string> current_Chest_Items = [];
 
-        public int NextRoomTeleporter_X = 0;
-        public int NextRoomTeleporter_Y = 0;
-        public int NextRoomTeleporter_Room = 0;
-
-        public BlockType block_type = BlockType.Empty;
-        public LeftWallType left_wall = LeftWallType.None;
-        public RightWallType right_wall = RightWallType.None;
-        public UpperWallType upper_wall = UpperWallType.None;
-        public DownerWallType downer_wall = DownerWallType.None;
-
-        public bool OutofArrayChecker()
+        public List<string> current_NPC_Lines
         {
-            //MessageBox.Show("NOT out of array!"); // inportent piece of tech right here
-            return true;
+            get => Data.current_NPC_Lines;
+            set => Data.current_NPC_Lines = value;
         }
+        public List<string> current_Chest_Items
+        {
+            get => Data.current_Chest_Items;
+            set => Data.current_Chest_Items = value;
+        }
+
+
+        public int NextRoomTeleporter_X
+        {
+            get => Data.NextRoomTeleporter_X;
+            set => Data.NextRoomTeleporter_X = value;
+        }
+        public int NextRoomTeleporter_Y
+        {
+            get => Data.NextRoomTeleporter_Y;
+            set => Data.NextRoomTeleporter_Y = value;
+        }
+        public int NextRoomTeleporter_Room
+        {
+            get => Data.NextRoomTeleporter_Room;
+            set => Data.NextRoomTeleporter_Room = value;
+        }
+
+
+        public BlockType block_type
+        {
+            get => Data.block_type;
+            set => Data.block_type = value;
+        }
+        public LeftWallType left_wall
+        {
+            get => Data.left_wall;
+            set => Data.left_wall = value;
+        }
+        public RightWallType right_wall
+        {
+            get => Data.right_wall;
+            set => Data.right_wall = value;
+        }
+        public UpperWallType upper_wall
+        {
+            get => Data.upper_wall;
+            set => Data.upper_wall = value;
+        }
+        public DownerWallType downer_wall
+        {
+            get => Data.downer_wall;
+            set => Data.downer_wall = value;
+        }
+
+
+        public bool OutofArrayChecker() { return true; }
+
 
         public Image Left_wall = new Image()
         {
@@ -96,10 +148,10 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         };
         public Image Downer_wall = new Image()
         {
-            Height = 20,//20
+            Height = 20,
             Width = 100,
             VerticalAlignment = VerticalAlignment.Bottom,
-            Margin = new Thickness(0, 0, 0, 10) // change somethin' here
+            Margin = new Thickness(0, 0, 0, 10)
         };
         public Image Flore = new Image()
         {
@@ -131,10 +183,10 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         };
 
         public MapBlocks_Insides(int box_position)
-            {
-            Height = 100 ;
-            Width = 100 ;
-            Margin = new Thickness(box_position, 5, 5, 5); /// change somethin' here
+        {
+            Height = 100;
+            Width = 100;
+            Margin = new Thickness(box_position, 5, 5, 5);
             Background = Brushes.DarkGray;
 
             Children.Add(Flore);
@@ -145,7 +197,6 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             Children.Add(Item);
             Children.Add(NPC);
             Children.Add(Chest);
-
         }
     }
 }

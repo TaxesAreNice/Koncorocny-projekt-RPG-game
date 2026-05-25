@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace Koncoročný_projekt__RPG_game.UI_Generations
 {
-    internal class Map_Block : Grid
+    public class Map_Block : Grid
     {
         private Grid Box;
         private int box_position = 5;
