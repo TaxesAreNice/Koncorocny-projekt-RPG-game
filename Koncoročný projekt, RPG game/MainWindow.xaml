@@ -95,14 +95,17 @@
         </Grid>
         <Label x:Name="Text_Of_All_Texts" Content="Fafafela" HorizontalAlignment="Left" Margin="0,648,0,0" VerticalAlignment="Top" Height="72" Width="1152" FontSize="50" Background="DarkGray" Visibility="Collapsed"/>
 
-        <Grid x:Name="AdmitGrid" Margin="1292,0,0,0" Background="#FF423252" Visibility="Collapsed">
+        <Grid x:Name="AdmitGrid" Margin="1292,0,0,0" Background="#FF423252" Visibility="Visible">
             <Button x:Name="Add_Item" Content="Add Item" HorizontalAlignment="Center" Margin="0,521,0,0" VerticalAlignment="Top" Height="74" Width="144" FontSize="30" Click="Add_Item_Click"/>
             <TextBox x:Name="item_name" HorizontalAlignment="Center" Margin="0,600,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="158" Height="56" TextChanged="item_name_TextChanged"/>
-            <Button x:Name="start" Content="Load Map" HorizontalAlignment="Left" Margin="40,256,0,0" VerticalAlignment="Top" Height="150" Width="104" Click="start_Click" FontSize="20"/>
+            <Button x:Name="start" Content="Load Map" HorizontalAlignment="Left" Margin="40,346,0,0" VerticalAlignment="Top" Height="60" Width="104" Click="start_Click" FontSize="20"/>
             <Button x:Name="StudioAct" Content="Button" HorizontalAlignment="Center" Margin="0,678,0,0" VerticalAlignment="Top" Height="46" Width="72" Click="StudioAct_Click"/>
             <TextBox x:Name="MapSize" HorizontalAlignment="Left" Margin="25,411,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" Height="84" Text="h"/>
             <Button x:Name="StartFight_but" Content="Fight" HorizontalAlignment="Left" Margin="51,52,0,0" VerticalAlignment="Top" Height="79" Width="89" Click="StartFight_but_Click" FontSize="20"/>
             <TextBox x:Name="Enemy_Num" HorizontalAlignment="Left" Margin="39,151,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="144" Height="59" TextChanged="Enemy_Num_TextChanged"/>
+            <TextBox x:Name="Room_ID_Changer_Studio" HorizontalAlignment="Left" Margin="25,301,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="146" Height="40"/>
+            <Button x:Name="Save_Room" Content="Save room" HorizontalAlignment="Left" Margin="38,240,0,0" VerticalAlignment="Top" Height="38" Width="66" Click="Save_Room_Click"/>
+            <Button x:Name="Load_Room" Content="Load room" HorizontalAlignment="Left" Margin="117,240,0,0" VerticalAlignment="Top" Height="38" Width="66" Click="Load_Room_Click"/>
         </Grid>
         <Grid x:Name="ChestGrid" Background="DarkGray" Margin="208,55,280,266" Visibility="Collapsed" MouseDown="ChestGrid_MouseDown">
             <Button x:Name="Exit_Chest" Content="X" HorizontalAlignment="Left" Margin="951,10,0,0" VerticalAlignment="Top" Height="38" Width="33" Background="Red" FontSize="30" Foreground="White" Click="Exit_Chest_Click"/>
@@ -110,6 +113,7 @@
             <Grid x:Name="ChestInventory_Chest" Margin="10,64,10,63" Background="Gray">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="455*"/>
+
                     <ColumnDefinition Width="41*"/>
                 </Grid.ColumnDefinitions>
             </Grid>
