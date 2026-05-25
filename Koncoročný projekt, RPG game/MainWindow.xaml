@@ -9,7 +9,7 @@
     <Grid>
 
 
-        <Label x:Name="TheInteractions" Content="Fahh" HorizontalAlignment="Center" Margin="0,620,0,0" VerticalAlignment="Top" Height="114" Width="1500" FontSize="30" Background="Gray"/>
+        <Label x:Name="TheInteractions" Content="" HorizontalAlignment="Center" Margin="0,620,0,0" VerticalAlignment="Top" Height="114" Width="1500" FontSize="30" Background="Gray"/>
 
 
         <Grid x:Name="Map_UI" Margin="0,0,0,98" Background="Black"/>
@@ -18,12 +18,10 @@
         <Grid x:Name="Inventory" Background="#FF444242" MouseDown="Inventory_MouseDown" Visibility="Collapsed">
             <Grid x:Name="Item_Stuff" Margin="0,502,1030,0" Background="Gray">
 
-                <Label Content="Item Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="0,10,0,0" Width="235" FontSize="30"/>
-                <Label Content="Mana Usage:" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="0,144,0,0" Width="235" FontSize="30"/>
-                <Label Content="Item Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Width="235" FontSize="30" Margin="0,79,0,0"/>
-                <Label x:Name="Mana_Usage" Content="           -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="245,144,0,0" Width="200" FontSize="30"/>
-                <Label x:Name="Item_Description" Content="           -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="245,79,0,0" Width="200" FontSize="30"/>
-                <Label x:Name="Item_Name" Content="           -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="245,10,0,0" Width="200" FontSize="30"/>
+                <Label Content="Item Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="0,32,0,0" Width="235" FontSize="30"/>
+                <Label Content="Item Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Width="235" FontSize="30" Margin="0,116,0,0"/>
+                <Label x:Name="Item_Description" Content="           -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="245,116,0,0" Width="200" FontSize="30"/>
+                <Label x:Name="Item_Name" Content="           -" HorizontalAlignment="Left" VerticalAlignment="Top" Background="DarkGray" Height="52" Margin="245,32,0,0" Width="200" FontSize="30"/>
             </Grid>
             <Grid x:Name="Item_Stuff_Copy" Margin="475,502,578,0" Background="Gray">
                 <Grid.ColumnDefinitions>
@@ -49,12 +47,10 @@
                 <ProgressBar x:Name="PlayerHp_Bar" HorizontalAlignment="Center" Height="50" Margin="0,10,0,0" VerticalAlignment="Top" Width="446" Background="Gray" Value="50" Foreground="#FFFF1212"/>
                 <Label x:Name="PlayerHp_Label" Content="50hp" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" Height="53" Margin="0,10,0,0" Foreground="White"/>
                 <Rectangle x:Name="Player_Image" HorizontalAlignment="Center" Height="250" Margin="0,68,0,0" Stroke="Black" VerticalAlignment="Top" Width="250" Fill="Gray" Grid.RowSpan="2"/>
-                <Label Content="Mana:" HorizontalAlignment="Left" Margin="10,138,0,0" VerticalAlignment="Top" Background="Gray" Height="47" Width="70" FontSize="15" Grid.Row="1"/>
-                <Label Content="Defence:" HorizontalAlignment="Left" Margin="160,138,0,0" VerticalAlignment="Top" Background="Gray" Height="47" Width="70" FontSize="15" Grid.Row="1"/>
-                <Label x:Name="Player_Mana" Content="   -" HorizontalAlignment="Left" Margin="85,128,0,0" VerticalAlignment="Top" Background="Gray" Height="57" Width="70" FontSize="30" Grid.Row="1"/>
-                <Label x:Name="Player_Attack" Content="   -" HorizontalAlignment="Left" Margin="385,128,0,0" VerticalAlignment="Top" Background="Gray" Height="57" Width="70" FontSize="30" Grid.Row="1"/>
-                <Label x:Name="Player_Defence" Content="   -" HorizontalAlignment="Left" Margin="235,128,0,0" VerticalAlignment="Top" Background="Gray" Height="57" Width="70" FontSize="30" Grid.Row="1"/>
-                <Label Content="Attack:" HorizontalAlignment="Left" Margin="310,138,0,0" VerticalAlignment="Top" Background="Gray" Height="47" Width="70" FontSize="15" Grid.Row="1"/>
+                <Label Content="Defence:" HorizontalAlignment="Left" Margin="103,140,0,0" VerticalAlignment="Top" Background="Gray" Height="47" Width="70" FontSize="15" Grid.Row="1"/>
+                <Label x:Name="Player_Attack" Content="   -" HorizontalAlignment="Left" Margin="364,128,0,0" VerticalAlignment="Top" Background="Gray" Height="57" Width="70" FontSize="30" Grid.Row="1"/>
+                <Label x:Name="Player_Defence" Content="   -" HorizontalAlignment="Left" Margin="185,128,0,0" VerticalAlignment="Top" Background="Gray" Height="57" Width="70" FontSize="30" Grid.Row="1"/>
+                <Label Content="Attack:" HorizontalAlignment="Left" Margin="275,138,0,0" VerticalAlignment="Top" Background="Gray" Height="47" Width="70" FontSize="15" Grid.Row="1"/>
             </Grid>
             <Grid x:Name="Enemy_Grid" Margin="852,75,38,75" Background="Gray" MouseDown="Enemy_Grid_MouseDown" />
             <Button x:Name="Attack" Content="Attack" HorizontalAlignment="Left" Margin="642,0,0,0" VerticalAlignment="Center" Height="106" Width="108" FontSize="20" Click="Attack_Click"/>
@@ -80,6 +76,7 @@
                 <Button x:Name="NPCs_Studio" Content="NPCs" HorizontalAlignment="Left" Margin="0,182,0,0" VerticalAlignment="Top" Height="45" Width="80" FontSize="18" Click="NPCs_Studio_Click"/>
                 <Button x:Name="Doors_Studio" Content="Doors" HorizontalAlignment="Left" Margin="85,182,0,0" VerticalAlignment="Top" Height="45" Width="97" FontSize="18" Click="Doors_Studio_Click"/>
                 <Button x:Name="Chest_Studio" Content="Chests" HorizontalAlignment="Left" Margin="0,232,0,0" VerticalAlignment="Top" Height="45" Width="80" FontSize="18" Click="Chest_Studio_Click"/>
+                <Button x:Name="RoomDoor_Studio" Content="RoomDoor" HorizontalAlignment="Left" Margin="85,232,0,0" VerticalAlignment="Top" Height="45" Width="97" FontSize="18" Click="RoomDoor_Studio_Click"/>
             </Grid>
             <Grid x:Name="AddThingy_Studio">
                 <Button x:Name="Back_Studio" Content="Back" HorizontalAlignment="Left" Margin="131,663,0,0" VerticalAlignment="Top" Height="36" Width="54" FontSize="20" Click="Back_Studio_Click" Visibility="Hidden"/>
@@ -107,10 +104,10 @@
             <Button x:Name="StartFight_but" Content="Fight" HorizontalAlignment="Left" Margin="51,52,0,0" VerticalAlignment="Top" Height="79" Width="89" Click="StartFight_but_Click" FontSize="20"/>
             <TextBox x:Name="Enemy_Num" HorizontalAlignment="Left" Margin="39,151,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="144" Height="59" TextChanged="Enemy_Num_TextChanged"/>
         </Grid>
-        <Grid x:Name="ChestGrid" Background="DarkGray" Margin="208,10,280,57" Visibility="Visible" MouseDown="ChestGrid_MouseDown">
+        <Grid x:Name="ChestGrid" Background="DarkGray" Margin="208,55,280,266" Visibility="Collapsed" MouseDown="ChestGrid_MouseDown">
             <Button x:Name="Exit_Chest" Content="X" HorizontalAlignment="Left" Margin="951,10,0,0" VerticalAlignment="Top" Height="38" Width="33" Background="Red" FontSize="30" Foreground="White" Click="Exit_Chest_Click"/>
-            <Grid x:Name="CurrentPlayerInventory_Chest" Margin="10,372,10,10" Background="Gray"/>
-            <Grid x:Name="ChestInventory_Chest" Margin="10,53,10,328" Background="Gray">
+            <Grid x:Name="CurrentPlayerInventory_Chest" Margin="10,372,10,10" Background="Gray" Visibility="Collapsed"/>
+            <Grid x:Name="ChestInventory_Chest" Margin="10,64,10,63" Background="Gray">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="455*"/>
                     <ColumnDefinition Width="41*"/>

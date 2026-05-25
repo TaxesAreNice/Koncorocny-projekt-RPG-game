@@ -19,28 +19,32 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             None,
             Wall,
             DoorOpen,
-            DoorClosed
+            DoorClosed,
+            RoomDoor
         }
         public enum RightWallType
         {
             None,
             Wall,
             DoorOpen,
-            DoorClosed
+            DoorClosed,
+            RoomDoor
         }
         public enum UpperWallType
         {
             None,
             Wall,
             DoorOpen,
-            DoorClosed
+            DoorClosed,
+            RoomDoor
         }
         public enum DownerWallType
         {
             None,
             Wall,
             DoorOpen,
-            DoorClosed
+            DoorClosed,
+            RoomDoor
         }
 
         public string current_Left_Wall_Texture = "";
@@ -55,6 +59,10 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         public string current_Chest_Texture = "";
         public List<string> current_NPC_Lines = [];
         public List<string> current_Chest_Items = [];
+
+        public int NextRoomTeleporter_X = 0;
+        public int NextRoomTeleporter_Y = 0;
+        public int NextRoomTeleporter_Room = 0;
 
         public BlockType block_type = BlockType.Empty;
         public LeftWallType left_wall = LeftWallType.None;

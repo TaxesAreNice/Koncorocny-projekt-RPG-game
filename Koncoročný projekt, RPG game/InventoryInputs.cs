@@ -358,7 +358,6 @@ namespace Koncoročný_projekt__RPG_game
                     description.Add(desc);
 
 
-                    description.Add(item.Mana.ToString());
                     break;
                 }
             }
