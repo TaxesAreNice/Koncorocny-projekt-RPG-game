@@ -147,12 +147,12 @@ namespace Koncoročný_projekt__RPG_game
         }
 
         // ── Save Room ─────────────────────────────────────────────────────────
-        public static void SaveRoom(List<List<UI_Generations.Map_Block>> map, int roomNumber, int xMap, int yMap)
+        public static void SaveRoom(List<List<UI_Generations.Map_Block>> map, int roomNumber, int xMap, int yMap, string corner = "TopLeft")
         {
             string folder = string.IsNullOrEmpty(CurrentSaveName)
-                  ? Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Rooms")
-                  : CurrentSavePath;
-            RoomSaveLoad.SaveRoomToFolder(map, roomNumber, xMap, yMap, folder);
+                ? Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Rooms")
+                : CurrentSavePath;
+            RoomSaveLoad.SaveRoomToFolder(map, roomNumber, xMap, yMap, folder, corner);
         }
 
         // ── Read Room ─────────────────────────────────────────────────────────

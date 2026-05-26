@@ -50,6 +50,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         public int XMap { get; set; }   // columns
         public int YMap { get; set; }   // rows
         public List<List<BlockData>> Rows { get; set; } = [];
+        public string Corner { get; set; } = "TopLeft";
     }
 }
 

@@ -1344,6 +1344,8 @@ namespace Koncoročný_projekt__RPG_game
             CurrentState = "Main";
             Enemy_Grid.Children.Clear();
             current_enemies.Clear();
+            inNPCFight = false;
+            justFinishedNPCFight = true;
         }
 
         private void UpdatePlayerStats()
@@ -1782,6 +1784,7 @@ namespace Koncoročný_projekt__RPG_game
 
         private void SwitchRoom(int roomNumber, int playerStartX, int playerStartY)
         {
+
             RoomSaveData? roomData = SaveManager.ReadRoom(roomNumber);
             if (roomData == null) return;
 
@@ -1796,6 +1799,8 @@ namespace Koncoročný_projekt__RPG_game
 
             XMap = roomData.XMap;
             YMap = roomData.YMap;
+            if (Enum.TryParse<MapCorner>(roomData.Corner, out MapCorner corner))
+                mapCorner = corner;
             playerMovement.MAX_x = XMap - 1;
             playerMovement.MAX_y = YMap - 1;
 
@@ -1981,10 +1986,8 @@ namespace Koncoročný_projekt__RPG_game
         {
             if (int.TryParse(Room_ID_Changer_Studio.Text, out int num))
             {
-                // Save to legacy Rooms/ folder (for building the DEFAULT)
-                RoomSaveLoad.SaveRoom(Map, num, XMap, YMap);
-                // Also save to current save folder if one is active
-                SaveManager.SaveRoom(Map, num, XMap, YMap);
+                RoomSaveLoad.SaveRoom(Map, num, XMap, YMap, mapCorner.ToString());
+                SaveManager.SaveRoom(Map, num, XMap, YMap, mapCorner.ToString());
             }
             else
                 MessageBox.Show("Type a room number in the text box first!");

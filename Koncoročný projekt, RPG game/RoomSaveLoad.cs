@@ -20,22 +20,21 @@ namespace Koncoročný_projekt__RPG_game
         };
 
         // ── Called by SaveManager ─────────────────────────────────────────────
-        public static void SaveRoomToFolder(
-            List<List<Map_Block>> map, int roomNumber, int xMap, int yMap, string folder)
-        {
-            try
-            {
-                var roomSave = new RoomSaveData { RoomNumber = roomNumber, XMap = xMap, YMap = yMap };
-                foreach (var mapRow in map[0])
-                    roomSave.Rows.Add(mapRow.blocks.Select(b => b.Data).ToList());
-
-                Directory.CreateDirectory(folder);
-                File.WriteAllText(
-                    Path.Combine(folder, $"room_{roomNumber}.json"),
-                    JsonSerializer.Serialize(roomSave, JsonOpts));
-            }
-            catch (Exception ex) { MessageBox.Show($"Save failed: {ex.Message}"); }
-        }
+ public static void SaveRoomToFolder(
+    List<List<Map_Block>> map, int roomNumber, int xMap, int yMap, string folder, string corner = "TopLeft")
+{
+    try
+    {
+        var roomSave = new RoomSaveData { RoomNumber = roomNumber, XMap = xMap, YMap = yMap, Corner = corner };
+        foreach (var mapRow in map[0])
+            roomSave.Rows.Add(mapRow.blocks.Select(b => b.Data).ToList());
+        Directory.CreateDirectory(folder);
+        File.WriteAllText(
+            Path.Combine(folder, $"room_{roomNumber}.json"),
+            JsonSerializer.Serialize(roomSave, JsonOpts));
+    }
+    catch (Exception ex) { MessageBox.Show($"Save failed: {ex.Message}"); }
+}
 
         public static RoomSaveData? ReadRoomFromFolder(int roomNumber, string folder)
         {
@@ -57,8 +56,8 @@ namespace Koncoročný_projekt__RPG_game
         private static string LegacyFolder =>
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, RoomsFolder);
 
-        public static void SaveRoom(List<List<Map_Block>> map, int roomNumber, int xMap, int yMap)
-            => SaveRoomToFolder(map, roomNumber, xMap, yMap, LegacyFolder);
+        public static void SaveRoom(List<List<Map_Block>> map, int roomNumber, int xMap, int yMap, string corner = "TopLeft")
+    => SaveRoomToFolder(map, roomNumber, xMap, yMap, LegacyFolder, corner);
 
         public static RoomSaveData? ReadRoomFile(int roomNumber)
             => ReadRoomFromFolder(roomNumber, LegacyFolder);
