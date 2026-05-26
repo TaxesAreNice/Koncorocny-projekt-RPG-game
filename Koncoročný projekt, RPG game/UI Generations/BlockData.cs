@@ -21,6 +21,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         public string current_NPC_Texture { get; set; } = "";
         public string current_NPC_Name { get; set; } = "Grrr";
         public string current_Chest_Texture { get; set; } = "";
+        public List<string> NPC_Enemies { get; set; } = [];
 
         // --- Lists ---
         public List<string> current_NPC_Lines { get; set; } = [];
@@ -30,6 +31,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         public int NextRoomTeleporter_X { get; set; } = 0;
         public int NextRoomTeleporter_Y { get; set; } = 0;
         public int NextRoomTeleporter_Room { get; set; } = 0;
+        public int NPC_Aura { get; set; } = 0;
 
         // --- Block / Wall types ---
         public BlockType block_type { get; set; } = BlockType.Empty;

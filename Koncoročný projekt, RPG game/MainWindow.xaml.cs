@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Numerics;
 using System.Text;
 using System.Timers;
@@ -17,6 +18,7 @@ using Koncoročný_projekt__RPG_game.UI_Generations;
 using static Koncoročný_projekt__RPG_game.Fighting;
 using static Koncoročný_projekt__RPG_game.PlayerMovementClass;
 using static Koncoročný_projekt__RPG_game.UI_Generations.MapBlocks_Insides;
+using Path = System.IO.Path;
 
 namespace Koncoročný_projekt__RPG_game
 {
@@ -51,6 +53,8 @@ namespace Koncoročný_projekt__RPG_game
         private int XMap = 0;
 
         private int NPC_line_index = 1;
+        private int currentRoomNumber = 0;
+
 
         DispatcherTimer inventory_click_checker = new DispatcherTimer();
         DispatcherTimer inventory_Chest_click_checker = new DispatcherTimer();
@@ -207,6 +211,11 @@ namespace Koncoročný_projekt__RPG_game
 
         private void start_Click(object sender, RoutedEventArgs e)
         {
+            if (Started)
+            {
+                ClearMap();
+                Map.Add(new List<Map_Block>());
+            }
             if (MapSize.Text.Contains("x") || MapSize.Text.Contains("X"))
             {
                 int tester = 0;
@@ -390,6 +399,11 @@ namespace Koncoročný_projekt__RPG_game
             if (e.Key == Key.F5)
             {
                 AdminToggle();
+            }
+            if (e.Key == Key.F6)
+            {
+                Menu.Visibility = Visibility.Collapsed;
+                NewGameMenu.Visibility = Visibility.Collapsed;
             }
             if (!Started) { return; }
 
@@ -659,6 +673,8 @@ namespace Koncoročný_projekt__RPG_game
             else if (neighbor != null && playerMovement.CheckingForWalls(key, current, neighbor))
             {
                 ChangingPlayerPosition(key);
+                if (Studio.Visibility != Visibility.Visible)
+                    CheckingForHostileNPCs();
                 ChestGrid.Visibility = Visibility.Hidden;
 
                 int newPx = playerMovement.PlayerX;
@@ -691,6 +707,67 @@ namespace Koncoročný_projekt__RPG_game
                 {
                     if (!string.IsNullOrEmpty((string?)TheInteractions.Content)) TheInteractions.Content += "\n";
                     TheInteractions.Content += "There's a door you can interact with (F)";
+                }
+            }
+        }
+        private bool inNPCFight = false;
+        private bool justFinishedNPCFight = false;
+        private void CheckingForHostileNPCs()
+        {
+            // First check if player is in ANY aura range
+            bool anyInRange = false;
+            for (int y = 0; y < Map[0].Count; y++)
+            {
+                for (int x = 0; x < Map[0][y].blocks.Count; x++)
+                {
+                    MapBlocks_Insides block = Map[0][y].blocks[x];
+                    if (block.block_type != MapBlocks_Insides.BlockType.NPC) continue;
+                    if (block.NPC_Aura <= 0) continue;
+                    if (Math.Abs(playerMovement.PlayerX - x) <= block.NPC_Aura &&
+                        Math.Abs(playerMovement.PlayerY - y) <= block.NPC_Aura)
+                    {
+                        anyInRange = true;
+                        break;
+                    }
+                }
+            }
+
+            // Reset flags when player leaves all aura ranges
+            if (!anyInRange)
+            {
+                inNPCFight = false;
+                justFinishedNPCFight = false;
+            }
+
+            // Don't trigger again until player leaves range first
+            if (justFinishedNPCFight) return;
+
+            // Now check for fight trigger
+            for (int y = 0; y < Map[0].Count; y++)
+            {
+                for (int x = 0; x < Map[0][y].blocks.Count; x++)
+                {
+                    MapBlocks_Insides block = Map[0][y].blocks[x];
+                    if (block.block_type != MapBlocks_Insides.BlockType.NPC) continue;
+                    if (block.NPC_Aura <= 0) continue;
+                    int aura = block.NPC_Aura;
+                    int px = playerMovement.PlayerX;
+                    int py = playerMovement.PlayerY;
+                    bool inRange = Math.Abs(px - x) <= aura && Math.Abs(py - y) <= aura;
+                    if (inRange && !inNPCFight)
+                    {
+                        inNPCFight = true;
+                        fighting.currentEnemies.Clear();
+                        foreach (string enemyName in block.NPC_Enemies)
+                        {
+                            if (fighting.currentEnemies.Count >= 4) break;
+                            var newEnemy = new Enemy { EnemyName = enemyName.Trim() };
+                            fighting.currentEnemies.Add(newEnemy);
+                            EnemyStatAdder(enemyName.Trim());
+                        }
+                        StartFight();
+                        return;
+                    }
                 }
             }
         }
@@ -989,6 +1066,8 @@ namespace Koncoročný_projekt__RPG_game
                 CurrentState = "Main";
                 Enemy_Grid.Children.Clear();
                 current_enemies.Clear();
+                inNPCFight = false;
+                justFinishedNPCFight = true;
                 return;
             }
 
@@ -1057,8 +1136,9 @@ namespace Koncoročný_projekt__RPG_game
             {
                 case 0:
                     MessageBox.Show("You've won this battle");
+                    inNPCFight = false;
+                    justFinishedNPCFight = true;
                     Player plater = fighting.RequestPlayer();
-
                     plater.PlayerHP += 25;
                     if (plater.PlayerHP >= 100)
                     {
@@ -1068,6 +1148,7 @@ namespace Koncoročný_projekt__RPG_game
                     return;
                 case 1:
                     name = fighting.currentEnemies[0].EnemyName;
+
                     EnemyStatAdder(name);
                     Spawing_enemy(name, space_off_x, space_off_y, 0);
                     break;
@@ -1450,25 +1531,25 @@ namespace Koncoročný_projekt__RPG_game
             {
                 SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Left_wall, "Blocks", currentStudioState.ToString(), taxes + "_sides");
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].left_wall = LeftWallType.Wall;
-                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Left_Wall_Texture = taxes;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Left_Wall_Texture = taxes + "_sides";
             }
             else if (currentStudioState == StudioState.Right_Walls)
             {
                 SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Right_wall, "Blocks", currentStudioState.ToString(), taxes + "_sides");
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].right_wall = RightWallType.Wall;
-                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Right_Wall_Texture = taxes;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Right_Wall_Texture = taxes + "_sides";
             }
             else if (currentStudioState == StudioState.Top_Walls)
             {
                 SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Upper_wall, "Blocks", currentStudioState.ToString(), taxes + "_tops");
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].upper_wall = UpperWallType.Wall;
-                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Upper_Wall_Texture = taxes;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Upper_Wall_Texture = taxes + "_tops";
             }
             else if (currentStudioState == StudioState.Buttom_Walls)
             {
                 SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Downer_wall, "Blocks", currentStudioState.ToString(), taxes + "_tops");
                 Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].downer_wall = DownerWallType.Wall;
-                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Downer_Wall_Texture = taxes;
+                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Downer_Wall_Texture = taxes + "_tops";
 
             }
             else if (currentStudioState == StudioState.Flores)
@@ -1582,46 +1663,69 @@ namespace Koncoročný_projekt__RPG_game
             }
             else if (currentStudioState == StudioState.NPCs)
             {
-                if (taxes.Contains("/"))
+                if (taxes.Contains("//"))
                 {
-                    string theDialog = taxes.Split("/")[1];
+                    string leftSide = taxes.Split("//")[0];
+                    int theAura = int.Parse(taxes.Split("//")[1]);
 
-                    for (int i = 0; i < theDialog.Split("|").Length; i++)
-                    {
-                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Lines.Add(theDialog.Split("|")[i]);
-                    }
+                    string mainName = leftSide.Contains(",") ? leftSide.Split(",")[0].Trim() : leftSide.Trim();
 
-                    taxes = taxes.Split("/")[0];
-                    SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC, "Characters", "NPC", taxes);
-                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Texture = taxes;
-                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Name = taxes;
+                    SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC, "Characters", "Enemies", mainName);
+                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Texture = mainName;
+                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Name = mainName;
                     Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.NPC;
-                }
-            }
-            else if (currentStudioState == StudioState.Chests)
-            {
-                if (taxes.Contains("/"))
-                {
-                    string theSide = taxes.Split("/")[0];
-                    taxes = taxes.Split("/")[1];
-                    if (taxes.Contains(","))
+                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC_Aura = theAura;
+
+                    // Store all enemies including the main one
+                    if (leftSide.Contains(","))
                     {
-                        for (int i = 0; i < taxes.Split(",").Length; i++)
-                        {
-                            Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Items.Add(taxes.Split(",")[i]);
-                        }
+                        foreach (string enemy in leftSide.Split(","))
+                            Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC_Enemies.Add(enemy.Trim());
                     }
                     else
                     {
-                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Items.Add(taxes);
+                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC_Enemies.Add(mainName);
                     }
+                    }
+                    else if (taxes.Contains("/"))
+                    {
+                        string theDialog = taxes.Split("/")[1];
+                        for (int i = 0; i < theDialog.Split("|").Length; i++)
+                        {
+                            Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Lines.Add(theDialog.Split("|")[i]);
+                        }
+                        taxes = taxes.Split("/")[0];
+                        SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC, "Characters", "NPC", taxes);
+                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Texture = taxes;
+                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_NPC_Name = taxes;
+                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.NPC;
+                    }
+                }
+                else if (currentStudioState == StudioState.Chests)
+                {
+                    if (taxes.Contains("/"))
+                    {
+                        string theSide = taxes.Split("/")[0];
+                        taxes = taxes.Split("/")[1];
+                        if (taxes.Contains(","))
+                        {
+                            for (int i = 0; i < taxes.Split(",").Length; i++)
+                            {
+                                Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Items.Add(taxes.Split(",")[i]);
+                            }
+                        }
+                        else
+                        {
+                            Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Items.Add(taxes);
+                        }
 
-                    SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Chest, "Blocks", "Others", "Chest_" + theSide);
-                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.Chest;
-                    Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Texture = "Chest_" + theSide;
+                        SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Chest, "Blocks", "Others", "Chest_" + theSide);
+                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.Chest;
+                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Chest_Texture = "Chest_" + theSide;
+                    }
                 }
             }
-        }
+        
 
         private void Chest_Studio_Click(object sender, RoutedEventArgs e)
         {
@@ -1649,13 +1753,7 @@ namespace Koncoročný_projekt__RPG_game
             faf(9);
         }
 
-        private void Save_Room_Click(object sender, RoutedEventArgs e)
-        {
-            if (int.TryParse(Room_ID_Changer_Studio.Text, out int num))
-                RoomSaveLoad.SaveRoom(Map, num, XMap, YMap);
-            else
-                MessageBox.Show("Type a room number in the text box first!");
-        }
+    
 
         private void Load_Room_Click(object sender, RoutedEventArgs e)
         {
@@ -1674,35 +1772,252 @@ namespace Koncoročný_projekt__RPG_game
                 Map.Clear();
             }
             Map_UI.Children.Remove(Player_ima);
+
+            // Reset player movement state
+            playerMovement.PlayerX = 0;
+            playerMovement.PlayerY = 0;
+            playerMovement.Player_Pixel_X = 30;
+            playerMovement.Player_Pixel_Y = 30;
         }
-        
+
         private void SwitchRoom(int roomNumber, int playerStartX, int playerStartY)
         {
-            // 1. Read the file first — bail out early if it doesn't exist
-            RoomSaveData? roomData = RoomSaveLoad.ReadRoomFile(roomNumber);
+            RoomSaveData? roomData = SaveManager.ReadRoom(roomNumber);
             if (roomData == null) return;
 
-            // 2. Clear the current map
+            // Auto-save current room + player before leaving
+            if (Started && Map.Count > 0 && Map[0].Count > 0)
+            {
+                SaveManager.SaveRoom(Map, currentRoomNumber, XMap, YMap);
+                SaveManager.SavePlayer(BuildPlayerSaveData());
+            }
+
             ClearMap();
 
-            // 3. Update size variables so everything still works
             XMap = roomData.XMap;
             YMap = roomData.YMap;
             playerMovement.MAX_x = XMap - 1;
             playerMovement.MAX_y = YMap - 1;
 
-            // 4. Regenerate the map UI at the new size
             GeneretingMap();
-
-            // 5. Apply saved block data + textures onto the fresh map
             RoomSaveLoad.ApplyRoomData(Map, roomData, SetGameImage);
 
-            // 6. Move the player to the correct spawn point
             playerMovement.PlayerX = playerStartX;
             playerMovement.PlayerY = playerStartY;
             playerMovement.Player_Pixel_X = (playerStartX * 105) + 30;
             playerMovement.Player_Pixel_Y = (playerStartY * 100) + 30;
             ChangingPlayerPosition("switch");
+            currentRoomNumber = roomNumber;
+        }
+
+
+        private void ToExisting_Menu_Click(object sender, RoutedEventArgs e)
+        {
+            NewGameMenu.Visibility = Visibility.Collapsed;
+        }
+
+        private void ToNew_Menu_Click(object sender, RoutedEventArgs e)
+        {
+            NewGameMenu.Visibility = Visibility.Visible;
+        }
+
+        private void LoadSave_Click(object sender, RoutedEventArgs e)
+        {
+            string saveName = Input_Menu.Text.Trim();
+            var playerData = SaveManager.LoadGame(saveName, out string error);
+
+            if (playerData == null)
+            {
+                Output_Menu.Content = error;
+                return;
+            }
+
+            // Collapse menu panels
+            Menu.Visibility = Visibility.Collapsed;
+            NewGameMenu.Visibility = Visibility.Collapsed;
+
+            // Start the game from the saved state
+            StartFromSave(playerData);
+        }
+
+        // ── New game ──────────────────────────────────────────────────────────
+        private void NewGame_Menu_Click(object sender, RoutedEventArgs e)
+        {
+            string saveName = Input_NewOne_Menu.Text.Trim();
+            bool ok = SaveManager.NewGame(saveName, out string error);
+
+            if (!ok)
+            {
+                Output_Menu.Content = error;
+                return;
+            }
+
+            // Collapse menu panels
+            Menu.Visibility = Visibility.Collapsed;
+            NewGameMenu.Visibility = Visibility.Collapsed;
+
+            // Start fresh — load room 0, player at 0,0
+            var freshPlayer = new PlayerSaveData();
+            StartFromSave(freshPlayer);
+        }
+
+        // ── Shared startup logic ──────────────────────────────────────────────
+        private void StartFromSave(PlayerSaveData playerData)
+        {
+            var startTimer = new DispatcherTimer();
+            startTimer.Interval = TimeSpan.FromMilliseconds(100);
+            startTimer.Tick += (s, e) =>
+            {
+                startTimer.Stop();
+                Started = true;
+                CurrentState = "Main";
+                CurrentMain = "Map";
+                this.Focus();
+            };
+            startTimer.Start();
+            // MessageBox.Show($"Started: {Started}, State: {CurrentState}, Main: {CurrentMain}, MAX_x: {playerMovement.MAX_x}, MAX_y: {playerMovement.MAX_y}");
+            Started = true;
+            CurrentState = "Main";
+            CurrentMain = "Map";
+
+            // 2. Restore player stats
+            Player player = fighting.RequestPlayer();
+            player.PlayerHP = playerData.HP;
+            player.PlayerAttack = playerData.Attack;
+            player.PlayerDefense = playerData.Defense;
+            // 3. Rebuild inventory UI fresh
+            foreach (var slot in Inventory_Code) Inventory.Children.Remove(slot);
+            foreach (var btn in Inventory_butons) Inventory.Children.Remove(btn);
+            foreach (var chest in InventoryChest) ChestInventory_Chest.Children.Remove(chest);
+            Inventory_Code.Clear();
+            Inventory_butons.Clear();
+            InventoryChest.Clear();
+            GeneretingInventory();
+            GeneretingChestInv();
+
+            // 4. Restore inventory contents
+            if (playerData.Inventory.Count > 0)
+            {
+                for (int y = 0; y < playerData.Inventory.Count && y < Inventory_Code.Count; y++)
+                {
+                    for (int x = 0; x < playerData.Inventory[y].Count && x < Inventory_Code[y].slots.Count; x++)
+                    {
+                        string itemName = playerData.Inventory[y][x];
+                        if (string.IsNullOrEmpty(itemName)) continue;
+
+                        Inventory_Code[y].names[x] = itemName;
+                        SetGameImage(Inventory_Code[y].slots[x].image, "Items", "faf", itemName);
+
+                        // Keep InventoryInputs pointer in sync
+                        inventoryMovementClass.ender_x = x;
+                        inventoryMovementClass.ender_y = y;
+                        inventoryMovementClass.MovePointerForward();
+                    }
+                }
+            }
+
+            // 5. Restore equipped items
+            List<string> categories = new List<string>
+                { "Helmet", "Chestplate", "Leggins", "Boots", "Sword", "Ring", "2nd hand", "Accessory" };
+
+            foreach (var kvp in playerData.Equipped)
+            {
+                int idx = categories.IndexOf(kvp.Key);
+                if (idx < 0 || string.IsNullOrEmpty(kvp.Value)) continue;
+
+                int row = idx / 4;
+                int col = idx % 4;
+                if (row >= Inventory_butons.Count) continue;
+
+                Inventory_butons[row].Names[col] = kvp.Value;
+                SetGameImage(Inventory_butons[row].slots[col].image, "Items", "faf", kvp.Value);
+            }
+
+            // 6. Load the room the player was in
+            currentRoomNumber = playerData.CurrentRoom;
+            SwitchRoom(playerData.CurrentRoom, playerData.PlayerX, playerData.PlayerY);
+        }
+        private PlayerSaveData BuildPlayerSaveData()
+        {
+            if(Inventory_Code.Count == 0) return new PlayerSaveData();
+            Player player = fighting.RequestPlayer();
+
+            var data = new PlayerSaveData
+            {
+                HP = player.PlayerHP,
+                Attack = player.PlayerAttack,
+                Defense = player.PlayerDefense,
+                CurrentRoom = currentRoomNumber,
+                PlayerX = playerMovement.PlayerX,
+                PlayerY = playerMovement.PlayerY,
+            };
+
+            // Inventory grid (7 rows x 5 cols)
+            for (int y = 0; y < Inventory_Code.Count; y++)
+            {
+                var row = new List<string>();
+                for (int x = 0; x < 5; x++)
+                    row.Add(Inventory_Code[y].names.Count > x ? Inventory_Code[y].names[x] : "");
+                data.Inventory.Add(row);
+            }
+
+            // Equipped items
+            List<string> categories = new List<string>
+        { "Helmet", "Chestplate", "Leggins", "Boots", "Sword", "Ring", "2nd hand", "Accessory" };
+
+            for (int i = 0; i < categories.Count; i++)
+            {
+                int row = i / 4;
+                int col = i % 4;
+                if (row >= Inventory_butons.Count) continue;
+                string itemName = Inventory_butons[row].Names[col];
+                if (!string.IsNullOrEmpty(itemName))
+                    data.Equipped[categories[i]] = itemName;
+            }
+
+            return data;
+        }
+        private void Save_Room_Click(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(Room_ID_Changer_Studio.Text, out int num))
+            {
+                // Save to legacy Rooms/ folder (for building the DEFAULT)
+                RoomSaveLoad.SaveRoom(Map, num, XMap, YMap);
+                // Also save to current save folder if one is active
+                SaveManager.SaveRoom(Map, num, XMap, YMap);
+            }
+            else
+                MessageBox.Show("Type a room number in the text box first!");
+        }
+
+        private void SaveToDefault_Click(object sender, RoutedEventArgs e)
+        {
+            string roomsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Rooms");
+            string defaultFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Saves", "DEFAULT");
+
+            if (!Directory.Exists(roomsFolder))
+            {
+                MessageBox.Show("No Rooms folder found!");
+                return;
+            }
+
+            Directory.CreateDirectory(defaultFolder);
+
+            var files = Directory.GetFiles(roomsFolder, "*.json");
+            if (files.Length == 0)
+            {
+                MessageBox.Show("No room files found in Rooms/!");
+                return;
+            }
+
+            foreach (var file in files)
+            {
+                string dest = Path.Combine(defaultFolder, Path.GetFileName(file));
+                File.Copy(file, dest, overwrite: true);
+                File.Delete(file);
+            }
+
+            MessageBox.Show($"Moved {files.Length} room(s) to DEFAULT!");
         }
     }
 }
