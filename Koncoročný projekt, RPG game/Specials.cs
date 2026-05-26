@@ -45,23 +45,23 @@ namespace Koncoročný_projekt__RPG_game
             int roll = random.Next(0, 5);
             if (roll == 0)
             {
-                monster.MonsterDamage += 10; //fire scroll
+                monster.MonsterDamage += 10; 
             }
             else if (roll == 1)
             {
-                monster.MonsterDamage += 20; //lightning scroll
+                monster.MonsterDamage += 20; 
             }
             else if (roll == 2)
             {
-                monster.MonsterHP += 25; //healing scroll
+                monster.MonsterHP += 25; 
             }
             else if (roll == 3)
             {
-                monster.MonsterDefense += 20; //shield scroll
+                monster.MonsterDefense += 20; 
             }
             else if (roll == 4 && monster.MonsterHP <= 0)
             {
-                monster.MonsterHP = 100; //revive scroll
+                monster.MonsterHP = 100; 
             }
             else
             {

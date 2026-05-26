@@ -22,9 +22,6 @@ using Path = System.IO.Path;
 
 namespace Koncoročný_projekt__RPG_game
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private List<List<Map_Block>> Map = [];
@@ -90,13 +87,7 @@ namespace Koncoročný_projekt__RPG_game
             Studio_Buttons.Add(Slot_2_Studio);
             Studio_Buttons.Add(Slot_3_Studio);
             Studio_Buttons.Add(Slot_4_Studio);
-
-           // GeneretingChestInv(); // don't forget to remove this later
         }
-
-        
-
-        //q_pressed
         private void Inventory_Q_Click_Checker_Tick(object? sender, EventArgs e)
         {
             int rowB = 0;
@@ -122,7 +113,6 @@ namespace Koncoročný_projekt__RPG_game
                 inventoryMovementClass.PressedTick_Q();
 
                 string Itemdescription = inventoryMovementClass.CheckingForItemDescriptionQ(Inventory_butons[row].Names[inventoryMovementClass.chosed_But_x - minesar]);
-                // Inventory_butons[row].slots[inventoryMovementClass.chosed_But_x - minesar]
                 Item_Name.Content = Inventory_butons[row].Names[inventoryMovementClass.chosed_But_x - minesar];
                 Item_Description.Content = Itemdescription; //32
 
@@ -183,9 +173,8 @@ namespace Koncoročný_projekt__RPG_game
                 Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x].Background = Brushes.Gray;
                 inventoryMovementClass.PressedTick();
                 List<string> Itemdescription = inventoryMovementClass.CheckingForItemDescription();
-                //Inventory_Code[inventoryMovementClass.chosed_y].slots[inventoryMovementClass.chosed_x]
                 Item_Name.Content = Itemdescription[0];
-                Item_Description.Content = Itemdescription[1]; //32
+                Item_Description.Content = Itemdescription[1]; 
 
                 if (Itemdescription[1] != "           -")
                 {
@@ -224,10 +213,8 @@ namespace Koncoročný_projekt__RPG_game
 
                 try
                 {
-                    // tester = 
 
                     string corner = MapSize.Text.Split('x', 'X')[2];
-
 
                     if (MapSize.Text.Contains("TL") || MapSize.Text.Contains("TopLeft") ||
                 MapSize.Text.Contains("TR") || MapSize.Text.Contains("TopRight") ||
@@ -235,14 +222,6 @@ namespace Koncoročný_projekt__RPG_game
                 MapSize.Text.Contains("BR") || MapSize.Text.Contains("ButtomRight") ||
                 MapSize.Text.Contains("x"))
                     {
-
-
-
-                        // TopLeft,
-                        //TopRight,
-                        //BottomLeft,
-                        //BottomRight
-
                         if (XMap > 14)
                         {
                             XMap = 14;
@@ -251,7 +230,6 @@ namespace Koncoročný_projekt__RPG_game
                         {
                             YMap = 6;
                         }
-
 
                         if (corner == "TL" || corner == "TopLeft")
                         {
@@ -292,13 +270,8 @@ namespace Koncoročný_projekt__RPG_game
                 {
                     MessageBox.Show("If you want to set the corner, write it like this: (for example) 10x10xTopLeft or 10x10xTL. If you don't want to set the corner, just write the size like this: 10x10");
                 }
-
-
             }
         }
-
-
-
         private void GeneretingMap()
         {
             int rowY = 0;
@@ -309,7 +282,6 @@ namespace Koncoročný_projekt__RPG_game
 
             bool fromLeft = mapCorner == MapCorner.TopLeft || mapCorner == MapCorner.BottomLeft;
 
-            // Make sure Map[0] exists
             if (Map.Count == 0) Map.Add(new List<Map_Block>());
 
             for (int i = 0; i < YMap; i++)
@@ -317,7 +289,7 @@ namespace Koncoročný_projekt__RPG_game
                 Map_Block roww = new Map_Block(XMap, YMap, fromLeft);
                 roww.Margin = new Thickness(0, rowY + 5, 0, 0);
                 Map_UI.Children.Add(roww);
-                Map[0].Add(roww);  // all rows go into Map[0], which is how the rest of your code expects it
+                Map[0].Add(roww);
                 rowY += 100;
             }
 
@@ -345,7 +317,7 @@ namespace Koncoročný_projekt__RPG_game
             {
                 InventoryBlocks_Chest roww = new InventoryBlocks_Chest(i, chestMovementClass);
 
-                roww.Margin = new Thickness(15, rowY + 5 + 0, -200, 0); //817
+                roww.Margin = new Thickness(15, rowY + 5 + 0, -200, 0);
 
                 ChestInventory_Chest.Children.Add(roww);
                 InventoryChest.Add(roww);
@@ -512,7 +484,6 @@ namespace Koncoročný_projekt__RPG_game
                         Add_Item_To_Inventory();
 
                         inventoryMovementClass.SettingWearablesBack(player, contentE);
-                        // Also this... Tho it gotta be spesific to each category
                     }
                     else if (inventory_on_slot)
                     {
@@ -536,7 +507,7 @@ namespace Koncoročný_projekt__RPG_game
                         int fahh = 0;
                         foreach (var category in categories)
                         {
-                            if (JustInCaseWearable == category) //here, you gotta somehow figure out how to find the items category
+                            if (JustInCaseWearable == category) 
                             {
                                 if (Inventory_butons[fahh / 4].Names[fahh % 4] == contentE)
                                 {
@@ -680,7 +651,6 @@ namespace Koncoročný_projekt__RPG_game
                 int newPx = playerMovement.PlayerX;
                 int newPy = playerMovement.PlayerY;
                 MapBlocks_Insides freshCurrent = Map[0][newPy].blocks[newPx];
-                // -----------------------------------------------
 
                 playerMovement.CheckingForEPrompts(CheckingForEPrompts(), freshCurrent);
 
@@ -688,21 +658,15 @@ namespace Koncoročný_projekt__RPG_game
                 {
                     Back_Studio_Click(null, null);
                 }
-
-                // Set base interaction content based on your new tile
                 if (playerMovement.blockType != PlayerMovementClass.BlockType.Empty_T)
                 {
-                    // If the space is NOT empty, show the prompt
                     TheInteractions.Content = "There's something you can interact with (E)";
-                    playerMovement.blockType = PlayerMovementClass.BlockType.Empty_T; // Reset it so it doesn't keep showing the prompt when you move around on the same tile
+                    playerMovement.blockType = PlayerMovementClass.BlockType.Empty_T; 
                 }
                 else
                 {
-                    // If the space IS empty, clear the prompt
                     TheInteractions.Content = "";
                 }
-
-                // Inside your MapMovement logic, update the door check to this:
                 if (HasNearbyOrNeighborDoor(newPx, newPy, px, py))
                 {
                     if (!string.IsNullOrEmpty((string?)TheInteractions.Content)) TheInteractions.Content += "\n";
@@ -713,8 +677,7 @@ namespace Koncoročný_projekt__RPG_game
         private bool inNPCFight = false;
         private bool justFinishedNPCFight = false;
         private void CheckingForHostileNPCs()
-        {
-            // First check if player is in ANY aura range
+        { 
             bool anyInRange = false;
             for (int y = 0; y < Map[0].Count; y++)
             {
@@ -731,18 +694,14 @@ namespace Koncoročný_projekt__RPG_game
                     }
                 }
             }
-
-            // Reset flags when player leaves all aura ranges
             if (!anyInRange)
             {
                 inNPCFight = false;
                 justFinishedNPCFight = false;
             }
 
-            // Don't trigger again until player leaves range first
             if (justFinishedNPCFight) return;
 
-            // Now check for fight trigger
             for (int y = 0; y < Map[0].Count; y++)
             {
                 for (int x = 0; x < Map[0][y].blocks.Count; x++)
@@ -784,7 +743,7 @@ namespace Koncoročný_projekt__RPG_game
                 targetY = current.NextRoomTeleporter_Y;
                 targetRoom = current.NextRoomTeleporter_Room;
             }
-            else // "N"
+            else 
             {
                 targetX = neighbor.NextRoomTeleporter_X;
                 targetY = neighbor.NextRoomTeleporter_Y;
@@ -794,11 +753,8 @@ namespace Koncoročný_projekt__RPG_game
             SwitchRoom(targetRoom, targetX, targetY);
         }
 
-
-        // Upgraded helper method that checks your block AND neighboring walls facing you
         private bool HasNearbyOrNeighborDoor(int x, int y, int oldX, int oldY)
         {
-            // 1. Check the block the player is currently standing on
             MapBlocks_Insides current = Map[0][y].blocks[x];
             if (current.left_wall == LeftWallType.DoorClosed || current.left_wall == LeftWallType.DoorOpen ||
                 current.right_wall == RightWallType.DoorClosed || current.right_wall == RightWallType.DoorOpen ||
@@ -808,35 +764,31 @@ namespace Koncoročný_projekt__RPG_game
                 return true;
             }
 
-            // 2. Check the Neighbor ABOVE (Does its DOWN wall have a door facing you?)
             if (y > 0)
             {
                 var above = Map[0][y - 1].blocks[x];
                 if (above.downer_wall == DownerWallType.DoorClosed || above.downer_wall == DownerWallType.DoorOpen) return true;
             }
 
-            // 3. Check the Neighbor BELOW (Does its UP wall have a door facing you?)
             if (y < playerMovement.MAX_y)
             {
                 var below = Map[0][y + 1].blocks[x];
                 if (below.upper_wall == UpperWallType.DoorClosed || below.upper_wall == UpperWallType.DoorOpen) return true;
             }
 
-            // 4. Check the Neighbor to the LEFT (Does its RIGHT wall have a door facing you?)
             if (x > 0)
             {
                 var left = Map[0][y].blocks[x - 1];
                 if (left.right_wall == RightWallType.DoorClosed || left.right_wall == RightWallType.DoorOpen) return true;
             }
 
-            // 5. Check the Neighbor to the RIGHT (Does its LEFT wall have a door facing you?)
             if (x < playerMovement.MAX_x)
             {
                 var right = Map[0][y].blocks[x + 1];
                 if (right.left_wall == LeftWallType.DoorClosed || right.left_wall == LeftWallType.DoorOpen) return true;
             }
 
-            return false; // No doors found anywhere around you
+            return false; 
         }
         private void MapPresss(MapBlocks_Insides current, string key, string type, string neighbor_type, List<(MapBlocks_Insides, bool OpenedOrClosed, string id)> neighbor)
         {
@@ -968,13 +920,11 @@ namespace Koncoročný_projekt__RPG_game
 
         private void EventerChanger(string eventText)
         {
-            // 1. If we already have 4 or more items, chop off the oldest one at index 0
             while (Eventer.Items.Count >= 5)
             {
                 Eventer.Items.RemoveAt(0);
             }
 
-            // 2. Always add the new event text
             Eventer.Items.Add(eventText);
         }
 
@@ -1022,7 +972,6 @@ namespace Koncoročný_projekt__RPG_game
 
         private void Add_Item_To_Inventory()
         {
-            // 1. Logic sets ender_x/y to the correct spot (either a hole or the next empty slot)
             string success = inventoryMovementClass.CheckingForYs(itemNAME);
 
             if (success == "inventory_full")
@@ -1032,23 +981,18 @@ namespace Koncoročný_projekt__RPG_game
             }
 
 
-            // 2. Get the current target coordinates
             int tx = inventoryMovementClass.ender_x;
             int ty = inventoryMovementClass.ender_y;
 
-            // 3. Draw the item
             SetGameImage(Inventory_Code[ty].slots[tx].image, "Items", "faf", itemNAME);
             Inventory_Code[ty].names[tx] = itemNAME;
 
-            // 4. Handle the pointers
             if (success == "hole")
             {
-                // Put the pointer back to the "real" end of the inventory
                 inventoryMovementClass.FixingHolesXandYs();
             }
             else
             {
-                // ONLY move the pointer forward if we didn't just fill a hole
                 inventoryMovementClass.MovePointerForward();
             }
         }
@@ -1128,9 +1072,6 @@ namespace Koncoročný_projekt__RPG_game
             int space_off_x = 0;
             int space_off_y = 0;
             string name = enemy_name;
-            // List<string> enemy_names = new List<string>();
-            //enemy_names.Add(name);
-
 
             switch (enemy_num)
             {
@@ -1193,22 +1134,22 @@ namespace Koncoročný_projekt__RPG_game
                 case 4:
                     for (int i = 0; i < enemy_num; i++)
                     {
-                        if (i == 0) // top-left
+                        if (i == 0) 
                         {
                             space_off_x = -220;
                             space_off_y = -220;
                         }
-                        else if (i == 1) // top-right
+                        else if (i == 1) 
                         {
                             space_off_x = 220;
                             space_off_y = -220;
                         }
-                        else if (i == 2) // bottom-left
+                        else if (i == 2) 
                         {
                             space_off_x = -220;
                             space_off_y = 220;
                         }
-                        else if (i == 3) // bottom-right
+                        else if (i == 3) 
                         {
                             space_off_x = 220;
                             space_off_y = 220;
@@ -1233,12 +1174,6 @@ namespace Koncoročný_projekt__RPG_game
 
         private void Attack_Click(object sender, RoutedEventArgs e)
         {
-            //current_enemies[0].stuff[0].prog.Value = 100;
-            //current_enemies[0].stuff[0].progLab.Content = "100hp";
-
-            //current_enemies[0].stuff[0].atkLabel.Content = "10";
-            //current_enemies[0].stuff[0].defLabel.Content = "5";
-
             string justInCase = "";
             string result = fighting.PlayerAttack();
             if (result.Contains("_"))
@@ -1247,7 +1182,6 @@ namespace Koncoročný_projekt__RPG_game
                 result = result.Split('_')[0];
             }
             int i = 0;
-            //currentEnemies.RemoveAt(i);
             foreach (var enemy in current_enemies)
             {
 
@@ -1255,7 +1189,7 @@ namespace Koncoročný_projekt__RPG_game
                 foreach (var enemy_case in fighting.enemies)
                 {
                     if (i >= fighting.currentEnemies.Count) { break; }
-                    if (enemy_case.name == fighting.currentEnemies[i].EnemyName) // error for killin' an enemy
+                    if (enemy_case.name == fighting.currentEnemies[i].EnemyName) 
                     {
                         hpMax = enemy_case.hp;
                         break;
@@ -1310,7 +1244,6 @@ namespace Koncoročný_projekt__RPG_game
             if (hasPhoenixFeather)
             {
                 MessageBox.Show("Your Phoenix Feather has saved you from death! You have been revived.");
-                //fighting.RevivePlayer();
                 return true;
             }
             else
@@ -1321,7 +1254,6 @@ namespace Koncoročný_projekt__RPG_game
         private void EnemiesAttack()
         {
             fighting.EnemyAttacks();
-            //fighting.State = TurnState.EnemyTurn;
             bool playerDead = fighting.playerDead();
             if (playerDead && chechingIfPhoenixFeatherIsInInventory())
             {
@@ -1354,11 +1286,10 @@ namespace Koncoročný_projekt__RPG_game
             {
                 MessageBox.Show("Error: Player stats list does not contain the expected number of elements.");
                 return;
-            } // Just a safety check
+            } 
 
             PlayerHp_Label.Content = $"{playerStats[0]}hp";
-            PlayerHp_Bar.Value = (double)playerStats[0] / 100 * 100; // Assuming max HP is 100
-          //  Player_Mana.Content = $"{playerStats[3]}";
+            PlayerHp_Bar.Value = (double)playerStats[0] / 100 * 100;
             Player_Defence.Content = $"{playerStats[2]}";
             Player_Attack.Content = $"{playerStats[1]}";
         }
@@ -1383,7 +1314,6 @@ namespace Koncoročný_projekt__RPG_game
             }
             catch (Exception ex)
             {
-                // Helpful if you forget to set an image to "Resource"
                 MessageBox.Show($"Failed to load: {fileName}. Error: {ex.Message}");
             }
         }
@@ -1403,7 +1333,6 @@ namespace Koncoročný_projekt__RPG_game
 
             }
         }
-
         private enum StudioState
         {
             Left_Walls,
@@ -1498,11 +1427,6 @@ namespace Koncoročný_projekt__RPG_game
                 button.Content = Studio_Names[i][Studio_Buttons.IndexOf(button)];
             }
         }
-
-
-
-
-
         private void Back_Studio_Click(object sender, RoutedEventArgs e)
         {
             currentStudioState = StudioState.Menu;
@@ -1676,7 +1600,6 @@ namespace Koncoročný_projekt__RPG_game
                     Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].block_type = MapBlocks_Insides.BlockType.NPC;
                     Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].NPC_Aura = theAura;
 
-                    // Store all enemies including the main one
                     if (leftSide.Contains(","))
                     {
                         foreach (string enemy in leftSide.Split(","))
@@ -1758,7 +1681,7 @@ namespace Koncoročný_projekt__RPG_game
         private void Load_Room_Click(object sender, RoutedEventArgs e)
         {
             if (int.TryParse(Room_ID_Changer_Studio.Text, out int num))
-                SwitchRoom(num, 0, 0); // loads room, player starts at 0,0
+                SwitchRoom(num, 0, 0);
             else
                 MessageBox.Show("Type a room number in the text box first!");
         }
@@ -1773,7 +1696,6 @@ namespace Koncoročný_projekt__RPG_game
             }
             Map_UI.Children.Remove(Player_ima);
 
-            // Reset player movement state
             playerMovement.PlayerX = 0;
             playerMovement.PlayerY = 0;
             playerMovement.Player_Pixel_X = 30;
@@ -1783,9 +1705,9 @@ namespace Koncoročný_projekt__RPG_game
         private void SwitchRoom(int roomNumber, int playerStartX, int playerStartY)
         {
             RoomSaveData? roomData = SaveManager.ReadRoom(roomNumber);
+
             if (roomData == null) return;
 
-            // Auto-save current room + player before leaving
             if (Started && Map.Count > 0 && Map[0].Count > 0)
             {
                 SaveManager.SaveRoom(Map, currentRoomNumber, XMap, YMap);
@@ -1832,15 +1754,12 @@ namespace Koncoročný_projekt__RPG_game
                 return;
             }
 
-            // Collapse menu panels
             Menu.Visibility = Visibility.Collapsed;
             NewGameMenu.Visibility = Visibility.Collapsed;
 
-            // Start the game from the saved state
             StartFromSave(playerData);
         }
 
-        // ── New game ──────────────────────────────────────────────────────────
         private void NewGame_Menu_Click(object sender, RoutedEventArgs e)
         {
             string saveName = Input_NewOne_Menu.Text.Trim();
@@ -1851,17 +1770,13 @@ namespace Koncoročný_projekt__RPG_game
                 Output_Menu.Content = error;
                 return;
             }
-
-            // Collapse menu panels
             Menu.Visibility = Visibility.Collapsed;
             NewGameMenu.Visibility = Visibility.Collapsed;
 
-            // Start fresh — load room 0, player at 0,0
             var freshPlayer = new PlayerSaveData();
             StartFromSave(freshPlayer);
         }
 
-        // ── Shared startup logic ──────────────────────────────────────────────
         private void StartFromSave(PlayerSaveData playerData)
         {
             var startTimer = new DispatcherTimer();
@@ -1875,27 +1790,26 @@ namespace Koncoročný_projekt__RPG_game
                 this.Focus();
             };
             startTimer.Start();
-            // MessageBox.Show($"Started: {Started}, State: {CurrentState}, Main: {CurrentMain}, MAX_x: {playerMovement.MAX_x}, MAX_y: {playerMovement.MAX_y}");
             Started = true;
             CurrentState = "Main";
             CurrentMain = "Map";
 
-            // 2. Restore player stats
             Player player = fighting.RequestPlayer();
             player.PlayerHP = playerData.HP;
             player.PlayerAttack = playerData.Attack;
             player.PlayerDefense = playerData.Defense;
-            // 3. Rebuild inventory UI fresh
+
             foreach (var slot in Inventory_Code) Inventory.Children.Remove(slot);
             foreach (var btn in Inventory_butons) Inventory.Children.Remove(btn);
             foreach (var chest in InventoryChest) ChestInventory_Chest.Children.Remove(chest);
+
             Inventory_Code.Clear();
             Inventory_butons.Clear();
             InventoryChest.Clear();
+
             GeneretingInventory();
             GeneretingChestInv();
 
-            // 4. Restore inventory contents
             if (playerData.Inventory.Count > 0)
             {
                 for (int y = 0; y < playerData.Inventory.Count && y < Inventory_Code.Count; y++)
@@ -1908,7 +1822,6 @@ namespace Koncoročný_projekt__RPG_game
                         Inventory_Code[y].names[x] = itemName;
                         SetGameImage(Inventory_Code[y].slots[x].image, "Items", "faf", itemName);
 
-                        // Keep InventoryInputs pointer in sync
                         inventoryMovementClass.ender_x = x;
                         inventoryMovementClass.ender_y = y;
                         inventoryMovementClass.MovePointerForward();
@@ -1916,7 +1829,6 @@ namespace Koncoročný_projekt__RPG_game
                 }
             }
 
-            // 5. Restore equipped items
             List<string> categories = new List<string>
                 { "Helmet", "Chestplate", "Leggins", "Boots", "Sword", "Ring", "2nd hand", "Accessory" };
 
@@ -1933,7 +1845,7 @@ namespace Koncoročný_projekt__RPG_game
                 SetGameImage(Inventory_butons[row].slots[col].image, "Items", "faf", kvp.Value);
             }
 
-            // 6. Load the room the player was in
+
             currentRoomNumber = playerData.CurrentRoom;
             SwitchRoom(playerData.CurrentRoom, playerData.PlayerX, playerData.PlayerY);
         }
@@ -1952,7 +1864,6 @@ namespace Koncoročný_projekt__RPG_game
                 PlayerY = playerMovement.PlayerY,
             };
 
-            // Inventory grid (7 rows x 5 cols)
             for (int y = 0; y < Inventory_Code.Count; y++)
             {
                 var row = new List<string>();
@@ -1961,7 +1872,6 @@ namespace Koncoročný_projekt__RPG_game
                 data.Inventory.Add(row);
             }
 
-            // Equipped items
             List<string> categories = new List<string>
         { "Helmet", "Chestplate", "Leggins", "Boots", "Sword", "Ring", "2nd hand", "Accessory" };
 
@@ -1980,10 +1890,8 @@ namespace Koncoročný_projekt__RPG_game
         private void Save_Room_Click(object sender, RoutedEventArgs e)
         {
             if (int.TryParse(Room_ID_Changer_Studio.Text, out int num))
-            {
-                // Save to legacy Rooms/ folder (for building the DEFAULT)
+            { 
                 RoomSaveLoad.SaveRoom(Map, num, XMap, YMap);
-                // Also save to current save folder if one is active
                 SaveManager.SaveRoom(Map, num, XMap, YMap);
             }
             else

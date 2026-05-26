@@ -24,7 +24,6 @@ namespace Koncoročný_projekt__RPG_game
             Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
         };
 
-        // ── Paths ─────────────────────────────────────────────────────────────
         private static string SavesRootPath =>
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, SavesRoot);
 
@@ -40,11 +39,6 @@ namespace Koncoročný_projekt__RPG_game
         private static string PlayerPath(string saveFolder) =>
             Path.Combine(saveFolder, PlayerFile);
 
-        // ── New Game ──────────────────────────────────────────────────────────
-        /// <summary>
-        /// Copies DEFAULT/ into Saves/{name}/ and sets it as the current save.
-        /// Returns true on success.
-        /// </summary>
         public static bool NewGame(string saveName, out string error)
         {
             error = "";
@@ -72,7 +66,6 @@ namespace Koncoročný_projekt__RPG_game
             {
                 CopyDirectory(DefaultPath, dest);
 
-                // Write a fresh player.json
                 var freshPlayer = new PlayerSaveData();
                 File.WriteAllText(PlayerPath(dest), JsonSerializer.Serialize(freshPlayer, JsonOpts));
 
@@ -86,11 +79,6 @@ namespace Koncoročný_projekt__RPG_game
             }
         }
 
-        // ── Load Game ─────────────────────────────────────────────────────────
-        /// <summary>
-        /// Validates that Saves/{name}/ exists and sets it as the current save.
-        /// Returns the PlayerSaveData on success, null on failure.
-        /// </summary>
         public static PlayerSaveData? LoadGame(string saveName, out string error)
         {
             error = "";
@@ -131,7 +119,6 @@ namespace Koncoročný_projekt__RPG_game
             }
         }
 
-        // ── Save Player ───────────────────────────────────────────────────────
         public static void SavePlayer(PlayerSaveData data)
         {
             if (string.IsNullOrEmpty(CurrentSaveName)) return;
@@ -146,7 +133,6 @@ namespace Koncoročný_projekt__RPG_game
             }
         }
 
-        // ── Save Room ─────────────────────────────────────────────────────────
         public static void SaveRoom(List<List<UI_Generations.Map_Block>> map, int roomNumber, int xMap, int yMap)
         {
             string folder = string.IsNullOrEmpty(CurrentSaveName)
@@ -155,7 +141,6 @@ namespace Koncoročný_projekt__RPG_game
             RoomSaveLoad.SaveRoomToFolder(map, roomNumber, xMap, yMap, folder);
         }
 
-        // ── Read Room ─────────────────────────────────────────────────────────
         public static RoomSaveData? ReadRoom(int roomNumber)
         {
             if (string.IsNullOrEmpty(CurrentSaveName))
@@ -164,7 +149,6 @@ namespace Koncoročný_projekt__RPG_game
             return RoomSaveLoad.ReadRoomFromFolder(roomNumber, CurrentSavePath);
         }
 
-        // ── Helpers ───────────────────────────────────────────────────────────
         private static void CopyDirectory(string source, string dest)
         {
             Directory.CreateDirectory(dest);

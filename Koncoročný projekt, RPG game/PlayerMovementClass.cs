@@ -57,7 +57,6 @@ namespace Koncoročný_projekt__RPG_game
             }
             catch (Exception ex)
             {
-                // Helpful if you forget to set an image to "Resource"
                 MessageBox.Show($"Failed to load: {fileName}. Error: {ex.Message}");
             }
         }
@@ -202,13 +201,6 @@ namespace Koncoročný_projekt__RPG_game
                 }
             }
         }
-
-
-
-            //if (neighbor != null && neighbor.left_wall == MapBlocks_Insides.LeftWallType.DoorOpen) { neighbor.left_wall = MapBlocks_Insides.LeftWallType.DoorClosed; }
-           // else if (neighbor != null && neighbor.left_wall == MapBlocks_Insides.LeftWallType.DoorClosed) { neighbor.left_wall = MapBlocks_Insides.LeftWallType.DoorOpen; }
-        
-
         private void PlayerMovement(string key)
         {
             LastPlayerX = PlayerX;
@@ -324,9 +316,6 @@ namespace Koncoročný_projekt__RPG_game
                     doorPos = DoorPosition.Down_D;
                 }
             }
-            //check if in any pos of this there is a prompt, if yes, put it in a list... 
-            //then if theres more, just put some extra inputs on the prompts.. 
-            // then have this methode return the list of extra inputs.. or just one and the positions of the prompts..
         }
 
         internal string CheckingForRoomDoors(string key, MapBlocks_Insides current, MapBlocks_Insides neighbor)
