@@ -63,6 +63,7 @@
 
 
         <Grid x:Name="Studio" Margin="1292,0,0,0" Background="#FF7D7D7D" Visibility="Collapsed">
+
             <Label x:Name="CurrentBlockType" Content="Current block:" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Background="#FFB2B2B2" Height="48" Width="172" FontSize="18"/>
 
 
@@ -87,7 +88,8 @@
                 <Button x:Name="Slot_3_Studio" Content="" HorizontalAlignment="Left" Margin="10,408,0,0" VerticalAlignment="Top" Height="47" Width="77" Click="Slot_3_Studio_Click"/>
                 <Button x:Name="Slot_4_Studio" Content="" HorizontalAlignment="Left" Margin="109,408,0,0" VerticalAlignment="Top" Height="47" Width="76" Click="Slot_4_Studio_Click"/>
                 <TextBox x:Name="Texter_Studio" HorizontalAlignment="Center" Margin="0,484,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="44"/>
-                <Button Content="Add" HorizontalAlignment="Left" Margin="48,533,0,0" VerticalAlignment="Top" Height="46" Width="96" FontSize="30" Click="Button_Click"/>
+                <Button Content="Add" HorizontalAlignment="Left" Margin="11,533,0,0" VerticalAlignment="Top" Height="46" Width="96" FontSize="30" Click="Button_Click"/>
+                <Button x:Name="Remove" Content="Remove" HorizontalAlignment="Left" Margin="99,533,0,0" VerticalAlignment="Top" Height="46" Width="96" FontSize="30" Click="Remove_Click"/>
 
 
             </Grid>

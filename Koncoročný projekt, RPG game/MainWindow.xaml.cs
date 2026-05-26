@@ -2063,5 +2063,42 @@ namespace Koncoročný_projekt__RPG_game
 
             MessageBox.Show($"Moved {files.Length} room(s) to DEFAULT!");
         }
+
+        private void Remove_Click(object sender, RoutedEventArgs e)
+        {
+            MapBlocks_Insides block = Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX];
+
+            block.block_type = MapBlocks_Insides.BlockType.Empty;
+            block.left_wall = LeftWallType.None;
+            block.right_wall = RightWallType.None;
+            block.upper_wall = UpperWallType.None;
+            block.downer_wall = DownerWallType.None;
+
+            block.current_Left_Wall_Texture = "";
+            block.current_Right_Wall_Texture = "";
+            block.current_Upper_Wall_Texture = "";
+            block.current_Downer_Wall_Texture = "";
+            block.current_Flore_Texture = "";
+            block.current_item_Texture = "";
+            block.current_NPC_Texture = "";
+            block.current_NPC_Name = "Grrr";
+            block.current_Chest_Texture = "";
+            block.current_NPC_Lines.Clear();
+            block.current_Chest_Items.Clear();
+            block.NPC_Enemies.Clear();
+            block.NPC_Aura = 0;
+            block.NextRoomTeleporter_X = 0;
+            block.NextRoomTeleporter_Y = 0;
+            block.NextRoomTeleporter_Room = 0;
+
+            block.Left_wall.Source = null;
+            block.Right_wall.Source = null;
+            block.Upper_wall.Source = null;
+            block.Downer_wall.Source = null;
+            block.Flore.Source = null;
+            block.Item.Source = null;
+            block.NPC.Source = null;
+            block.Chest.Source = null;
+        }
     }
 }
