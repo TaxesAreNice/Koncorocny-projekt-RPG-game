@@ -69,6 +69,9 @@
     <None Remove="Images\Items\faf\Dragon Chestplate.png" />
     <None Remove="Images\Items\faf\Dragon Helmet.png" />
     <None Remove="Images\Items\faf\Dragon Leggins.png" />
+    <None Remove="Images\Items\faf\Dragon Sword.png" />
+    <None Remove="Images\Items\faf\Dull Blade.png" />
+    <None Remove="Images\Items\faf\Excalibur.png" />
     <None Remove="Images\Items\faf\Fire Breath Orb.png" />
     <None Remove="Images\Items\faf\Guardian Amulet.png" />
     <None Remove="Images\Items\faf\Health Potion.png" />
@@ -82,6 +85,7 @@
     <None Remove="Images\Items\faf\Steel Chestplate.png" />
     <None Remove="Images\Items\faf\Steel Helmet.png" />
     <None Remove="Images\Items\faf\Steel Leggins.png" />
+    <None Remove="Images\Items\faf\Steel Sword.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -138,6 +142,9 @@
     <Resource Include="Images\Items\faf\Dragon Chestplate.png" />
     <Resource Include="Images\Items\faf\Dragon Helmet.png" />
     <Resource Include="Images\Items\faf\Dragon Leggins.png" />
+    <Resource Include="Images\Items\faf\Dragon Sword.png" />
+    <Resource Include="Images\Items\faf\Dull Blade.png" />
+    <Resource Include="Images\Items\faf\Excalibur.png" />
     <Resource Include="Images\Items\faf\Fire Breath Orb.png" />
     <Resource Include="Images\Items\faf\Guardian Amulet.png" />
     <Resource Include="Images\Items\faf\Health Potion.png" />
@@ -153,6 +160,7 @@
     <Resource Include="Images\Items\faf\Steel Chestplate.png" />
     <Resource Include="Images\Items\faf\Steel Helmet.png" />
     <Resource Include="Images\Items\faf\Steel Leggins.png" />
+    <Resource Include="Images\Items\faf\Steel Sword.png" />
   </ItemGroup>
 
   <ItemGroup>
