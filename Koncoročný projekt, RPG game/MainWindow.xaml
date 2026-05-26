@@ -91,10 +91,11 @@
                 <Button x:Name="Slot_3_Studio" Content="" HorizontalAlignment="Left" Margin="10,408,0,0" VerticalAlignment="Top" Height="47" Width="77" Click="Slot_3_Studio_Click"/>
                 <Button x:Name="Slot_4_Studio" Content="" HorizontalAlignment="Left" Margin="109,408,0,0" VerticalAlignment="Top" Height="47" Width="76" Click="Slot_4_Studio_Click"/>
                 <TextBox x:Name="Texter_Studio" HorizontalAlignment="Center" Margin="0,484,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="44"/>
-                <Button Content="Add" HorizontalAlignment="Left" Margin="48,533,0,0" VerticalAlignment="Top" Height="46" Width="96" FontSize="30" Click="Button_Click"/>
+                <Button Content="Add" HorizontalAlignment="Left" Margin="10,533,0,0" VerticalAlignment="Top" Height="46" Width="96" FontSize="30" Click="Button_Click"/>
 
 
             </Grid>
+            <Button x:Name="Remove" Content="Remove" HorizontalAlignment="Left" Margin="104,530,0,0" VerticalAlignment="Top" Height="46" Width="96" FontSize="30" Click="Remove_Click"/>
 
 
         </Grid>
@@ -113,7 +114,7 @@
             <Button x:Name="Load_Room" Content="Load room" HorizontalAlignment="Left" Margin="117,240,0,0" VerticalAlignment="Top" Height="38" Width="66" Click="Load_Room_Click"/>
             <Button x:Name="SaveToDefault" Content="DON'T TOUCH" HorizontalAlignment="Left" Margin="131,0,0,0" VerticalAlignment="Top" Height="50" Width="68" Click="SaveToDefault_Click"/>
         </Grid>
-        <Grid x:Name="ChestGrid" Background="DarkGray" Margin="208,55,280,266" Visibility="Collapsed" MouseDown="ChestGrid_MouseDown">
+        <Grid x:Name="ChestGrid" Background="DarkGray" Margin="208,55,280,266" Visibility="Visible" MouseDown="ChestGrid_MouseDown">
             <Button x:Name="Exit_Chest" Content="X" HorizontalAlignment="Left" Margin="951,10,0,0" VerticalAlignment="Top" Height="38" Width="33" Background="Red" FontSize="30" Foreground="White" Click="Exit_Chest_Click"/>
             <Grid x:Name="CurrentPlayerInventory_Chest" Margin="10,372,10,10" Background="Gray" Visibility="Collapsed"/>
             <Grid x:Name="ChestInventory_Chest" Margin="10,64,10,63" Background="Gray">
@@ -134,7 +135,7 @@
 
 
         </Grid>
-        <Grid x:Name="NewGameMenu" Background="#FFB9B9B9" Visibility="Visible">
+        <Grid x:Name="NewGameMenu" Background="#FFB9B9B9" Visibility="Collapsed">
 
             <Button x:Name="NewGame_Menu" Content="New Game" HorizontalAlignment="Center" Margin="0,75,0,0" VerticalAlignment="Top" Height="248" Width="268" FontSize="50" Click="NewGame_Menu_Click"/>
             <TextBox x:Name="Input_NewOne_Menu" HorizontalAlignment="Center" Margin="0,356,0,0" TextWrapping="Wrap" Text="(File Name)" VerticalAlignment="Top" Width="268" Height="96" FontSize="30"/>
