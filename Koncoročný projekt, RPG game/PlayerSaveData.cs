@@ -15,11 +15,7 @@ namespace Koncoročný_projekt__RPG_game
         public int CurrentRoom { get; set; } = 0;
         public int PlayerX { get; set; } = 0;
         public int PlayerY { get; set; } = 0;
-
-        // 7 rows × 5 cols = 35 slots, empty string = empty
         public List<List<string>> Inventory { get; set; } = [];
-
-        // Category name → item name  (e.g. "Helmet" → "Knight Helmet")
         public Dictionary<string, string> Equipped { get; set; } = [];
     }
 }

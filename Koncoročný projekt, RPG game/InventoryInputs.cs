@@ -5,7 +5,6 @@ namespace Koncoročný_projekt__RPG_game
 {
     internal class InventoryInputs
     {
-       // private Player player = new Player();
         private ItemTypes itemTypes = new ItemTypes();
         private Inventoryy Items = new Inventoryy();
 
@@ -19,9 +18,6 @@ namespace Koncoročný_projekt__RPG_game
         private int PlayerBackUpBootsDefence = 0;
         private int PlayerBackUpAccessoryDefence = 0;
         private int EnemyBackUpRingDefense = 0;
-
-
-        ///Helmet", "Chestplate", "Leggins", "Boots
 
         public int chosed_But_x = 0;
         public int backup_chosed_But_x = 0;
@@ -49,7 +45,6 @@ namespace Koncoročný_projekt__RPG_game
 
         public InventoryInputs()
         {
-            // Pre-fill the 7x5 grid with empty strings
             for (int y = 0; y < 7; y++)
             {
                 inventory.Add(new List<string>());
@@ -69,8 +64,6 @@ namespace Koncoročný_projekt__RPG_game
 
         public void SettingWearablesBack(Player player, string category)
         {
-            //player.PlayerDefense = PlayerBackUpDefense;
-            // player.PlayerAttack = PlayerBackUpAttack;
             if (!category.Contains("_"))
             {
                 foreach (Item item in Items.Items)
@@ -120,17 +113,10 @@ namespace Koncoročný_projekt__RPG_game
                 }
             }
               
-            
-        
-
-        // Update the signature to accept the live game objects
         public string E_Pressed(string name, Player realPlayer, Monster realMonster, Fighting realFight)
         {
             if (q_pressed)
             {
-
-
-
                 return "AddItem_" + name;
             }
             else
@@ -146,10 +132,6 @@ namespace Koncoročný_projekt__RPG_game
 
             foreach (Item item in Items.Items)
             {
-                if (item.Name == "Rusty Helmet_Helmet") // for testing, yup
-                {
-                    // fahhh
-                }
                 string justInCaseEHEMWEARABLES = "";
                 string ItemName = item.Name;
                 if (item.Name.Contains("_"))
@@ -162,8 +144,6 @@ namespace Koncoročný_projekt__RPG_game
                     
                     if (item.Type == ItemTypes.ItemType.Wearable)
                     {
-                        // PlayerBackUpDefense = p.PlayerDefense;
-                        //PlayerBackUpAttack = p.PlayerAttack;
                         SavingBackUpStats(p,m, justInCaseEHEMWEARABLES, item);
 
                         returner =  name + justInCaseEHEMWEARABLES;  
@@ -255,23 +235,17 @@ namespace Koncoročný_projekt__RPG_game
         }
         public string CheckingForYs(string item_name)
         {
-            // 1. Check for holes first
             if (CheckingForHoles())
             {
                 inventory[ender_y][ender_x] = item_name;
                 return "hole";
             }
-
-            // 2. Standard placement: 
-            // We do NOT increment ender_x here anymore. 
-            // We increment it AFTER the UI has placed the item.
             if (ender_y >= 7) return "inventory_full";
 
             inventory[ender_y][ender_x] = item_name;
             return "normal";
         }
 
-        // Add this new helper to move the pointer forward ONLY when we are NOT filling a hole
         public void MovePointerForward()
         {
             ender_x++;
@@ -285,11 +259,8 @@ namespace Koncoročný_projekt__RPG_game
         {
             if (inventory_holes.Count > 0)
             {
-                // Get the earliest hole
                 var lowest = inventory_holes.MinBy(p => (p.y, p.x));
 
-                // ONLY fill the hole if it is actually behind the current "ender" position
-                // This prevents the "jumping" bug at the end of the list
                 if (lowest.y < ender_y || (lowest.y == ender_y && lowest.x < ender_x))
                 {
                     backup_ender_x = ender_x;
@@ -303,7 +274,6 @@ namespace Koncoročný_projekt__RPG_game
                 }
                 else
                 {
-                    // If the "hole" is actually at or past the ender, it's not a hole anymore
                     inventory_holes.Remove(lowest);
                 }
             }
@@ -313,11 +283,9 @@ namespace Koncoročný_projekt__RPG_game
         {
             inventory[y][x] = "";
 
-            // Convert coordinates to a single number to check if it's the last item
             int deletedIdx = (y * 5) + x;
             int enderIdx = (ender_y * 5) + ender_x;
 
-            // If we deleted the item right behind the 'next' pointer
             if (deletedIdx == enderIdx - 1)
             {
                 ender_x--;
@@ -326,12 +294,10 @@ namespace Koncoročný_projekt__RPG_game
                     if (ender_y > 0) { ender_y--; ender_x = 4; }
                     else { ender_x = 0; }
                 }
-                // Clean up any hole that might have been registered at this spot
                 inventory_holes.RemoveAll(h => h.x == ender_x && h.y == ender_y);
             }
             else
             {
-                // It's a middle item, add it to holes
                 if (!inventory_holes.Any(h => h.x == x && h.y == y))
                 {
                     inventory_holes.Add((x, y));

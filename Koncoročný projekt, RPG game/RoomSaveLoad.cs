@@ -18,8 +18,6 @@ namespace Koncoročný_projekt__RPG_game
             WriteIndented = true,
             Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
         };
-
-        // ── Called by SaveManager ─────────────────────────────────────────────
  public static void SaveRoomToFolder(
     List<List<Map_Block>> map, int roomNumber, int xMap, int yMap, string folder, string corner = "TopLeft")
 {
@@ -51,7 +49,6 @@ namespace Koncoročný_projekt__RPG_game
             catch (Exception ex) { MessageBox.Show($"Load failed: {ex.Message}"); return null; }
         }
 
-        // ── Legacy helpers (still used by admin panel Save/Load buttons) ──────
         private const string RoomsFolder = "Rooms";
         private static string LegacyFolder =>
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, RoomsFolder);
@@ -62,7 +59,6 @@ namespace Koncoročný_projekt__RPG_game
         public static RoomSaveData? ReadRoomFile(int roomNumber)
             => ReadRoomFromFolder(roomNumber, LegacyFolder);
 
-        // ── Apply room data to map UI ─────────────────────────────────────────
         public static void ApplyRoomData(
             List<List<Map_Block>> map,
             RoomSaveData roomSave,

@@ -1788,17 +1788,24 @@ namespace Koncoročný_projekt__RPG_game
             faf(9);
         }
 
-    
 
+        private bool skipAutoSave = false;
         private void Load_Room_Click(object sender, RoutedEventArgs e)
         {
             if (int.TryParse(Room_ID_Changer_Studio.Text, out int num))
-                SwitchRoom(num, 0, 0); // loads room, player starts at 0,0
+            {
+                // Don't auto-save when manually loading via admin panel
+                int backup = currentRoomNumber;
+                currentRoomNumber = num; // trick SwitchRoom into not overwriting the wrong room
+                skipAutoSave = true;
+                SwitchRoom(num, 0, 0); ;
+                currentRoomNumber = num;
+            }
             else
                 MessageBox.Show("Type a room number in the text box first!");
         }
-   
-            private void ClearMap()
+
+        private void ClearMap()
         {
             if (Map.Count > 0)
             {
@@ -1822,11 +1829,12 @@ namespace Koncoročný_projekt__RPG_game
             if (roomData == null) return;
 
             // Auto-save current room + player before leaving
-            if (Started && Map.Count > 0 && Map[0].Count > 0)
+            if (Started && Map.Count > 0 && Map[0].Count > 0 && !skipAutoSave)
             {
                 SaveManager.SaveRoom(Map, currentRoomNumber, XMap, YMap);
                 SaveManager.SavePlayer(BuildPlayerSaveData());
             }
+            skipAutoSave = false;
 
             ClearMap();
 
