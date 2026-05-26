@@ -34,6 +34,8 @@ namespace Koncoročný_projekt__RPG_game
         private List<Inventory_Buttons> Inventory_butons = [];
         private List<Fighting_EnemySpawner> current_enemies = [];
 
+        private MapBlocks_Insides? lastHostileNPCBlock = null;
+
         private Image Player_ima = new Image();
 
         private bool Started = false;
@@ -146,7 +148,7 @@ namespace Koncoročný_projekt__RPG_game
                 Item_Description.FontSize = 30;
             }
         }
-        private void Inventory_Chest_Click_Checker_Tick(object? sender, EventArgs e)
+        private void Inventory_Chest_Click_Checker_Tick (object? sender, EventArgs e)
         {
             if (inventory_on_slot_chest)
             {
@@ -164,6 +166,12 @@ namespace Koncoročný_projekt__RPG_game
                 inventory_on_slot_chest = false;
                 chestMovementClass.isPressed = false;
                 InventoryChest_Code[chestMovementClass.ChosenY][chestMovementClass.ChosenX] = "";
+
+                // Remove from the actual block's chest items
+                int flatIndex = (chestMovementClass.ChosenY * 11) + chestMovementClass.ChosenX;
+                MapBlocks_Insides currentBlock = Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX];
+                if (flatIndex < currentBlock.current_Chest_Items.Count)
+                    currentBlock.current_Chest_Items[flatIndex] = "";
             }
             else
             {
@@ -760,6 +768,9 @@ namespace Koncoročný_projekt__RPG_game
                         fighting.currentEnemies.Clear();
                         foreach (string enemyName in block.NPC_Enemies)
                         {
+                            inNPCFight = true;
+                            lastHostileNPCBlock = block; // save reference
+                            fighting.currentEnemies.Clear();
                             if (fighting.currentEnemies.Count >= 4) break;
                             var newEnemy = new Enemy { EnemyName = enemyName.Trim() };
                             fighting.currentEnemies.Add(newEnemy);
@@ -909,9 +920,9 @@ namespace Koncoročný_projekt__RPG_game
                         if (x == 11) { InventoryChest_Code.Add(new List<string>()); y++; x = 0; }
                         else if (i == 0) { InventoryChest_Code.Add(new List<string>()); }
 
+                        if (string.IsNullOrEmpty(current.current_Chest_Items[i])) continue;
                         SetGameImage(InventoryChest[y].slots[x].image, "Items", "faf", current.current_Chest_Items[i]);
                         InventoryChest_Code[y].Add(current.current_Chest_Items[i]);
-
                     }
                    
                 }
@@ -1138,6 +1149,16 @@ namespace Koncoročný_projekt__RPG_game
                     MessageBox.Show("You've won this battle");
                     inNPCFight = false;
                     justFinishedNPCFight = true;
+                    if (lastHostileNPCBlock != null)
+                    {
+                        lastHostileNPCBlock.block_type = MapBlocks_Insides.BlockType.Empty;
+                        lastHostileNPCBlock.NPC.Source = null;
+                        lastHostileNPCBlock.NPC_Aura = 0;
+                        lastHostileNPCBlock.NPC_Enemies.Clear();
+                        lastHostileNPCBlock.current_NPC_Texture = "";
+                        lastHostileNPCBlock.current_NPC_Name = "";
+                        lastHostileNPCBlock = null;
+                    }
                     Player plater = fighting.RequestPlayer();
                     plater.PlayerHP += 25;
                     if (plater.PlayerHP >= 100)

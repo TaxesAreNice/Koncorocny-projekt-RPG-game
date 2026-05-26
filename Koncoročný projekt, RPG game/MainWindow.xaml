@@ -13,10 +13,6 @@
 
 
         <Grid x:Name="Map_UI" Margin="0,0,0,98" Background="Black">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="146*"/>
-                <RowDefinition Height="13*"/>
-            </Grid.RowDefinitions>
         </Grid>
 
 
