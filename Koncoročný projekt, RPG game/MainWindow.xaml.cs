@@ -655,10 +655,22 @@ namespace Koncoročný_projekt__RPG_game
 
             switch (e.Key)
             {
-                case Key.W: if (py > 0) neighbor = Map[0][py - 1].blocks[px]; break;
-                case Key.S: if (py < playerMovement.MAX_y) neighbor = Map[0][py + 1].blocks[px]; break;
-                case Key.A: if (px > 0) neighbor = Map[0][py].blocks[px - 1]; break;
-                case Key.D: if (px < playerMovement.MAX_x) neighbor = Map[0][py].blocks[px + 1]; break;
+                case Key.W:
+                    if (py > 0) neighbor = Map[0][py - 1].blocks[px];
+                    else if (current.upper_wall == UpperWallType.RoomDoor) { RoomMoved(current, current, "C"); return; }
+                    break;
+                case Key.S:
+                    if (py < playerMovement.MAX_y) neighbor = Map[0][py + 1].blocks[px];
+                    else if (current.downer_wall == DownerWallType.RoomDoor) { RoomMoved(current, current, "C"); return; }
+                    break;
+                case Key.A:
+                    if (px > 0) neighbor = Map[0][py].blocks[px - 1];
+                    else if (current.left_wall == LeftWallType.RoomDoor) { RoomMoved(current, current, "C"); return; }
+                    break;
+                case Key.D:
+                    if (px < playerMovement.MAX_x) neighbor = Map[0][py].blocks[px + 1];
+                    else if (current.right_wall == RightWallType.RoomDoor) { RoomMoved(current, current, "C"); return; }
+                    break;
                 case Key.E:
                     MapPresss(current, "E", current.block_type.ToString(), playerMovement.neighborDoorPos.ToString(), CheckingForNeighborsDoors()); //playerMovement.blockType.ToString()
                     return;
@@ -1619,25 +1631,25 @@ namespace Koncoročný_projekt__RPG_game
                 if (i == 3)
                     {
                         SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Downer_wall, "Blocks", "Buttom_Walls", taxes + "_room");
-                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Downer_Wall_Texture = taxes;
+                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Downer_Wall_Texture = taxes + "_room";
                         Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].downer_wall = DownerWallType.RoomDoor;
                     }
                     else if (i == 2)
                     {
                         SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Upper_wall, "Blocks", "Top_Walls", taxes + "_room");
-                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Upper_Wall_Texture = taxes;
+                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Upper_Wall_Texture = taxes + "_room";
                         Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].upper_wall = UpperWallType.RoomDoor;
                     }
                     else if (i == 1)
                     {
                         SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Right_wall, "Blocks", "Right_Walls", taxes + "_room");
-                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Right_Wall_Texture = taxes;
+                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Right_Wall_Texture = taxes + "_room";
                         Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].right_wall = RightWallType.RoomDoor;
                     }
                     else if (i == 0)
                     {
                         SetGameImage(Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].Left_wall, "Blocks", "Left_Walls", taxes + "_room");
-                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Left_Wall_Texture = taxes;
+                        Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].current_Left_Wall_Texture = taxes + "_room";
                         Map[0][playerMovement.PlayerY].blocks[playerMovement.PlayerX].left_wall = LeftWallType.RoomDoor;
 
                     }
