@@ -37,6 +37,10 @@
     <None Remove="Images\Blocks\Left_Walls\LeftDoor_opened.png" />
     <None Remove="Images\Blocks\Left_Walls\stone_sides.png" />
     <None Remove="Images\Blocks\Left_Walls\wood_sides.png" />
+    <None Remove="Images\Blocks\Others\Chest_B.png" />
+    <None Remove="Images\Blocks\Others\Chest_L.png" />
+    <None Remove="Images\Blocks\Others\Chest_R.png" />
+    <None Remove="Images\Blocks\Others\Chest_T.png" />
     <None Remove="Images\Blocks\Right_Walls\RightDoor_closed.png" />
     <None Remove="Images\Blocks\Right_Walls\RightDoor_opened.png" />
     <None Remove="Images\Blocks\Right_Walls\stone_sides.png" />
@@ -99,6 +103,10 @@
     <Resource Include="Images\Blocks\Left_Walls\LeftDoor_opened.png" />
     <Resource Include="Images\Blocks\Left_Walls\stone_sides.png" />
     <Resource Include="Images\Blocks\Left_Walls\wood_sides.png" />
+    <Resource Include="Images\Blocks\Others\Chest_B.png" />
+    <Resource Include="Images\Blocks\Others\Chest_L.png" />
+    <Resource Include="Images\Blocks\Others\Chest_R.png" />
+    <Resource Include="Images\Blocks\Others\Chest_T.png" />
     <Resource Include="Images\Blocks\Right_Walls\andezit_sides.png" />
     <Resource Include="Images\Blocks\Right_Walls\RightDoor_closed.png" />
     <Resource Include="Images\Blocks\Right_Walls\RightDoor_opened.png" />
@@ -148,7 +156,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\Blocks\Others\" />
     <Folder Include="Images\Characters\NPC\" />
     <Folder Include="Saves\DEFAULT\" />
   </ItemGroup>
