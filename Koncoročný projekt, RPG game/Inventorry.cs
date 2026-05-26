@@ -34,11 +34,6 @@ namespace Koncoročný_projekt__RPG_game
                 Revive = true,
             });
 
-            Items.Add(new Item { Name = "Knight Helmet_Helmet", Type = ItemType.Wearable, Description = "+4 defense", Defense = 4 });
-            Items.Add(new Item { Name = "Knight Chestplate_Chestplate", Type = ItemType.Wearable, Description = "+6 defense", Defense = 6 });
-            Items.Add(new Item { Name = "Knight Leggins_Leggins", Type = ItemType.Wearable, Description = "+5 defense", Defense = 5 });
-            Items.Add(new Item { Name = "Knight Boots_Boots", Type = ItemType.Wearable, Description = "+4 defense", Defense = 4 });
-
             Items.Add(new Item
             {
                 Name = "Mythical Meal",
