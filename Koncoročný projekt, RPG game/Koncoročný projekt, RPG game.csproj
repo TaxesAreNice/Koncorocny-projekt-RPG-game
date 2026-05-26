@@ -150,6 +150,7 @@
   <ItemGroup>
     <Folder Include="Images\Blocks\Others\" />
     <Folder Include="Images\Characters\NPC\" />
+    <Folder Include="Saves\DEFAULT\" />
   </ItemGroup>
 
 </Project>
