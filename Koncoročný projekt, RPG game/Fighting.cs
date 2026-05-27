@@ -42,8 +42,8 @@ namespace Koncoročný_projekt__RPG_game
             (250, 10, 50, "Shield Spirit"),
             (180, 25, 10, "Knight"),
             (150, 20, 0, "Mage"),
-            (220, 30, 10, "Phoenix"),
-            (300, 40, 20, "Dragon"),
+            (220, 70, 10, "Phoenix"),
+            (300, 80, 20, "Dragon"),
             (100, 1, 50, "Mythical Pig")
         };
 
