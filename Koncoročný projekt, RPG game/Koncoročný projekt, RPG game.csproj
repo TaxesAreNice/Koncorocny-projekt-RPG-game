@@ -23,8 +23,7 @@
   <ItemGroup>
     <None Remove="Images\AGuy.png" />
     <None Remove="Images\Blocks\Buttom_Walls\andezit_tops.png" />
-    <None Remove="Images\Blocks\Buttom_Walls\ButtomDoor_closed.png" />
-    <None Remove="Images\Blocks\Buttom_Walls\ButtomDoor_opened.png" />
+    <None Remove="Images\Blocks\Buttom_Walls\ButtomDoor_room.png" />
     <None Remove="Images\Blocks\Buttom_Walls\stone_tops.png" />
     <None Remove="Images\Blocks\Buttom_Walls\wood_tops.png" />
     <None Remove="Images\Blocks\Flores\andezit_block.png" />
@@ -33,18 +32,19 @@
     <None Remove="Images\Blocks\Items\Bloxy_Cola_item.png" />
     <None Remove="Images\Blocks\Items\Krankenwagen_item.png" />
     <None Remove="Images\Blocks\Left_Walls\andezit_sides.png" />
-    <None Remove="Images\Blocks\Left_Walls\LeftDoor_closed.png" />
-    <None Remove="Images\Blocks\Left_Walls\LeftDoor_opened.png" />
+    <None Remove="Images\Blocks\Left_Walls\LeftDoor_room.png" />
     <None Remove="Images\Blocks\Left_Walls\stone_sides.png" />
     <None Remove="Images\Blocks\Left_Walls\wood_sides.png" />
-    <None Remove="Images\Blocks\Right_Walls\RightDoor_closed.png" />
-    <None Remove="Images\Blocks\Right_Walls\RightDoor_opened.png" />
+    <None Remove="Images\Blocks\Others\Chest_B.png" />
+    <None Remove="Images\Blocks\Others\Chest_L.png" />
+    <None Remove="Images\Blocks\Others\Chest_R.png" />
+    <None Remove="Images\Blocks\Others\Chest_T.png" />
+    <None Remove="Images\Blocks\Right_Walls\RightDoor_room.png" />
     <None Remove="Images\Blocks\Right_Walls\stone_sides.png" />
     <None Remove="Images\Blocks\Right_Walls\wood_sides.png" />
     <None Remove="Images\Blocks\Top_Walls\andezit_tops.png" />
     <None Remove="Images\Blocks\Top_Walls\stone_tops.png" />
-    <None Remove="Images\Blocks\Top_Walls\TopDoor_closed.png" />
-    <None Remove="Images\Blocks\Top_Walls\TopDoor_opened.png" />
+    <None Remove="Images\Blocks\Top_Walls\TopDoor_room.png" />
     <None Remove="Images\Blocks\Top_Walls\wood_tops.png" />
     <None Remove="Images\Characters\Enemies\Bat.png" />
     <None Remove="Images\Characters\Enemies\Dragon.png" />
@@ -65,6 +65,9 @@
     <None Remove="Images\Items\faf\Dragon Chestplate.png" />
     <None Remove="Images\Items\faf\Dragon Helmet.png" />
     <None Remove="Images\Items\faf\Dragon Leggins.png" />
+    <None Remove="Images\Items\faf\Dragon Sword.png" />
+    <None Remove="Images\Items\faf\Dull Blade.png" />
+    <None Remove="Images\Items\faf\Excalibur.png" />
     <None Remove="Images\Items\faf\Fire Breath Orb.png" />
     <None Remove="Images\Items\faf\Guardian Amulet.png" />
     <None Remove="Images\Items\faf\Health Potion.png" />
@@ -78,12 +81,12 @@
     <None Remove="Images\Items\faf\Steel Chestplate.png" />
     <None Remove="Images\Items\faf\Steel Helmet.png" />
     <None Remove="Images\Items\faf\Steel Leggins.png" />
+    <None Remove="Images\Items\faf\Steel Sword.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Images\Blocks\Buttom_Walls\andezit_tops.png" />
-    <Resource Include="Images\Blocks\Buttom_Walls\ButtomDoor_closed.png" />
-    <Resource Include="Images\Blocks\Buttom_Walls\ButtomDoor_opened.png" />
+    <Resource Include="Images\Blocks\Buttom_Walls\ButtomDoor_room.png" />
     <Resource Include="Images\Blocks\Buttom_Walls\stone_tops.png" />
     <Resource Include="Images\Blocks\Buttom_Walls\wood_tops.png" />
     <Resource Include="Images\Blocks\Flores\andezit_block.png" />
@@ -95,19 +98,20 @@
     <Resource Include="Images\Blocks\Items\Bloxy_Cola_item.png" />
     <Resource Include="Images\Blocks\Items\Krankenwagen_item.png" />
     <Resource Include="Images\Blocks\Left_Walls\andezit_sides.png" />
-    <Resource Include="Images\Blocks\Left_Walls\LeftDoor_closed.png" />
-    <Resource Include="Images\Blocks\Left_Walls\LeftDoor_opened.png" />
+    <Resource Include="Images\Blocks\Left_Walls\LeftDoor_room.png" />
     <Resource Include="Images\Blocks\Left_Walls\stone_sides.png" />
     <Resource Include="Images\Blocks\Left_Walls\wood_sides.png" />
+    <Resource Include="Images\Blocks\Others\Chest_B.png" />
+    <Resource Include="Images\Blocks\Others\Chest_L.png" />
+    <Resource Include="Images\Blocks\Others\Chest_R.png" />
+    <Resource Include="Images\Blocks\Others\Chest_T.png" />
     <Resource Include="Images\Blocks\Right_Walls\andezit_sides.png" />
-    <Resource Include="Images\Blocks\Right_Walls\RightDoor_closed.png" />
-    <Resource Include="Images\Blocks\Right_Walls\RightDoor_opened.png" />
+    <Resource Include="Images\Blocks\Right_Walls\RightDoor_room.png" />
     <Resource Include="Images\Blocks\Right_Walls\stone_sides.png" />
     <Resource Include="Images\Blocks\Right_Walls\wood_sides.png" />
     <Resource Include="Images\Blocks\Top_Walls\andezit_tops.png" />
     <Resource Include="Images\Blocks\Top_Walls\stone_tops.png" />
-    <Resource Include="Images\Blocks\Top_Walls\TopDoor_closed.png" />
-    <Resource Include="Images\Blocks\Top_Walls\TopDoor_opened.png" />
+    <Resource Include="Images\Blocks\Top_Walls\TopDoor_room.png" />
     <Resource Include="Images\Blocks\Top_Walls\wood_tops.png" />
     <Resource Include="Images\Characters\Enemies\Bat.png" />
     <Resource Include="Images\Characters\Enemies\Cursed Trader.png" />
@@ -130,6 +134,9 @@
     <Resource Include="Images\Items\faf\Dragon Chestplate.png" />
     <Resource Include="Images\Items\faf\Dragon Helmet.png" />
     <Resource Include="Images\Items\faf\Dragon Leggins.png" />
+    <Resource Include="Images\Items\faf\Dragon Sword.png" />
+    <Resource Include="Images\Items\faf\Dull Blade.png" />
+    <Resource Include="Images\Items\faf\Excalibur.png" />
     <Resource Include="Images\Items\faf\Fire Breath Orb.png" />
     <Resource Include="Images\Items\faf\Guardian Amulet.png" />
     <Resource Include="Images\Items\faf\Health Potion.png" />
@@ -145,11 +152,12 @@
     <Resource Include="Images\Items\faf\Steel Chestplate.png" />
     <Resource Include="Images\Items\faf\Steel Helmet.png" />
     <Resource Include="Images\Items\faf\Steel Leggins.png" />
+    <Resource Include="Images\Items\faf\Steel Sword.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\Blocks\Others\" />
     <Folder Include="Images\Characters\NPC\" />
+    <Folder Include="Saves\DEFAULT\" />
   </ItemGroup>
 
 </Project>

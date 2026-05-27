@@ -79,8 +79,16 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             get => Data.current_Chest_Items;
             set => Data.current_Chest_Items = value;
         }
-
-
+        public List<string> NPC_Enemies
+        {
+            get => Data.NPC_Enemies;
+            set => Data.NPC_Enemies = value;
+        }
+        public int NPC_Aura
+        {
+            get => Data.NPC_Aura;
+            set => Data.NPC_Aura = value;
+        }
         public int NextRoomTeleporter_X
         {
             get => Data.NextRoomTeleporter_X;

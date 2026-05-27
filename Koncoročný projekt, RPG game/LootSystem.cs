@@ -29,6 +29,15 @@ namespace Koncoročný_projekt__RPG_game
             "Dragon Leggins",
             "Dragon Boots",
             "Fire Breath Orb",
+            "Dragon Sword",
+        };
+        List<string> batItems = new List<string>
+        {
+            "Rusty Helmet",
+            "Rusty Chestplate",
+            "Rusty Leggins",
+            "Rusty Boots",
+            "Dull Blade",
         };
 
         public bool RollChance(int percent)
@@ -50,14 +59,14 @@ namespace Koncoročný_projekt__RPG_game
                 }
                 else if (enemyName == "Dragon")
                 {
-                    if (RollChance(10))
+                    if (RollChance(50))
                     {
                         string droppedItem = dragonItems[random.Next(dragonItems.Count)];
                     }
                 }
                 else if (enemyName == "Mythical Pig")
                 {
-                    if (RollChance(50))
+                    if (RollChance(100))
                     {
                         string droppedItem = "Mythical Meal";
                     }
@@ -67,6 +76,13 @@ namespace Koncoročný_projekt__RPG_game
                     if (RollChance(30))
                     {
                         string droppedItem = "Phoenix Feather";
+                    }
+                }
+                else if (enemyName == "Bat")
+                {
+                    if (RollChance(50))
+                    {
+                        string droppedItem = batItems[random.Next(batItems.Count)];
                     }
                 }
             }

@@ -12,7 +12,8 @@
         <Label x:Name="TheInteractions" Content="" HorizontalAlignment="Center" Margin="0,620,0,0" VerticalAlignment="Top" Height="114" Width="1500" FontSize="30" Background="Gray"/>
 
 
-        <Grid x:Name="Map_UI" Margin="0,0,0,98" Background="Black"/>
+        <Grid x:Name="Map_UI" Margin="0,0,0,98" Background="Black">
+        </Grid>
 
 
         <Grid x:Name="Inventory" Background="#FF444242" MouseDown="Inventory_MouseDown" Visibility="Collapsed">
@@ -46,7 +47,7 @@
                 </Grid.RowDefinitions>
                 <ProgressBar x:Name="PlayerHp_Bar" HorizontalAlignment="Center" Height="50" Margin="0,10,0,0" VerticalAlignment="Top" Width="446" Background="Gray" Value="50" Foreground="#FFFF1212"/>
                 <Label x:Name="PlayerHp_Label" Content="50hp" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" Height="53" Margin="0,10,0,0" Foreground="White"/>
-                <Rectangle x:Name="Player_Image" HorizontalAlignment="Center" Height="250" Margin="0,68,0,0" Stroke="Black" VerticalAlignment="Top" Width="250" Fill="Gray" Grid.RowSpan="2"/>
+                <Image x:Name="Player_Image" HorizontalAlignment="Center" Height="250" Margin="0,68,0,0" VerticalAlignment="Top" Width="250" Grid.RowSpan="2" Source="/Images/Characters/Player/Player_Fight.png"/>
                 <Label Content="Defence:" HorizontalAlignment="Left" Margin="103,140,0,0" VerticalAlignment="Top" Background="Gray" Height="47" Width="70" FontSize="15" Grid.Row="1"/>
                 <Label x:Name="Player_Attack" Content="   -" HorizontalAlignment="Left" Margin="364,128,0,0" VerticalAlignment="Top" Background="Gray" Height="57" Width="70" FontSize="30" Grid.Row="1"/>
                 <Label x:Name="Player_Defence" Content="   -" HorizontalAlignment="Left" Margin="185,128,0,0" VerticalAlignment="Top" Background="Gray" Height="57" Width="70" FontSize="30" Grid.Row="1"/>
@@ -62,6 +63,7 @@
 
 
         <Grid x:Name="Studio" Margin="1292,0,0,0" Background="#FF7D7D7D" Visibility="Collapsed">
+
             <Label x:Name="CurrentBlockType" Content="Current block:" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Background="#FFB2B2B2" Height="48" Width="172" FontSize="18"/>
 
 
@@ -86,7 +88,8 @@
                 <Button x:Name="Slot_3_Studio" Content="" HorizontalAlignment="Left" Margin="10,408,0,0" VerticalAlignment="Top" Height="47" Width="77" Click="Slot_3_Studio_Click"/>
                 <Button x:Name="Slot_4_Studio" Content="" HorizontalAlignment="Left" Margin="109,408,0,0" VerticalAlignment="Top" Height="47" Width="76" Click="Slot_4_Studio_Click"/>
                 <TextBox x:Name="Texter_Studio" HorizontalAlignment="Center" Margin="0,484,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="44"/>
-                <Button Content="Add" HorizontalAlignment="Left" Margin="48,533,0,0" VerticalAlignment="Top" Height="46" Width="96" FontSize="30" Click="Button_Click"/>
+                <Button Content="Add" HorizontalAlignment="Left" Margin="11,533,0,0" VerticalAlignment="Top" Height="46" Width="96" FontSize="30" Click="Button_Click"/>
+                <Button x:Name="Remove" Content="Remove" HorizontalAlignment="Left" Margin="99,533,0,0" VerticalAlignment="Top" Height="46" Width="96" FontSize="30" Click="Remove_Click"/>
 
 
             </Grid>
@@ -95,7 +98,7 @@
         </Grid>
         <Label x:Name="Text_Of_All_Texts" Content="Fafafela" HorizontalAlignment="Left" Margin="0,648,0,0" VerticalAlignment="Top" Height="72" Width="1152" FontSize="50" Background="DarkGray" Visibility="Collapsed"/>
 
-        <Grid x:Name="AdmitGrid" Margin="1292,0,0,0" Background="#FF423252" Visibility="Visible">
+        <Grid x:Name="AdmitGrid" Margin="1292,0,0,0" Background="#FF423252" Visibility="Collapsed">
             <Button x:Name="Add_Item" Content="Add Item" HorizontalAlignment="Center" Margin="0,521,0,0" VerticalAlignment="Top" Height="74" Width="144" FontSize="30" Click="Add_Item_Click"/>
             <TextBox x:Name="item_name" HorizontalAlignment="Center" Margin="0,600,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="158" Height="56" TextChanged="item_name_TextChanged"/>
             <Button x:Name="start" Content="Load Map" HorizontalAlignment="Left" Margin="40,346,0,0" VerticalAlignment="Top" Height="60" Width="104" Click="start_Click" FontSize="20"/>
@@ -106,6 +109,7 @@
             <TextBox x:Name="Room_ID_Changer_Studio" HorizontalAlignment="Left" Margin="25,301,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="146" Height="40"/>
             <Button x:Name="Save_Room" Content="Save room" HorizontalAlignment="Left" Margin="38,240,0,0" VerticalAlignment="Top" Height="38" Width="66" Click="Save_Room_Click"/>
             <Button x:Name="Load_Room" Content="Load room" HorizontalAlignment="Left" Margin="117,240,0,0" VerticalAlignment="Top" Height="38" Width="66" Click="Load_Room_Click"/>
+            <Button x:Name="SaveToDefault" Content="DON'T TOUCH" HorizontalAlignment="Left" Margin="131,0,0,0" VerticalAlignment="Top" Height="50" Width="68" Click="SaveToDefault_Click"/>
         </Grid>
         <Grid x:Name="ChestGrid" Background="DarkGray" Margin="208,55,280,266" Visibility="Collapsed" MouseDown="ChestGrid_MouseDown">
             <Button x:Name="Exit_Chest" Content="X" HorizontalAlignment="Left" Margin="951,10,0,0" VerticalAlignment="Top" Height="38" Width="33" Background="Red" FontSize="30" Foreground="White" Click="Exit_Chest_Click"/>
@@ -117,6 +121,23 @@
                     <ColumnDefinition Width="41*"/>
                 </Grid.ColumnDefinitions>
             </Grid>
+
+        </Grid>
+        <Grid x:Name="Menu" Background="#FFB9B9B9" Visibility="Visible">
+            <Button x:Name="LoadSave" Content="Load The Save" HorizontalAlignment="Left" Margin="546,410,0,0" VerticalAlignment="Top" Height="161" Width="276" FontSize="40" Click="LoadSave_Click"/>
+            <TextBox x:Name="Input_Menu" HorizontalAlignment="Left" Margin="465,89,0,0" TextWrapping="Wrap" Text="(The saves name here)" VerticalAlignment="Top" Width="450" Height="161" FontSize="40"/>
+            <Label x:Name="Output_Menu" Content="Waiting for the Name" HorizontalAlignment="Left" Margin="498,274,0,0" VerticalAlignment="Top" Height="116" Width="390" FontSize="30" Background="Gray"/>
+            <Button x:Name="ToNew_Menu" Content="New Game" HorizontalAlignment="Left" Margin="1116,449,0,0" VerticalAlignment="Top" Height="161" Width="276" FontSize="40" Click="ToNew_Menu_Click"/>
+
+
+
+        </Grid>
+        <Grid x:Name="NewGameMenu" Background="#FFB9B9B9" Visibility="Visible">
+
+            <Button x:Name="NewGame_Menu" Content="New Game" HorizontalAlignment="Center" Margin="0,75,0,0" VerticalAlignment="Top" Height="248" Width="268" FontSize="50" Click="NewGame_Menu_Click"/>
+            <TextBox x:Name="Input_NewOne_Menu" HorizontalAlignment="Center" Margin="0,356,0,0" TextWrapping="Wrap" Text="(File Name)" VerticalAlignment="Top" Width="268" Height="96" FontSize="30"/>
+            <Button x:Name="ToExisting_Menu" Content="Load Existing files" HorizontalAlignment="Left" Margin="1116,437,0,0" VerticalAlignment="Top" Height="188" Width="259" FontSize="30" Click="ToExisting_Menu_Click"/>
+
 
         </Grid>
     </Grid>

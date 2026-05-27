@@ -29,7 +29,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
 
             Height = 100;
             Width = (105 * xMap) + 5; // 1265, 1475
-            Margin = new Thickness(2,2,2,2);
+            Margin = new Thickness(2);
             Background = Brushes.Gray;
             
             VerticalAlignment = VerticalAlignment.Top;
