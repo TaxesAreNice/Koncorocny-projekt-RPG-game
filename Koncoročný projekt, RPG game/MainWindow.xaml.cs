@@ -778,15 +778,14 @@ namespace Koncoročný_projekt__RPG_game
                     {
                         inNPCFight = true;
                         fighting.currentEnemies.Clear();
+                        int idCounter = 0;
                         foreach (string enemyName in block.NPC_Enemies)
                         {
-                            inNPCFight = true;
-                            lastHostileNPCBlock = block; // save reference
-                            fighting.currentEnemies.Clear();
                             if (fighting.currentEnemies.Count >= 4) break;
-                            var newEnemy = new Enemy { EnemyName = enemyName.Trim() };
+                            var newEnemy = new Enemy { EnemyName = enemyName.Trim(), EnemyID = idCounter };
                             fighting.currentEnemies.Add(newEnemy);
                             EnemyStatAdder(enemyName.Trim());
+                            idCounter++;
                         }
                         StartFight();
                         return;
@@ -1256,7 +1255,7 @@ namespace Koncoročný_projekt__RPG_game
         private void Spawing_enemy(string name, int space_off_x, int space_off_y, int enemy_num)
         {
             Fighting_EnemySpawner fighting_EnemySpawner = new Fighting_EnemySpawner(fighting, name, fighting.currentEnemies[enemy_num]);
-            SetGameImage(fighting_EnemySpawner.stuff[0].theImage, "Characters", "Enemies", name);
+            SetGameImage(fighting_EnemySpawner.stuff[0].theImage, "Characters", "Enemies", name.Split("_")[0]);
             fighting_EnemySpawner.Margin = new Thickness(space_off_x, space_off_y, 0, 0);
             Enemy_Grid.Children.Add(fighting_EnemySpawner);
 

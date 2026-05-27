@@ -20,7 +20,8 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         Enemy Enemy;
         public Fighting_EnemySpawner(Fighting fight, string name, Enemy enemy)
         {
-            
+            //this.name = name + "_" + enemy.EnemyID;
+
             this.Fighting = fight;
             this.Enemy = enemy;
             Height = 200;
