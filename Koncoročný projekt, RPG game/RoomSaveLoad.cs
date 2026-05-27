@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
-using Koncoročný_projekt__RPG_game.UI_Generations;
 using System.Windows.Controls;
+using Koncoročný_projekt__RPG_game.UI_Generations;
+using System.Diagnostics;
 
 namespace Koncoročný_projekt__RPG_game
 {
@@ -51,7 +53,7 @@ namespace Koncoročný_projekt__RPG_game
 
         private const string RoomsFolder = "Rooms";
         private static string LegacyFolder =>
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, RoomsFolder);
+            Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule!.FileName)!, RoomsFolder);
 
         public static void SaveRoom(List<List<Map_Block>> map, int roomNumber, int xMap, int yMap, string corner = "TopLeft")
     => SaveRoomToFolder(map, roomNumber, xMap, yMap, LegacyFolder, corner);

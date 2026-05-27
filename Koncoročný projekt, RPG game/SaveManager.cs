@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using Koncoročný_projekt__RPG_game.UI_Generations;
+using System.Diagnostics;
 
 namespace Koncoročný_projekt__RPG_game
 {
@@ -24,7 +26,7 @@ namespace Koncoročný_projekt__RPG_game
             Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
         };
         private static string SavesRootPath =>
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, SavesRoot);
+      Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule!.FileName)!, SavesRoot);
 
         private static string DefaultPath =>
             Path.Combine(SavesRootPath, DefaultName);
@@ -40,6 +42,7 @@ namespace Koncoročný_projekt__RPG_game
 
         public static bool NewGame(string saveName, out string error)
         {
+            MessageBox.Show(SavesRootPath);
             error = "";
             if (string.IsNullOrWhiteSpace(saveName))
             {

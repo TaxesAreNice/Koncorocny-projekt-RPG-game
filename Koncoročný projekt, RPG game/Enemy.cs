@@ -10,6 +10,7 @@ namespace Koncoročný_projekt__RPG_game
     {
         public Enemy() { }
 
+        public int EnemyID { get; set; } = 0;
         public int EnemyHP { get; set; }
         public int EnemyAttack { get; set; }
         public int EnemyDefense { get; set; }
