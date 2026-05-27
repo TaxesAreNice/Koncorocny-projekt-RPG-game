@@ -30,6 +30,7 @@ namespace Koncoročný_projekt__RPG_game
             StartFight,
         }
 
+
         public TurnState State { get; private set; }
 
         public List<(int hp, int attack, int defense, string name)> enemies = new List<(int hp, int attack, int defense, string name)>()
