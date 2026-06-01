@@ -153,7 +153,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
         }
         void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            string isSelected = Fighting.EnemySelected(name);
+            string isSelected = Fighting.EnemySelected(Enemy.EnemyID);
 
             if (isSelected == "true")
             {

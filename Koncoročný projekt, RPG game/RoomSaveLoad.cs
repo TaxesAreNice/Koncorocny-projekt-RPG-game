@@ -53,7 +53,7 @@ namespace Koncoročný_projekt__RPG_game
 
         private const string RoomsFolder = "Rooms";
         private static string LegacyFolder =>
-            Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule!.FileName)!, RoomsFolder);
+    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, RoomsFolder);
 
         public static void SaveRoom(List<List<Map_Block>> map, int roomNumber, int xMap, int yMap, string corner = "TopLeft")
     => SaveRoomToFolder(map, roomNumber, xMap, yMap, LegacyFolder, corner);

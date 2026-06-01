@@ -26,7 +26,8 @@ namespace Koncoročný_projekt__RPG_game
             Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
         };
         private static string SavesRootPath =>
-      Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule!.FileName)!, SavesRoot);
+      Path.Combine(AppDomain.CurrentDomain.BaseDirectory, SavesRoot);
+
 
         private static string DefaultPath =>
             Path.Combine(SavesRootPath, DefaultName);
@@ -42,7 +43,7 @@ namespace Koncoročný_projekt__RPG_game
 
         public static bool NewGame(string saveName, out string error)
         {
-            MessageBox.Show(SavesRootPath);
+            //MessageBox.Show(SavesRootPath);
             error = "";
             if (string.IsNullOrWhiteSpace(saveName))
             {

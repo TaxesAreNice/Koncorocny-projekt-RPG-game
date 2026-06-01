@@ -15,7 +15,7 @@ namespace Koncoročný_projekt__RPG_game
     {
         public List<Enemy> currentEnemies = new List<Enemy>();
 
-        public string selectedEnemy = "";
+        public int selectedEnemyID = -1;
         public bool enemySelected = false;
 
         Player player = new Player();
@@ -29,7 +29,6 @@ namespace Koncoročný_projekt__RPG_game
             WonFight,
             StartFight,
         }
-
 
         public TurnState State { get; private set; }
 
@@ -51,7 +50,6 @@ namespace Koncoročný_projekt__RPG_game
         {
             State = TurnState.EnemyTurn;
 
-
             foreach (var enemy in currentEnemies)
             {
                 monster.MonsterHP = enemy.EnemyHP;
@@ -62,7 +60,6 @@ namespace Koncoročný_projekt__RPG_game
                 EnemyTurn();
             }
         }
-
 
         public void EnemyTurn()
         {
@@ -117,17 +114,17 @@ namespace Koncoročný_projekt__RPG_game
             return new List<int> { player.PlayerHP, player.PlayerAttack, player.PlayerDefense };
         }
 
-        public string EnemySelected(string name)
+        public string EnemySelected(int id)
         {
             if (!enemySelected)
             {
-                selectedEnemy = name;
+                selectedEnemyID = id;
                 enemySelected = true;
                 return "true";
             }
-            else if (name == selectedEnemy)
+            else if (id == selectedEnemyID)
             {
-                selectedEnemy = "";
+                selectedEnemyID = -1;
                 enemySelected = false;
                 return "unselect";
             }
@@ -140,19 +137,15 @@ namespace Koncoročný_projekt__RPG_game
             enemySelected = false;
 
             State = TurnState.PlayerTurn;
-            monster.MonsterName = selectedEnemy;
 
-            foreach (var enemy in currentEnemies)
-            {
-                if (enemy.EnemyName == selectedEnemy)
-                {
-                    monster.MonsterHP = enemy.EnemyHP;
-                    monster.MonsterAttack = enemy.EnemyAttack;
-                    monster.MonsterDefense = enemy.EnemyDefense;
-                    monster.MonsterDamage = 0;
-                    break;
-                }
-            }
+            Enemy? target = currentEnemies.FirstOrDefault(e => e.EnemyID == selectedEnemyID);
+            if (target == null) { selectedEnemyID = -1; return "nothingSelected"; }
+
+            monster.MonsterName = target.EnemyName;
+            monster.MonsterHP = target.EnemyHP;
+            monster.MonsterAttack = target.EnemyAttack;
+            monster.MonsterDefense = target.EnemyDefense;
+            monster.MonsterDamage = 0;
 
             PlayerTurn();
 
@@ -161,26 +154,19 @@ namespace Koncoročný_projekt__RPG_game
             {
                 for (int i = currentEnemies.Count - 1; i >= 0; i--)
                 {
-                    if (currentEnemies[i].EnemyName == selectedEnemy)
+                    if (currentEnemies[i].EnemyID == target.EnemyID)
                     {
-                        selectedEnemy = "";
+                        selectedEnemyID = -1;
                         return "enemyDead_" + i;
                     }
                 }
             }
             else
             {
-                foreach (var enemy in currentEnemies)
-                {
-                    if (enemy.EnemyName == selectedEnemy)
-                    {
-                        enemy.EnemyHP = monster.MonsterHP;
-                        break;
-                    }
-
-                }
+                target.EnemyHP = monster.MonsterHP;
             }
-            selectedEnemy = "";
+
+            selectedEnemyID = -1;
             State = TurnState.EnemyTurn;
             return "ContinueFight";
         }
@@ -199,6 +185,7 @@ namespace Koncoročný_projekt__RPG_game
         {
             currentEnemies.RemoveAt(num);
         }
+
         public void RevivePlayer()
         {
             player.PlayerHP = 100;

@@ -38,6 +38,7 @@ namespace Koncoročný_projekt__RPG_game
 
         private Image Player_ima = new Image();
 
+        private bool spawnedFromNPC = false;
         private bool Started = false;
         public bool inventory_on_slot = false;
         public bool inventory_on_slot_q = false;
@@ -787,6 +788,8 @@ namespace Koncoročný_projekt__RPG_game
                             EnemyStatAdder(enemyName.Trim());
                             idCounter++;
                         }
+                        spawnedFromNPC = true;
+                        lastHostileNPCBlock = block;
                         StartFight();
                         return;
                     }
@@ -1153,13 +1156,13 @@ namespace Koncoročný_projekt__RPG_game
             // List<string> enemy_names = new List<string>();
             //enemy_names.Add(name);
 
-
-            switch (enemy_num)
+            switch(enemy_num)
             {
                 case 0:
                     MessageBox.Show("You've won this battle");
                     inNPCFight = false;
                     justFinishedNPCFight = true;
+                    spawnedFromNPC = false;
                     if (lastHostileNPCBlock != null)
                     {
                         lastHostileNPCBlock.block_type = MapBlocks_Insides.BlockType.Empty;
@@ -1173,85 +1176,49 @@ namespace Koncoročný_projekt__RPG_game
                     Player plater = fighting.RequestPlayer();
                     plater.PlayerHP += 25;
                     if (plater.PlayerHP >= 100)
-                    {
                         plater.PlayerHP = 100;
-                    }
                     StartFight();
                     return;
                 case 1:
-                    name = fighting.currentEnemies[0].EnemyName;
-
-                    EnemyStatAdder(name);
+                name = fighting.currentEnemies[0].EnemyName;
+                    spawnedFromNPC = false;
                     Spawing_enemy(name, space_off_x, space_off_y, 0);
-                    break;
-                case 2:
-                    for (int i = 0; i < enemy_num; i++)
-                    {
-                        if (i == 1)
-                        {
-                            space_off_x += 450;
-                        }
-                        else
-                        {
-                            space_off_x = -200;
-                        }
-                        name = fighting.currentEnemies[i].EnemyName;
-                        EnemyStatAdder(name);
-                        Spawing_enemy(name, space_off_x, space_off_y, i);
-                    }
-                    break;
-                case 3:
-                    for (int i = 0; i < enemy_num; i++)
-                    {
-                        if (i == 2)
-                        {
-                            space_off_x = 100;
-                            space_off_y = 320;
-                        }
-                        else if (i == 1)
-                        {
-                            space_off_x = -150;
-                        }
-                        else
-                        {
-                            space_off_x += 300;
-                            space_off_y = -100;
-                        }
-                        name = fighting.currentEnemies[i].EnemyName;
-                        EnemyStatAdder(name);
-                        Spawing_enemy(name, space_off_x, space_off_y, i);
-                    }
-                    break;
-                case 4:
-                    for (int i = 0; i < enemy_num; i++)
-                    {
-                        if (i == 0) // top-left
-                        {
-                            space_off_x = -220;
-                            space_off_y = -220;
-                        }
-                        else if (i == 1) // top-right
-                        {
-                            space_off_x = 220;
-                            space_off_y = -220;
-                        }
-                        else if (i == 2) // bottom-left
-                        {
-                            space_off_x = -220;
-                            space_off_y = 220;
-                        }
-                        else if (i == 3) // bottom-right
-                        {
-                            space_off_x = 220;
-                            space_off_y = 220;
-                        }
-                        name = fighting.currentEnemies[i].EnemyName;
-                        EnemyStatAdder(name);
-                        Spawing_enemy(name, space_off_x, space_off_y, i);
-                    }
-                    break;
+                break;
+
+            case 2:
+                for (int i = 0; i < enemy_num; i++)
+                {
+                    if (i == 1) space_off_x += 450;
+                    else space_off_x = -200;
+                    name = fighting.currentEnemies[i].EnemyName;
+                    Spawing_enemy(name, space_off_x, space_off_y, i);
+                }
+                break;
+
+            case 3:
+                for (int i = 0; i < enemy_num; i++)
+                {
+                    if (i == 2) { space_off_x = 100; space_off_y = 320; }
+                    else if (i == 1) { space_off_x = -150; }
+                    else { space_off_x += 300; space_off_y = -100; }
+                    name = fighting.currentEnemies[i].EnemyName;
+                    Spawing_enemy(name, space_off_x, space_off_y, i);
+                }
+                break;
+
+            case 4:
+                for (int i = 0; i < enemy_num; i++)
+                {
+                    if (i == 0) { space_off_x = -220; space_off_y = -220; }
+                    else if (i == 1) { space_off_x = 220; space_off_y = -220; }
+                    else if (i == 2) { space_off_x = -220; space_off_y = 220; }
+                    else if (i == 3) { space_off_x = 220; space_off_y = 220; }
+                    name = fighting.currentEnemies[i].EnemyName;
+                    Spawing_enemy(name, space_off_x, space_off_y, i);
+                }
+                break;
             }
-        }
+            }
         private void Spawing_enemy(string name, int space_off_x, int space_off_y, int enemy_num)
         {
             Fighting_EnemySpawner fighting_EnemySpawner = new Fighting_EnemySpawner(fighting, name, fighting.currentEnemies[enemy_num]);
@@ -1305,7 +1272,6 @@ namespace Koncoročný_projekt__RPG_game
             if (result == "enemyDead")
             {
                 int num = int.Parse(justInCase);
-
                 EventerChanger($"The {fighting.currentEnemies[num].EnemyName} has been defeated.");
                 fighting.KillEnemy(num);
                 Enemy_Grid.Children.Clear();
@@ -1378,6 +1344,20 @@ namespace Koncoročný_projekt__RPG_game
             current_enemies.Clear();
             inNPCFight = false;
             justFinishedNPCFight = true;
+
+            if (!string.IsNullOrEmpty(SaveManager.CurrentSaveName))
+            {
+                string savePath = System.IO.Path.Combine(
+                    System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName)!,
+                    "Saves", SaveManager.CurrentSaveName);
+
+                if (System.IO.Directory.Exists(savePath))
+                    System.IO.Directory.Delete(savePath, recursive: true);
+            }
+
+            Menu.Visibility = Visibility.Visible;
+            Started = false;
+            ClearMap();
         }
 
         private void UpdatePlayerStats()
@@ -1403,7 +1383,7 @@ namespace Koncoročný_projekt__RPG_game
             foreach (var enemy in current_enemies)
             {
                 enemy.Background = Brushes.DarkGray;
-                fighting.selectedEnemy = "";
+                fighting.selectedEnemyID = -1;
                 fighting.enemySelected = false;
             }
         }
