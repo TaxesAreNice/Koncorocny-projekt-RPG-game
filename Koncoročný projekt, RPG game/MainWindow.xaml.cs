@@ -535,6 +535,7 @@ namespace Koncoročný_projekt__RPG_game
                         string JustInCaseWearable = "";
 
 
+                        
 
                         if (itemType.Contains("_"))
                         {
@@ -551,6 +552,12 @@ namespace Koncoročný_projekt__RPG_game
                                 {
                                     inventoryMovementClass.SettingWearablesBack(player, contentE);
                                     MessageBox.Show("You can't equip an item that's already equipped! Take it out of the equipment slot first.");
+                                    return;
+                                }
+                                if (Inventory_butons[fahh / 4].Names[fahh % 4] != "")
+                                {
+                                    inventoryMovementClass.SettingWearablesBack(player, contentE);
+                                    MessageBox.Show("You can't equip an item when you are already using one from the category! Take it out of the equipment slot first.");
                                     return;
                                 }
                                 if (inventory_while_Fighting)

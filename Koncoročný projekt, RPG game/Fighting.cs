@@ -35,7 +35,7 @@ namespace Koncoročný_projekt__RPG_game
         public List<(int hp, int attack, int defense, string name)> enemies = new List<(int hp, int attack, int defense, string name)>()
         {
             (200, 30, 30, "Cursed Trader"),
-            (35, 4, 0, "Bat"),
+            (35, 7, 0, "Bat"),
             (65, 10, 0, "Vampire"),
             (80, 30, 20, "Jester"),
             (250, 10, 50, "Shield Spirit"),
@@ -52,11 +52,14 @@ namespace Koncoročný_projekt__RPG_game
 
             foreach (var enemy in currentEnemies)
             {
+                if (enemy.EnemyName != "Bat")
+
                 monster.MonsterHP = enemy.EnemyHP;
                 monster.MonsterAttack = enemy.EnemyAttack;
                 monster.MonsterDefense = enemy.EnemyDefense;
                 monster.MonsterDamage = 0;
 
+                
                 EnemyTurn();
             }
         }
@@ -65,7 +68,7 @@ namespace Koncoročný_projekt__RPG_game
         {
             if (State != TurnState.EnemyTurn)
                 return;
-            if (monster.MonsterName == "Jester")
+            /*if (monster.MonsterName == "Jester")
             {
                 specials.JesterSpecial();
             }
@@ -74,10 +77,10 @@ namespace Koncoročný_projekt__RPG_game
                 specials.MageSpecials();
             }
             else
-            {
+            {*/
                 monster.CalculateDamage(player);
                 monster.DoDamage(player);
-            }
+            //}
         }
 
         private void PlayerTurn()
