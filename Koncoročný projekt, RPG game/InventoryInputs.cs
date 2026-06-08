@@ -60,7 +60,7 @@ namespace Koncoročný_projekt__RPG_game
 
 
         }
-       
+
 
         public void SettingWearablesBack(Player player, string category)
         {
@@ -74,7 +74,6 @@ namespace Koncoročný_projekt__RPG_game
                     {
                         ItemName = item.Name.Split("_")[0];
                         justInCaseEHEMWEARABLES = "_" + item.Name.Split("_")[1];
-
                     }
                     if (ItemName == category)
                     {
@@ -87,32 +86,19 @@ namespace Koncoročný_projekt__RPG_game
                 }
             }
 
-                if (category == "_Sword")
-                {
-                    player.PlayerAttack -= PlayerBackUpSwordAttack;
-                }
-                else if (category == "_Helmet")
-                {
-                    player.PlayerDefense -= PlayerBackUpHelmetDefence;
-                }
-                else if (category == "_Chestplate")
-                {
-                    player.PlayerDefense -= PlayerBackUpChestplateDefence;
-                }
-                else if (category == "_Leggins")
-                {
-                    player.PlayerDefense -= PlayerBackUpLegginsDefence;
-                }
-                else if (category == "_Boots")
-                {
-                    player.PlayerDefense -= PlayerBackUpBootsDefence;
-                }
-                else if (category == "_Accessory")
-                {
-                    player.PlayerDefense -= PlayerBackUpAccessoryDefence;
-                }
-            }
-              
+            if (category == "_Sword")
+                player.PlayerAttack -= PlayerBackUpSwordAttack;
+            else if (category == "_Helmet")
+                player.PlayerDefense -= PlayerBackUpHelmetDefence;
+            else if (category == "_Chestplate")
+                player.PlayerDefense -= PlayerBackUpChestplateDefence;
+            else if (category == "_Leggins")
+                player.PlayerDefense -= PlayerBackUpLegginsDefence;
+            else if (category == "_Boots")
+                player.PlayerDefense -= PlayerBackUpBootsDefence;
+            else if (category == "_Accessory")
+                player.PlayerDefense -= PlayerBackUpAccessoryDefence;
+        }
         public string E_Pressed(string name, Player realPlayer, Monster realMonster, Fighting realFight)
         {
             if (q_pressed)
@@ -126,7 +112,7 @@ namespace Koncoročný_projekt__RPG_game
         }
             
 
-        private string CheckingItemType(string name, Player p, Monster m, Fighting f)
+        public string CheckingItemType(string name, Player p, Monster m, Fighting f)
         {
             string returner = "Item not found";
 

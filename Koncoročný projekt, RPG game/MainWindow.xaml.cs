@@ -531,11 +531,24 @@ namespace Koncoročný_projekt__RPG_game
                         Player player = fighting.RequestPlayer();
                         Monster monster = fighting.RequestMonster();
 
+                        foreach (var cat in categories)
+                        {
+                            int idx = categories.IndexOf(cat);
+                            if (Inventory_butons[idx / 4].Names[idx % 4] != "" &&
+                                Inventory_butons[idx / 4].Names[idx % 4] != contentE)
+                            {
+                                // check if contentE belongs to this category
+                                if (contentE.Contains(cat) || Inventory_Code[y].names[x].Contains(cat))
+                                {
+                                    MessageBox.Show("Take out your current item first!");
+                                    return;
+                                }
+                            }
+                        }
+
                         string itemType = inventoryMovementClass.E_Pressed(contentE, player, monster, fighting);
                         string JustInCaseWearable = "";
 
-
-                        
 
                         if (itemType.Contains("_"))
                         {
@@ -556,7 +569,6 @@ namespace Koncoročný_projekt__RPG_game
                                 }
                                 if (Inventory_butons[fahh / 4].Names[fahh % 4] != "")
                                 {
-                                    inventoryMovementClass.SettingWearablesBack(player, contentE);
                                     MessageBox.Show("You can't equip an item when you are already using one from the category! Take it out of the equipment slot first.");
                                     return;
                                 }
@@ -569,7 +581,6 @@ namespace Koncoročný_projekt__RPG_game
 
                                 SetGameImage(Inventory_butons[fahh / 4].slots[fahh % 4].image, "Items", "faf", contentE);
                                 Inventory_butons[fahh / 4].Names[fahh % 4] = contentE;
-
                             }
                             fahh++;
                         }
