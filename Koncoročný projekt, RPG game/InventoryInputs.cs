@@ -54,7 +54,7 @@ namespace Koncoročný_projekt__RPG_game
                 }
             }
         }
-        public void Q_Pressed() // removes items
+        public void Q_Pressed()
         {
          
 
@@ -176,7 +176,6 @@ namespace Koncoročný_projekt__RPG_game
                             EnemyBackUpRingDefense = item.EnemyDefense;
                             break;
                         case "2nd hand":
-                            //uhh pshhhh
                             break;
                         case "Accessory":
                             PlayerBackUpAccessoryDefence = item.Defense;
@@ -185,7 +184,7 @@ namespace Koncoročný_projekt__RPG_game
                 }
             }
         }
-        public void Equip_Pressed(string name, int pos) // equips items
+        public void Equip_Pressed(string name, int pos)
         {
             chosed_But_x = pos;
             q_pressed = true;

@@ -13,7 +13,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
     internal class InventoryBlocks_Chest : Grid
     {
         private int box_position = 5;
-        public List<InventoryBlocks_Insides_Chest> slots = new List<InventoryBlocks_Insides_Chest>(); //here too
+        public List<InventoryBlocks_Insides_Chest> slots = new List<InventoryBlocks_Insides_Chest>();
         public List<string> names = new List<string>();
         private int currentX = 0;
         private int currentY = 0;
@@ -37,7 +37,7 @@ namespace Koncoročný_projekt__RPG_game.UI_Generations
             {
                 int xX = i;
                 currentX = xX;
-                InventoryBlocks_Insides_Chest tempSlot = new InventoryBlocks_Insides_Chest(box_position, xX, y); // change to grid, please
+                InventoryBlocks_Insides_Chest tempSlot = new InventoryBlocks_Insides_Chest(box_position, xX, y);
                 tempSlot.Background = Brushes.DarkGray;
 
                 tempSlot.MouseDown += (s, e) =>
